@@ -1,0 +1,7 @@
+- Setup the folder structure - Done
+- Setup schema - Done
+- Add authentication for mentor - Done
+- Make API routes for students, payments, reminders
+- Display List of students
+- Profile of a student
+- Automatic and manually Trigger mail
