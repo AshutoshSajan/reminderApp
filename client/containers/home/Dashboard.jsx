@@ -21,10 +21,10 @@ class Dashboard extends Component {
     }
   }
 
-  handlePaymentReminder = id => {
+  handlePaymentReminder = (id, email) => {
     const { authToken } = localStorage;
     if (authToken) {
-      this.props.dispatch(paymentReminderHandler(id));
+      this.props.dispatch(paymentReminderHandler(id, email));
     }
   };
   deleteStudentHandler = id => {
@@ -117,7 +117,10 @@ class Dashboard extends Component {
                             to=""
                             className="card-footer-item"
                             onClick={() => {
-                              this.handlePaymentReminder(student._id);
+                              this.handlePaymentReminder(
+                                student._id,
+                                student.email
+                              );
                             }}
                           >
                             Send reminder

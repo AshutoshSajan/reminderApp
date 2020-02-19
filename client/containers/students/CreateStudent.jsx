@@ -17,8 +17,8 @@ class CreateStudent extends Component {
         isAlumni: false,
         isStayingInCampus: false,
         numAnnualSalary: "",
-        numPercentageToBeCharged: 0,
-        numMinAmtToBePaid: 0,
+        numPercentageToBeCharged: "",
+        numMinAmtToBePaid: "",
         hasPaidEntireTrainingFee: false
       }
     };

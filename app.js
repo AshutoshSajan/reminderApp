@@ -10,6 +10,8 @@ const indexRouter = require("./routes/index");
 const authRouter = require("./routes/auth");
 const studentsRouter = require("./routes/students");
 const paymentsRouter = require("./routes/payments");
+const remindersRouter = require("./routes/reminders");
+
 const authMiddleware = require("./utils/auth-middleware");
 
 const app = express();
@@ -40,20 +42,29 @@ if (process.env.NODE_ENV === "development") {
 }
 
 mongoose.set("useFindAndModify", false);
-mongoose.connect("mongodb://localhost:27017/paymentReminderApp", async function(
-  err
-) {
-  console.log("mongoDB connected ?", err ? false : true);
-  // Seed the DB.
-  require("./utils/seed");
-  // const authService = require('./src/auth/authService');
-  // const token = await authService.loginMentor('prashant.abhishek7g@gmail.com', 'qwerty123');
-  // console.log(token, 'result of authService call');
-});
+mongoose.connect(
+  process.env.MONGO_URI,
+  {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+    useUnifiedTopology: true
+  },
+  async function(err) {
+    console.log("mongoDB connected ?", err ? false : true);
+    // Seed the DB.
+    require("./utils/seed");
+    // const authService = require('./src/auth/authService');
+    // const token = await authService.loginMentor('prashant.abhishek7g@gmail.com', 'qwerty123');
+    // console.log(token, 'result of authService call');
+  }
+);
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/students", authMiddleware.verifyMentor, studentsRouter);
 app.use("/api/v1/payments", authMiddleware.verifyMentor, paymentsRouter);
+app.use("/api/v1/reminders", authMiddleware.verifyMentor, remindersRouter);
+
 app.use("*", indexRouter);
 
 // catch 404 and forward to error handler

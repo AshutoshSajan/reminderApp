@@ -8,11 +8,12 @@ import { verifyMentor } from "../actions/index";
 import CreateStudent from "../containers/students/CreateStudent";
 import NotFound from "../containers/common/NotFound";
 import Dashboard from "../containers/home/Dashboard";
-import PaymentDetails from "../containers/Payment/PaymentDetails";
-import PaymentReminder from "../containers/Payment/PaymentReminder";
+import PaymentDetails from "./payment/PaymentDetails";
+import PaymentReminder from "./payment/PaymentReminder";
 import Header from "../containers/common/Header";
 import UpdateStudent from "./students/UpdateStudent";
-
+import ListPayments from "./payment/ListPayments";
+import ListReminders from "./reminder/ListReminders";
 class App extends Component {
   componentDidMount() {
     const authToken = localStorage.getItem("authToken");
@@ -50,6 +51,17 @@ class App extends Component {
               path="/students/:id/send-payment-details"
               component={PaymentDetails}
             />
+            <Route
+              exact
+              path="/payments/list-payments"
+              component={ListPayments}
+            />
+            <Route
+              exact
+              path="/reminders/list-reminders"
+              component={ListReminders}
+            />
+
             <Route path="*" component={NotFound} />
           </Switch>
         )}

@@ -177,18 +177,23 @@ const paymenHandler = (id, cb) => {
   };
 };
 
-const paymentReminderHandler = (id, cb) => {
+const paymentReminderHandler = formData => {
+  console.log(formData, "paymentReminderHandler...");
+
   return async dispatch => {
     dispatch({ type: "PAYMENT_REMINDER_START" });
 
     const token = localStorage.getItem("authToken");
 
     try {
-      const res = await axios.get("/api/v1/payments/" + id + "/students", {
+      const res = await axios.post("/api/v1/reminders/", formData, {
         headers: {
           authorization: token
         }
       });
+
+      console.log(res, "payment reminder res...");
+
       dispatch({
         type: "PAYMENT_REMINDER_SUCCESS",
         data: { payment: res.data.payment }
@@ -240,6 +245,9 @@ const submitPaymentDetails = (id, formData) => {
           authorization: token
         }
       });
+
+      console.log(res, "submitPaymentDetails res..");
+
       dispatch({
         type: "CREATE_PAYMENT_SUCCESS",
         data: { payment: res.data.payment }

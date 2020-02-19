@@ -30,8 +30,8 @@ class UpdateStudent extends Component {
         isAlumni: this.student.isAlumni || false,
         isStayingInCampus: this.student.isStayingInCampus || false,
         numAnnualSalary: this.student.numAnnualSalary || "",
-        numPercentageToBeCharged: this.student.numPercentageToBeCharged || 0,
-        numMinAmtToBePaid: this.student.numMinAmtToBePaid || 0,
+        numPercentageToBeCharged: this.student.numPercentageToBeCharged || "",
+        numMinAmtToBePaid: this.student.numMinAmtToBePaid || "",
         hasPaidEntireTrainingFee: this.student.numMinAmtToBePaid || false
       }
     };

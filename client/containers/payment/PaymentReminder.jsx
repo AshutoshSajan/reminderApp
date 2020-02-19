@@ -1,14 +1,16 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { paymentReminderHandler } from "../../actions/index";
 
-export default class PaymentReminder extends Component {
+class PaymentReminder extends Component {
   state = {
     reminder: {
       studentId: "",
-      amount: 0,
+      amount: "",
       details: "",
       mode: "",
       month: "",
-      year: 0
+      year: ""
     },
 
     months: [
@@ -24,7 +26,8 @@ export default class PaymentReminder extends Component {
       "Oct",
       "Nov",
       "Dec"
-    ]
+    ],
+    paymentModes: ["cash", "UPI", "Bank Transfer"]
   };
 
   componentDidMount = () => {};
@@ -40,6 +43,14 @@ export default class PaymentReminder extends Component {
     });
   };
 
+  paymentReminderSubmitHandler = () => {
+    const { amount, details, mode, month, year } = this.state.reminder;
+    const reminder = { amount: +amount, details, mode, month, year: +year };
+    this.props.dispatch(paymentReminderHandler({ reminder }), () => {
+      this.props.history.push("/reminders/list-reminders");
+    });
+  };
+
   render() {
     const {
       studentId,
@@ -49,6 +60,8 @@ export default class PaymentReminder extends Component {
       month,
       year
     } = this.state.reminder;
+
+    const { paymentModes, months } = this.state;
 
     return (
       <div className="container">
@@ -65,9 +78,26 @@ export default class PaymentReminder extends Component {
                   onChange={this.handleChange}
                 >
                   <option value="">please select a month</option>
-                  {this.state.months.map((month, i) => (
+                  {months.map((month, i) => (
                     <option value={month} key={i}>
                       {month}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="field">
+              <div className="select is-info">
+                <select
+                  className="is-capitalized"
+                  name="mode"
+                  onChange={this.handleChange}
+                >
+                  <option value="">Mode of payment</option>
+                  {paymentModes.map((mode, i) => (
+                    <option value={mode} key={i}>
+                      {mode}
                     </option>
                   ))}
                 </select>
@@ -103,20 +133,6 @@ export default class PaymentReminder extends Component {
             </div>
 
             <div className="field">
-              <label className="label">Mode of payment</label>
-              <div className="control">
-                <input
-                  className="input"
-                  type="text"
-                  name="mode"
-                  value={mode}
-                  onChange={this.handleChange}
-                  placeholder="e.g cash/phonepay"
-                />
-              </div>
-            </div>
-
-            <div className="field">
               <label className="label">Year</label>
               <div className="control">
                 <input
@@ -131,7 +147,7 @@ export default class PaymentReminder extends Component {
             </div>
 
             <button
-              onClick={this.paymentDetailsSubmitHandler}
+              onClick={this.paymentReminderSubmitHandler}
               className="button is-info"
             >
               Submit
@@ -142,6 +158,8 @@ export default class PaymentReminder extends Component {
     );
   }
 }
+
+export default connect(store => store)(PaymentReminder);
 
 /*
 

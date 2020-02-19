@@ -1,8 +1,9 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 import { submitPaymentDetails } from "../../actions/index";
 
-export default class PaymentDetails extends Component {
+class PaymentDetails extends Component {
   constructor(props) {
     super();
     const studentId = window.location.pathname.split("/")[2];
@@ -10,10 +11,10 @@ export default class PaymentDetails extends Component {
     this.state = {
       payment: {
         studentId: studentId || "",
-        amount: 0,
+        amount: "",
         mode: "",
         month: "",
-        year: 0,
+        year: "",
         isStayFee: false,
         isTrainingFee: false
       },
@@ -58,7 +59,7 @@ export default class PaymentDetails extends Component {
     };
     console.log(payment, "paymentDetailsSubmitHandler called...");
 
-    this.props.dispatch(submitPaymentDetails(studentId, payment));
+    this.props.dispatch(submitPaymentDetails(studentId, { payment }));
   };
 
   handleChange = e => {
@@ -194,6 +195,8 @@ export default class PaymentDetails extends Component {
     );
   }
 }
+
+export default connect(store => store)(PaymentDetails);
 
 /*
 

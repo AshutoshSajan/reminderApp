@@ -37,11 +37,9 @@ const Header = props => {
                 <Link className="navbar-item" to="/students/create">
                   <strong>Create student</strong>
                 </Link>
-
                 <Link className="navbar-item" to="/students/list-students">
                   <strong>List student</strong>
                 </Link>
-
                 {/* TODO: remove these two links after testing  */}
                 <Link
                   className="navbar-item"
@@ -49,12 +47,17 @@ const Header = props => {
                 >
                   <strong>Payment Reminder</strong>
                 </Link>
-
                 <Link
                   className="navbar-item"
                   to="/students/:id/send-payment-details"
                 >
                   <strong>Send Payment Details</strong>
+                </Link>
+                <Link className="navbar-item" to="/payments/list-payments">
+                  <strong>List Payments</strong>
+                </Link>
+                <Link className="navbar-item" to="/reminders/list-reminders">
+                  <strong>List Reminders</strong>
                 </Link>
               </>
             ) : null}
