@@ -1,0 +1,16 @@
+// rename this file to .env and add all environmane variables
+// ==========================================================
+NAME=admin name
+EMAIL= enter admin mail
+PASSWORD= enter admin password
+
+JWT_SECRET= enter jwt secret
+MONGO_URI= e.g. mongodb://localhost/db_name
+
+CLOUDINARY_CLOUD_NAME= cloudinary cloud name
+CLOUDINARY_API_KEY= cloudinary api key
+CLOUDINARY_API_SECRET=cloudinary api secret
+CLOUDINARY_URL==cloudinary url
+
+MAIL_EMAIL=mailing-e-mail
+MAIL_PASS=mailing password
