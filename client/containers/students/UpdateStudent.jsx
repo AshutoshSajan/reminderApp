@@ -3,9 +3,11 @@ import { connect } from "react-redux";
 import validator from "validator";
 import axios from "axios";
 
-import { updateStudentHandler, fetchStudentHandler } from "../../actions";
+import {
+  updateStudentHandler,
+  fetchStudentHandler
+} from "../../actions/students";
 
-// dispatch as a prop.
 class UpdateStudent extends Component {
   constructor(props) {
     super(props);

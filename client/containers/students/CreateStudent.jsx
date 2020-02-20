@@ -2,9 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import validator from "validator";
 
-import { createStudent } from "../../actions";
+import { createStudentHandler } from "../../actions/students";
 
-// dispatch as a prop.
 class CreateStudent extends Component {
   constructor(props) {
     super(props);
@@ -66,7 +65,7 @@ class CreateStudent extends Component {
     };
 
     this.props.dispatch(
-      createStudent({ student }, () => {
+      createStudentHandler({ student }, () => {
         this.props.history.push("/");
       })
     );

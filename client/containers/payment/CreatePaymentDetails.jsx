@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { submitPaymentDetails } from "../../actions/index";
+import { createPaymentHandler } from "../../actions/payments";
 
 class PaymentDetails extends Component {
   constructor(props) {
@@ -32,7 +32,8 @@ class PaymentDetails extends Component {
         "Oct",
         "Nov",
         "Dec"
-      ]
+      ],
+      paymentModes: ["cash", "UPI", "Bank Transfer"]
     };
   }
 
@@ -59,7 +60,7 @@ class PaymentDetails extends Component {
     };
     console.log(payment, "paymentDetailsSubmitHandler called...");
 
-    this.props.dispatch(submitPaymentDetails(studentId, { payment }));
+    this.props.dispatch(createPaymentHandler(studentId, { payment }));
   };
 
   handleChange = e => {
@@ -93,6 +94,8 @@ class PaymentDetails extends Component {
       isStayFee,
       isTrainingFee
     } = this.state.payment;
+
+    const { paymentModes, months } = this.state;
 
     return (
       <div className="container">
@@ -132,10 +135,27 @@ class PaymentDetails extends Component {
                   name="month"
                   onChange={this.handleChange}
                 >
-                  <option value="">please select a month</option>
-                  {this.state.months.map((month, i) => (
+                  <option value="">Month of payment</option>
+                  {months.map((month, i) => (
                     <option value={month} key={i}>
                       {month}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="field">
+              <div className="select is-info">
+                <select
+                  className="is-capitalized"
+                  name="mode"
+                  onChange={this.handleChange}
+                >
+                  <option value="">Mode of payment</option>
+                  {paymentModes.map((mode, i) => (
+                    <option value={mode} key={i}>
+                      {mode}
                     </option>
                   ))}
                 </select>
@@ -152,19 +172,6 @@ class PaymentDetails extends Component {
                   value={amount}
                   onChange={this.handleChange}
                   placeholder="e.g 8000"
-                />
-              </div>
-            </div>
-            <div className="field">
-              <label className="label">Mode of payment</label>
-              <div className="control">
-                <input
-                  className="input"
-                  type="text"
-                  name="mode"
-                  value={mode}
-                  onChange={this.handleChange}
-                  placeholder="e.g cash/phonepay"
                 />
               </div>
             </div>
@@ -197,43 +204,3 @@ class PaymentDetails extends Component {
 }
 
 export default connect(store => store)(PaymentDetails);
-
-/*
-
-// ==================================================
-// payment schema feils...
-// ==================================================
-
-
-let payment = {
-  studentId: {
-    type: Schema.Types.ObjectId,
-    ref: "Student"
-  },
-  amount: {
-    type: Number,
-    required: true
-  },
-  mode: {
-    type: String,
-    enum: paymentModeEnum
-  },
-  month: {
-    type: String,
-    enum: monthsEnum
-  },
-  year: {
-    type: Number
-  },
-  isStayFee: {
-    type: Boolean,
-    default: false
-  },
-  isTrainingFee: {
-    type: Boolean,
-    default: false
-  }
-};
-// ==================================================
-
-*/

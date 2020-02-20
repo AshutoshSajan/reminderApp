@@ -64,7 +64,6 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/students", authMiddleware.verifyMentor, studentsRouter);
 app.use("/api/v1/payments", authMiddleware.verifyMentor, paymentsRouter);
 app.use("/api/v1/reminders", authMiddleware.verifyMentor, remindersRouter);
-
 app.use("*", indexRouter);
 
 // catch 404 and forward to error handler

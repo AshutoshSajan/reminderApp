@@ -3,11 +3,11 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 import {
-  fetchStudentsList,
-  handelDeleteStudent,
-  paymentReminderHandler
-} from "../../actions";
-import Header from "../common/Header";
+  fetchStudentsListHandler,
+  deleteStudentHandler
+} from "../../actions/students";
+
+import { createReminderHandler } from "../../actions/reminders";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -17,20 +17,21 @@ class Dashboard extends Component {
   componentDidMount() {
     const { authToken } = localStorage;
     if (authToken) {
-      this.props.dispatch(fetchStudentsList());
+      this.props.dispatch(fetchStudentsListHandler());
     }
   }
 
   handlePaymentReminder = (id, email) => {
     const { authToken } = localStorage;
     if (authToken) {
-      this.props.dispatch(paymentReminderHandler(id, email));
+      this.props.dispatch(createReminderHandler(id, email));
     }
   };
-  deleteStudentHandler = id => {
+
+  handelDeleteStudent = id => {
     const { authToken } = localStorage;
     if (authToken) {
-      this.props.dispatch(handelDeleteStudent(id));
+      this.props.dispatch(deleteStudentHandler(id));
     }
   };
 
@@ -134,7 +135,7 @@ class Dashboard extends Component {
                           <a
                             className="card-footer-item"
                             onClick={() =>
-                              this.deleteStudentHandler(student._id)
+                              this.handelDeleteStudent(student._id)
                             }
                           >
                             Delete

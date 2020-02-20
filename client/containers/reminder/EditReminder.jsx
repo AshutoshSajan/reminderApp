@@ -1,36 +1,58 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { paymentReminderHandler } from "../../actions/index";
+import { updateReminderHandler } from "../../actions/reminders";
 
-class PaymentReminder extends Component {
-  state = {
-    reminder: {
-      studentId: "",
-      amount: "",
-      details: "",
-      mode: "",
-      month: "",
-      year: ""
-    },
+class EditReminder extends Component {
+  constructor(props) {
+    super(props);
 
-    months: [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec"
-    ],
-    paymentModes: ["cash", "UPI", "Bank Transfer"]
+    const reminderId = window.location.pathname.split("/")[2] || "122";
+
+    const paymentReminder = this.props.reminders.reduce((acc, reminder) => {
+      if (reminder._id === reminderId) {
+        acc = reminder;
+        // return acc;
+      }
+      return acc;
+    }, {});
+
+    console.log(paymentReminder, "edit pay rem constructor....");
+
+    this.state = {
+      reminder: {
+        studentId: "",
+        amount: "",
+        details: "",
+        mode: "",
+        month: "",
+        year: ""
+
+        // ...this.state.reminder,
+        // ...paymentReminder
+      },
+
+      months: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+      ],
+      paymentModes: ["call", "sms", "email"]
+    };
+  }
+
+  componentDidMount = () => {
+    const { authToken } = localStorage;
+    console.log(authToken, "cdm edit payment reminders....");
   };
-
-  componentDidMount = () => {};
 
   handleChange = e => {
     const { name, value } = e.target;
@@ -43,10 +65,10 @@ class PaymentReminder extends Component {
     });
   };
 
-  paymentReminderSubmitHandler = () => {
+  updateReminderSubmitHandler = () => {
     const { amount, details, mode, month, year } = this.state.reminder;
     const reminder = { amount: +amount, details, mode, month, year: +year };
-    this.props.dispatch(paymentReminderHandler({ reminder }), () => {
+    this.props.dispatch(updateReminderHandler({ reminder }), () => {
       this.props.history.push("/reminders/list-reminders");
     });
   };
@@ -77,7 +99,7 @@ class PaymentReminder extends Component {
                   name="month"
                   onChange={this.handleChange}
                 >
-                  <option value="">please select a month</option>
+                  <option value="">Month of reminder</option>
                   {months.map((month, i) => (
                     <option value={month} key={i}>
                       {month}
@@ -94,7 +116,7 @@ class PaymentReminder extends Component {
                   name="mode"
                   onChange={this.handleChange}
                 >
-                  <option value="">Mode of payment</option>
+                  <option value="">Mode of Reminder</option>
                   {paymentModes.map((mode, i) => (
                     <option value={mode} key={i}>
                       {mode}
@@ -147,7 +169,7 @@ class PaymentReminder extends Component {
             </div>
 
             <button
-              onClick={this.paymentReminderSubmitHandler}
+              onClick={this.updateReminderSubmitHandler}
               className="button is-info"
             >
               Submit
@@ -159,37 +181,4 @@ class PaymentReminder extends Component {
   }
 }
 
-export default connect(store => store)(PaymentReminder);
-
-/*
-
-// ==================================================
-// reminder schema feilds...
-// ==================================================
-
-let reminder = {
-    studentId: {
-      type: Schema.Types.ObjectId,
-      ref: 'Student'
-    },
-    amount: {
-      type: Number,
-      required: true
-    },
-    details: {
-      type: String
-    },
-    mode: {
-      type: String,
-      enum: reminderModeEnum
-    },
-    month: {
-      type: String,
-      enum: monthsEnum
-    },
-    year: {
-      type: Number
-    }
-  },
-
-  */
+export default connect(store => store)(EditReminder);

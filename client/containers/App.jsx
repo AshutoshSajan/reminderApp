@@ -1,19 +1,27 @@
 import React, { Component } from "react";
-import { Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
+import { Route, Switch } from "react-router-dom";
+
+import { verifyMentor } from "../actions/index";
 
 import LoginPage from "./auth/LoginPage";
 import HomePage from "./home/HomePage";
-import { verifyMentor } from "../actions/index";
+
 import CreateStudent from "../containers/students/CreateStudent";
+import UpdateStudent from "./students/UpdateStudent";
+
 import NotFound from "../containers/common/NotFound";
 import Dashboard from "../containers/home/Dashboard";
-import PaymentDetails from "./payment/PaymentDetails";
-import PaymentReminder from "./payment/PaymentReminder";
-import Header from "../containers/common/Header";
-import UpdateStudent from "./students/UpdateStudent";
+
+import CreatePaymentDetails from "./payment/CreatePaymentDetails";
 import ListPayments from "./payment/ListPayments";
+import EditPaymentDetails from "./payment/EditPaymentDetails";
+
+import CreateReminder from "./reminder/CreateReminder";
+import EditReminder from "./reminder/EditReminder";
 import ListReminders from "./reminder/ListReminders";
+
+import Header from "../containers/common/Header";
 class App extends Component {
   componentDidMount() {
     const authToken = localStorage.getItem("authToken");
@@ -44,12 +52,12 @@ class App extends Component {
             <Route
               exact
               path="/students/:id/payment-reminder"
-              component={PaymentReminder}
+              component={CreateReminder}
             />
             <Route
               exact
               path="/students/:id/send-payment-details"
-              component={PaymentDetails}
+              component={CreatePaymentDetails}
             />
             <Route
               exact
