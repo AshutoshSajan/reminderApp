@@ -1,34 +1,31 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { updateReminderHandler } from "../../actions/reminders";
+import axios from "axios";
 
 class EditReminder extends Component {
   constructor(props) {
     super(props);
 
-    const reminderId = window.location.pathname.split("/")[2] || "122";
+    this.reminderId = window.location.pathname.split("/")[2];
 
-    const paymentReminder = this.props.reminders.reduce((acc, reminder) => {
-      if (reminder._id === reminderId) {
-        acc = reminder;
-        // return acc;
-      }
-      return acc;
-    }, {});
-
-    console.log(paymentReminder, "edit pay rem constructor....");
+    if (this.reminderId) {
+      this.reminder = this.props.reminders.reminders.reduce((acc, reminder) => {
+        if (reminder._id === this.reminderId) {
+          acc = reminder;
+        }
+        return acc;
+      }, null);
+    }
 
     this.state = {
       reminder: {
-        studentId: "",
-        amount: "",
-        details: "",
-        mode: "",
-        month: "",
-        year: ""
-
-        // ...this.state.reminder,
-        // ...paymentReminder
+        studentId: this.reminder ? this.reminder.studentId : "",
+        amount: this.reminder ? this.reminder.amount : "",
+        details: this.reminder ? this.reminder.details : "",
+        mode: this.reminder ? this.reminder.mode : "",
+        month: this.reminder ? this.reminder.month : "",
+        year: this.reminder ? this.reminder.year : ""
       },
 
       months: [
@@ -45,13 +42,38 @@ class EditReminder extends Component {
         "Nov",
         "Dec"
       ],
-      paymentModes: ["call", "sms", "email"]
+      paymentModes: ["call", "sms", "email"],
+
+      isLoading: false,
+      error: ""
     };
   }
 
   componentDidMount = () => {
     const { authToken } = localStorage;
-    console.log(authToken, "cdm edit payment reminders....");
+
+    if (!this.reminder) {
+      this.setState({ isLoading: true });
+      axios
+        .get("/api/v1/reminders/" + this.reminderId, {
+          headers: {
+            authorization: authToken
+          }
+        })
+        .then(res => {
+          this.setState(state => ({
+            isLoading: false,
+            reminder: {
+              ...state.reminder,
+              ...res.data.reminder
+            }
+          }));
+        })
+        .catch(err => {
+          console.error(err);
+          this.setState({ isLoading: false, error: "something went wrong" });
+        });
+    }
   };
 
   handleChange = e => {
@@ -66,11 +88,28 @@ class EditReminder extends Component {
   };
 
   updateReminderSubmitHandler = () => {
-    const { amount, details, mode, month, year } = this.state.reminder;
-    const reminder = { amount: +amount, details, mode, month, year: +year };
-    this.props.dispatch(updateReminderHandler({ reminder }), () => {
-      this.props.history.push("/reminders/list-reminders");
-    });
+    const {
+      studentId,
+      amount,
+      details,
+      mode,
+      month,
+      year
+    } = this.state.reminder;
+
+    const reminder = {
+      amount: +amount,
+      details,
+      mode,
+      month,
+      year: +year
+    };
+
+    this.props.dispatch(
+      updateReminderHandler(this.reminderId, { reminder }, () => {
+        this.props.history.push("/reminders/list-reminders");
+      })
+    );
   };
 
   render() {
@@ -83,13 +122,16 @@ class EditReminder extends Component {
       year
     } = this.state.reminder;
 
-    const { paymentModes, months } = this.state;
+    const { paymentModes, months, isLoading, error } = this.state;
 
     return (
       <div className="container">
+        {isLoading ? <p>Loading . . .</p> : null}
+        {error ? <p>{error}</p> : null}
+
         <div className="form columns">
           <div className="column is-one-third is-offset-one-third">
-            <label className="label">Payment reminder</label>
+            <label className="label">Edit Reminder</label>
             <br />
 
             <div className="field">
@@ -98,6 +140,7 @@ class EditReminder extends Component {
                   className="is-capitalized"
                   name="month"
                   onChange={this.handleChange}
+                  value={month}
                 >
                   <option value="">Month of reminder</option>
                   {months.map((month, i) => (
@@ -115,6 +158,7 @@ class EditReminder extends Component {
                   className="is-capitalized"
                   name="mode"
                   onChange={this.handleChange}
+                  value={mode}
                 >
                   <option value="">Mode of Reminder</option>
                   {paymentModes.map((mode, i) => (

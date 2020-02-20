@@ -1,42 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-function ListPayments() {
-  const { authToken } = localStorage;
-  const [loading, setLoading] = useState(false);
-  const [payments, setPayments] = useState([]);
+import {
+  deletePaymentHandler,
+  fetchPaymentsListHandler
+} from "../../actions/payments";
 
+function ListPayments(props) {
   useEffect(() => {
-    setLoading(true);
-    fetch("/api/v1/payments", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: authToken
-      }
-    })
-      .then(res => res.json())
-      .then(data => {
-        console.log(data, "payments data...");
-        setPayments(data.payments);
-        setLoading(false);
-      });
-    return () => {
-      console.log("cleanup called...");
-    };
+    props.dispatch(fetchPaymentsListHandler());
   }, []);
 
-  const deletePaymentHandler = () => {};
-
   return (
-    <div>
-      {loading ? <p>Loading....</p> : null}
-
-      {payments.length ? (
-        payments.map((payment, i) => {
+    <div className="container">
+      {props.payments.isFetchingPayments ? <p>Loading....</p> : null}
+      {props.reminders.paymentsAuthError ? (
+        <p>{props.reminders.paymentsAuthError}</p>
+      ) : null}
+      {props.payments.payments.length ? (
+        props.payments.payments.map((payment, i) => {
           return (
-            <div className="container" key={i}>
+            <div key={i}>
               <div className="columns is-mobile">
                 <div className="column is-half is-offset-one-quarter">
                   <div className="card">
@@ -64,22 +49,15 @@ function ListPayments() {
                       </div>
                     </div>
                     <footer className="card-footer">
-                      {/* <Link
-                        to=""
-                        className="card-footer-item"
-                        onClick={() => {}}
-                      >
-                        Send reminder
-                      </Link> */}
                       <Link
-                        to={`/students/${payment._id}/update`}
+                        to={`/payments/${payment._id}/update`}
                         className="card-footer-item"
                       >
                         Edit
                       </Link>
                       <a
                         className="card-footer-item"
-                        onClick={deletePaymentHandler(payment._id)}
+                        onClick={() => deletePaymentHandler(payment._id)}
                       >
                         Delete
                       </a>

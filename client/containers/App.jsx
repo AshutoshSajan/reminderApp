@@ -13,9 +13,9 @@ import UpdateStudent from "./students/UpdateStudent";
 import NotFound from "../containers/common/NotFound";
 import Dashboard from "../containers/home/Dashboard";
 
-import CreatePaymentDetails from "./payment/CreatePaymentDetails";
+import CreatePayment from "./payment/CreatePayment";
 import ListPayments from "./payment/ListPayments";
-import EditPaymentDetails from "./payment/EditPaymentDetails";
+import EditPayment from "./payment/EditPayment";
 
 import CreateReminder from "./reminder/CreateReminder";
 import EditReminder from "./reminder/EditReminder";
@@ -57,18 +57,23 @@ class App extends Component {
             <Route
               exact
               path="/students/:id/send-payment-details"
-              component={CreatePaymentDetails}
+              component={CreatePayment}
             />
             <Route
               exact
               path="/payments/list-payments"
               component={ListPayments}
             />
+
+            <Route path="/payments/:id/update" component={EditPayment} />
+
             <Route
               exact
               path="/reminders/list-reminders"
               component={ListReminders}
             />
+
+            <Route path="/reminders/:id/update" component={EditReminder} />
 
             <Route path="*" component={NotFound} />
           </Switch>

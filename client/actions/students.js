@@ -119,7 +119,7 @@ export function deleteStudentHandler(studentId) {
 
       dispatch({
         type: "DELETE_STUDENT",
-        data: { student: res.data.student }
+        data: { studentId }
       });
     } catch (err) {
       dispatch({

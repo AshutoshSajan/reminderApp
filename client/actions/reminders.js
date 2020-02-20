@@ -13,8 +13,6 @@ export function createReminderHandler(formData, cb) {
         }
       });
 
-      console.log(res, "create reminder res...");
-
       dispatch({
         type: "CREATE_REMINDER",
         data: { reminder: res.data.reminder }
@@ -42,8 +40,6 @@ export function fetchReminderHandler(reminderId) {
         }
       });
 
-      console.log(res, "fetch reminder res...");
-
       dispatch({
         type: "FETCH_REMINDER",
         data: { reminder: res.data.reminder }
@@ -57,7 +53,7 @@ export function fetchReminderHandler(reminderId) {
   };
 }
 
-export function fetchReminderListHandler() {
+export function fetchRemindersListHandler() {
   return async dispatch => {
     dispatch({ type: "REMINDER_AUTH_START" });
 
@@ -69,8 +65,6 @@ export function fetchReminderListHandler() {
           authorization: token
         }
       });
-
-      console.log(res, "fetch reminders list res...");
 
       dispatch({
         type: "FETCH_REMINDER_LIST_SUCCESS",
@@ -86,6 +80,8 @@ export function fetchReminderListHandler() {
 }
 
 export function updateReminderHandler(reminderId, formData, cb) {
+  console.log(cb, "cb...");
+
   return async dispatch => {
     dispatch({ type: "REMINDER_AUTH_START" });
 
@@ -98,12 +94,11 @@ export function updateReminderHandler(reminderId, formData, cb) {
         }
       });
 
-      console.log(res, "update reminder res...");
-
       dispatch({
         type: "UPDATE_REMINDER",
         data: { reminder: res.data.reminder }
       });
+
       cb();
     } catch (err) {
       dispatch({

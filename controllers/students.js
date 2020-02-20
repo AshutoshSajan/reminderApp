@@ -61,12 +61,13 @@ const studentsController = {
 
   deleteStudent: async function(req, res, next) {
     const studentId = req.params.id;
-    const student = await studentsService.deleteStudent(studentId);
 
     try {
+      const student = await studentsService.deleteStudent(studentId);
+
       return res.status(200).json({
         success: true,
-        message: "student updated",
+        message: "student deleted",
         student
       });
     } catch (error) {

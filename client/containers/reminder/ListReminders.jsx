@@ -2,43 +2,27 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-function ListReminders() {
-  const { authToken } = localStorage;
-  const [loading, setLoading] = useState(false);
-  const [reminders, setReminders] = useState([]);
+import {
+  deleteReminderHandler,
+  fetchRemindersListHandler
+} from "../../actions/reminders";
 
+function ListReminders(props) {
+  console.log(props);
   useEffect(() => {
-    setLoading(true);
-    fetch("/api/v1/reminders", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: authToken
-      }
-    })
-      .then(res => res.json())
-      .then(data => {
-        console.log(data, "reminders data...");
-        setReminders(data.reminders);
-        setLoading(false);
-      });
-    return () => {
-      console.log("cleanup called...");
-    };
+    props.dispatch(fetchRemindersListHandler());
   }, []);
 
-  const deleteReminderHandler = () => {
-    console.log("deleteReminderHandler called...");
-  };
-
   return (
-    <div>
-      {loading ? <p>Loading. . . </p> : null}
-
-      {reminders.length ? (
-        reminders.map((reminder, i) => {
+    <div className="container">
+      {props.reminders.isFetchingReminders ? <p>Loading . . . </p> : null}
+      {props.reminders.remindersAuthError ? (
+        <p>{props.reminders.remindersAuthError}</p>
+      ) : null}
+      {props.reminders.reminders.length ? (
+        props.reminders.reminders.map((reminder, i) => {
           return (
-            <div className="container" key={i}>
+            <div key={i}>
               <div className="columns is-mobile">
                 <div className="column is-half is-offset-one-quarter">
                   <div className="card">
@@ -65,24 +49,17 @@ function ListReminders() {
                       </div>
                     </div>
                     <footer className="card-footer">
-                      {/* <Link
-                        to=""
-                        className="card-footer-item"
-                        onClick={() => {}}
-                      >
-                        Send reminder
-                      </Link> */}
                       <Link
-                        to={`/students/${reminder._id}/update`}
+                        to={`/reminders/${reminder._id}/update`}
                         className="card-footer-item"
                       >
-                        Edit
+                        Edit Reminder
                       </Link>
                       <a
                         className="card-footer-item"
-                        onClick={deleteReminderHandler(reminder._id)}
+                        onClick={() => deleteReminderHandler(reminder._id)}
                       >
-                        Delete
+                        Delete Reminder
                       </a>
                     </footer>
                   </div>

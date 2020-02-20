@@ -5,7 +5,7 @@ const remindersDAL = {
     return await Reminder.find({});
   },
 
-  showReminde: async function(reminderId) {
+  showReminder: async function(reminderId) {
     return await Reminder.findOne({ _id: reminderId });
   },
 

@@ -1,6 +1,6 @@
 const initialState = {
   isFetchingReminders: false,
-  remindersError: null,
+  remindersAuthError: null,
   reminders: []
 };
 
@@ -10,15 +10,14 @@ const remindersReducer = (state = initialState, action) => {
       return {
         ...state,
         isFetchingReminders: true,
-        remindersError: null,
-        reminders: []
+        remindersAuthError: null
       };
 
     case "FETCH_REMINDER_LIST_SUCCESS":
       return {
         ...state,
         isFetchingReminders: false,
-        remindersError: null,
+        remindersAuthError: null,
         reminders: action.data.reminders
       };
 
@@ -26,7 +25,7 @@ const remindersReducer = (state = initialState, action) => {
       return {
         ...state,
         isFetchingReminders: false,
-        remindersError: null,
+        remindersAuthError: null,
         reminders: [...state.reminders, action.data.reminder]
       };
 
@@ -34,7 +33,7 @@ const remindersReducer = (state = initialState, action) => {
       return {
         ...state,
         isFetchingReminders: false,
-        remindersError: null,
+        remindersAuthError: null,
         reminders: state.reminders.map(reminder => {
           if (reminder._id === action.data.reminder._id) {
             return action.data.reminder;
@@ -48,7 +47,7 @@ const remindersReducer = (state = initialState, action) => {
       return {
         ...state,
         isFetchingReminders: false,
-        remindersError: null,
+        remindersAuthError: null,
         reminders: state.reminders.filter(reminder => {
           return !reminder._id === action.data.reminderId;
         })
@@ -58,7 +57,7 @@ const remindersReducer = (state = initialState, action) => {
       return {
         ...state,
         isFetchingReminders: false,
-        remindersError: action.data.error,
+        remindersAuthError: action.data.error,
         reminders: []
       };
 

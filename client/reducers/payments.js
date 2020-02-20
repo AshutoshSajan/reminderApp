@@ -1,6 +1,6 @@
 const initialState = {
   isFetchingPayments: false,
-  paymentsError: null,
+  paymentsAuthError: null,
   payments: []
 };
 
@@ -10,8 +10,7 @@ const paymentsReducer = (state = initialState, action) => {
       return {
         ...state,
         isFetchingPayments: true,
-        paymentsError: null,
-        payments: []
+        paymentsAuthError: null
       };
 
     case "FETCH_PAYMENT_LIST_SUCCESS":
@@ -19,7 +18,7 @@ const paymentsReducer = (state = initialState, action) => {
         ...state,
         isFetchingPayments: false,
         payments: action.data.payments,
-        paymentsError: null
+        paymentsAuthError: null
       };
 
     case "CREATE_PAYMENT":
@@ -27,7 +26,7 @@ const paymentsReducer = (state = initialState, action) => {
         ...state,
         isFetchingPayments: false,
         payments: [...state.payments, action.data.payment],
-        paymentsError: null
+        paymentsAuthError: null
       };
 
     case "UPDATE_PAYMENT":
@@ -41,7 +40,7 @@ const paymentsReducer = (state = initialState, action) => {
             return payment;
           }
         }),
-        paymentsError: null
+        paymentsAuthError: null
       };
 
     case "DELETE_PAYMENT":
@@ -51,7 +50,7 @@ const paymentsReducer = (state = initialState, action) => {
         payments: state.payments.filter(payment => {
           return payment._id !== action.data.paymentId;
         }),
-        paymentsError: null
+        paymentsAuthError: null
       };
 
     case "PAYMENT_AUTH_ERROR":
@@ -59,7 +58,7 @@ const paymentsReducer = (state = initialState, action) => {
         ...state,
         isFetchingPayments: false,
         payments: [],
-        paymentsError: action.data.error
+        paymentsAuthError: action.data.error
       };
 
     default:

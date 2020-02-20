@@ -13,9 +13,9 @@ class UpdateStudent extends Component {
     super(props);
 
     const studentId = window.location.pathname.split("/")[2];
-    const { list } = this.props.students;
+    const { students } = this.props.students;
 
-    this.student = list.reduce((acc, student) => {
+    this.student = students.reduce((acc, student) => {
       if (student._id === studentId) {
         acc = student;
         return acc;
@@ -34,7 +34,7 @@ class UpdateStudent extends Component {
         numAnnualSalary: this.student.numAnnualSalary || "",
         numPercentageToBeCharged: this.student.numPercentageToBeCharged || "",
         numMinAmtToBePaid: this.student.numMinAmtToBePaid || "",
-        hasPaidEntireTrainingFee: this.student.numMinAmtToBePaid || false
+        hasPaidEntireTrainingFee: this.student.hasPaidEntireTrainingFee || false
       }
     };
   }
@@ -305,6 +305,4 @@ class UpdateStudent extends Component {
   }
 }
 
-const mapStateToProps = store => store;
-
-export default connect(mapStateToProps)(UpdateStudent);
+export default connect(store => store)(UpdateStudent);

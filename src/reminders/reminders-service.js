@@ -14,7 +14,7 @@ const paymentsService = {
   },
 
   updateReminder: async function(reminderId, reminder) {
-    return await remindersDAL.updatePayment(reminderId, reminder);
+    return await remindersDAL.updateReminder(reminderId, reminder);
   },
 
   deleteReminder: async function(reminderId) {

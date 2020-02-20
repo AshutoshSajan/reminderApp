@@ -21,30 +21,33 @@ class Dashboard extends Component {
     }
   }
 
-  handlePaymentReminder = (id, email) => {
+  handlePaymentReminder = (studentId, email) => {
     const { authToken } = localStorage;
     if (authToken) {
-      this.props.dispatch(createReminderHandler(id, email));
+      this.props.dispatch(createReminderHandler(studentId, email));
     }
   };
 
-  handelDeleteStudent = id => {
-    const { authToken } = localStorage;
-    if (authToken) {
-      this.props.dispatch(deleteStudentHandler(id));
-    }
+  handelDeleteStudent = studentId => {
+    this.props.dispatch(deleteStudentHandler(studentId));
   };
 
   render() {
-    const { isFetchinglist, list } = this.props.students;
+    const {
+      isFetchingStudents,
+      studentsAuthError,
+      students
+    } = this.props.students;
 
     return (
       <div>
         <div className="container">
-          {isFetchinglist ? (
-            <div>Loading . . .</div>
-          ) : list ? (
-            list.map((student, i) => {
+          {isFetchingStudents ? (
+            <p>Loading . . .</p>
+          ) : studentsAuthError ? (
+            <p>{studentsAuthError}</p>
+          ) : students ? (
+            students.map((student, i) => {
               return (
                 <div className="container" key={i}>
                   <div className="columns is-mobile">

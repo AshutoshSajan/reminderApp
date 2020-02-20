@@ -8,10 +8,6 @@ router.get("/", remindersController.listReminders);
 
 router.post(
   "/",
-  (req, res, next) => {
-    console.log(req.body, "reminders post route");
-    next();
-  },
   validatorMiddleware.mustHaveFields(["amount"], "reminder"),
   remindersController.createReminder
 );
@@ -26,6 +22,8 @@ router.put(
 
 router.delete("/:id", remindersController.deleteReminder);
 
+// send reminder mail test route
+//
 // router.post(
 //   "/send-mail/:id",
 //   (req, res, next) => {

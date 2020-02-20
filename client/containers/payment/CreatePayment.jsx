@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import { createPaymentHandler } from "../../actions/payments";
 
-class PaymentDetails extends Component {
+class CreatePayment extends Component {
   constructor(props) {
     super();
     const studentId = window.location.pathname.split("/")[2];
@@ -51,6 +51,7 @@ class PaymentDetails extends Component {
     } = this.state.payment;
 
     const payment = {
+      studentId,
       amount: +amount,
       mode,
       month,
@@ -203,4 +204,4 @@ class PaymentDetails extends Component {
   }
 }
 
-export default connect(store => store)(PaymentDetails);
+export default connect(store => store)(CreatePayment);

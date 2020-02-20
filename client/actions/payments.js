@@ -13,8 +13,6 @@ export function createPaymentHandler(formData, cb) {
         }
       });
 
-      console.log(res, "createPaymentDetailsHandler res..");
-
       dispatch({
         type: "CREATE_PAYMENT",
         data: { payment: res.data.payment }
@@ -29,7 +27,7 @@ export function createPaymentHandler(formData, cb) {
   };
 }
 
-export function fetchPaymentDetailsHandler(paymentId) {
+export function fetchPaymentHandler(paymentId) {
   return async dispatch => {
     dispatch({ type: "PAYMENT_AUTH_START" });
 
@@ -41,8 +39,6 @@ export function fetchPaymentDetailsHandler(paymentId) {
           authorization: token
         }
       });
-
-      console.log(res, "get Payment Details Handler res..");
 
       dispatch({
         type: "GET_PAYMENT_SUCCESS",
@@ -58,7 +54,7 @@ export function fetchPaymentDetailsHandler(paymentId) {
   };
 }
 
-export function fetchPaymentListHandler() {
+export function fetchPaymentsListHandler() {
   return async dispatch => {
     dispatch({ type: "PAYMENT_AUTH_START" });
 
@@ -70,8 +66,6 @@ export function fetchPaymentListHandler() {
           authorization: token
         }
       });
-
-      console.log(res, "get Payment Details list Handler res..");
 
       dispatch({
         type: "FETCH_PAYMENT_LIST_SUCCESS",
@@ -86,7 +80,7 @@ export function fetchPaymentListHandler() {
   };
 }
 
-export function paymentDetailsUpdateHandler(paymentId, formData, cb) {
+export function paymentUpdateHandler(paymentId, formData, cb) {
   return async dispatch => {
     dispatch({ type: "PAYMENT_AUTH_START" });
 
@@ -98,8 +92,6 @@ export function paymentDetailsUpdateHandler(paymentId, formData, cb) {
           authorization: token
         }
       });
-
-      console.log(res, "createPaymentDetailsHandler res..");
 
       dispatch({
         type: "UPDATE_PAYMENT",
@@ -115,7 +107,7 @@ export function paymentDetailsUpdateHandler(paymentId, formData, cb) {
   };
 }
 
-export function deletePaymentDetailsHandler(paymentId, formData, cb) {
+export function deletePaymentHandler(paymentId, formData, cb) {
   return async dispatch => {
     dispatch({ type: "PAYMENT_AUTH_START" });
 
@@ -131,8 +123,6 @@ export function deletePaymentDetailsHandler(paymentId, formData, cb) {
           }
         }
       );
-
-      console.log(res, "createPaymentDetailsHandler res..");
 
       dispatch({
         type: "DELETE_PAYMENT",
