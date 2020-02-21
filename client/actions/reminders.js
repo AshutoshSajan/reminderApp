@@ -120,8 +120,6 @@ export function deleteReminderHandler(reminderId) {
         }
       });
 
-      console.log(res, "delete reminder res...");
-
       dispatch({
         type: "DELETE_REMINDER",
         data: { reminderId }
@@ -136,5 +134,5 @@ export function deleteReminderHandler(reminderId) {
 }
 
 export function paymentReminderHandler(id, email) {
-  console.log(paymentReminderHandler);
+  // console.log(paymentReminderHandler);
 }

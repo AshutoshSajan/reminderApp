@@ -33,7 +33,6 @@ exports.sendMail = async function(email, userId, html = null) {
   });
 
   console.log(
-    "inside nodemailer file",
     process.env.MAILING_EMAIL_ADDRESS,
     "process.env.MAILING_EMAIL_ADDRESS",
     process.env.MAILING_EMAIL_PASS,

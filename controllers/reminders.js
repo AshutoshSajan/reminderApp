@@ -82,17 +82,6 @@ const remindersController = {
     const { email } = req.body;
     const userId = req.params.id;
 
-    console.log(
-      // req,
-      "req...........",
-      req.body,
-      email,
-      "email",
-      userId,
-      "userId",
-      "send reminder controller..."
-    );
-
     try {
       const mailRes = await nodemailer.sendMail(email, userId);
       return res

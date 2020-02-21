@@ -34,7 +34,6 @@ class LoginPage extends Component {
 
     this.props.dispatch(
       loginMentor({ email, password }, () => {
-        console.log("called back");
         this.props.history.push("/");
       })
     );
