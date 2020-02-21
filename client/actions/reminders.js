@@ -80,8 +80,6 @@ export function fetchRemindersListHandler() {
 }
 
 export function updateReminderHandler(reminderId, formData, cb) {
-  console.log(cb, "cb...");
-
   return async dispatch => {
     dispatch({ type: "REMINDER_AUTH_START" });
 
@@ -126,9 +124,8 @@ export function deleteReminderHandler(reminderId) {
 
       dispatch({
         type: "DELETE_REMINDER",
-        data: { reminder: res.data.reminder }
+        data: { reminderId }
       });
-      cb();
     } catch (err) {
       dispatch({
         type: "REMINDER_AUTH_ERROR",

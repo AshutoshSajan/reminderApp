@@ -22,7 +22,7 @@ const paymentsController = {
       return res.status(200).json({
         success: true,
         message: "request sucessfull",
-        payments: await paymentsService.createPayment(payment)
+        payment: await paymentsService.createPayment(payment)
       });
     } catch (error) {
       return res

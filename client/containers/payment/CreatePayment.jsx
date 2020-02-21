@@ -6,11 +6,11 @@ import { createPaymentHandler } from "../../actions/payments";
 class CreatePayment extends Component {
   constructor(props) {
     super();
-    const studentId = window.location.pathname.split("/")[2];
+    this.studentId = window.location.pathname.split("/")[2];
 
     this.state = {
       payment: {
-        studentId: studentId || "",
+        studentId: this.studentId.length > 4 || "",
         amount: "",
         mode: "",
         month: "",
@@ -51,7 +51,7 @@ class CreatePayment extends Component {
     } = this.state.payment;
 
     const payment = {
-      studentId,
+      // studentId,
       amount: +amount,
       mode,
       month,
@@ -59,9 +59,14 @@ class CreatePayment extends Component {
       isStayFee,
       isTrainingFee
     };
-    console.log(payment, "paymentDetailsSubmitHandler called...");
 
-    this.props.dispatch(createPaymentHandler(studentId, { payment }));
+    // TODO: add student id inpayment object after testing
+
+    this.props.dispatch(
+      createPaymentHandler({ payment }, () =>
+        this.props.history.push("/payments/list-payments")
+      )
+    );
   };
 
   handleChange = e => {

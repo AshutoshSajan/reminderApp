@@ -110,6 +110,17 @@ class EditReminder extends Component {
         this.props.history.push("/reminders/list-reminders");
       })
     );
+
+    this.setState({
+      reminder: {
+        studentId: "",
+        amount: "",
+        details: "",
+        mode: "",
+        month: "",
+        year: ""
+      }
+    });
   };
 
   render() {

@@ -8,7 +8,15 @@ router.get("/", paymentsController.listPayments);
 
 router.post(
   "/",
+  (req, res, next) => {
+    console.log(req.body, "create payment check1...............");
+    next();
+  },
   validatorMiddleware.mustHaveFields(["amount"], "payment"),
+  (req, res, next) => {
+    console.log(req.body, "create payment check2...............");
+    next();
+  },
   paymentsController.createPayment
 );
 

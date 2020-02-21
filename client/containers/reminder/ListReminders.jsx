@@ -8,10 +8,13 @@ import {
 } from "../../actions/reminders";
 
 function ListReminders(props) {
-  console.log(props);
   useEffect(() => {
     props.dispatch(fetchRemindersListHandler());
   }, []);
+
+  const deleteReminder = reminderId => {
+    props.dispatch(deleteReminderHandler(reminderId));
+  };
 
   return (
     <div className="container">
@@ -57,7 +60,7 @@ function ListReminders(props) {
                       </Link>
                       <a
                         className="card-footer-item"
-                        onClick={() => deleteReminderHandler(reminder._id)}
+                        onClick={() => deleteReminder(reminder._id)}
                       >
                         Delete Reminder
                       </a>

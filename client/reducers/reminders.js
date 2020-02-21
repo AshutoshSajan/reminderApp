@@ -49,7 +49,7 @@ const remindersReducer = (state = initialState, action) => {
         isFetchingReminders: false,
         remindersAuthError: null,
         reminders: state.reminders.filter(reminder => {
-          return !reminder._id === action.data.reminderId;
+          return reminder._id !== action.data.reminderId;
         })
       };
 

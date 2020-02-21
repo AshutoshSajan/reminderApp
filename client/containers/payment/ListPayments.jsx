@@ -9,8 +9,14 @@ import {
 
 function ListPayments(props) {
   useEffect(() => {
-    props.dispatch(fetchPaymentsListHandler());
+    if (!props.payments.payments.length) {
+      props.dispatch(fetchPaymentsListHandler());
+    }
   }, []);
+
+  const deletePayment = paymentId => {
+    props.dispatch(deletePaymentHandler(paymentId));
+  };
 
   return (
     <div className="container">
@@ -20,6 +26,7 @@ function ListPayments(props) {
       ) : null}
       {props.payments.payments.length ? (
         props.payments.payments.map((payment, i) => {
+          if (!payment) return null;
           return (
             <div key={i}>
               <div className="columns is-mobile">
@@ -32,10 +39,17 @@ function ListPayments(props) {
                         </p>
                         <p className="is-size-5">
                           Is Training Fee :
-                          {payment.isTrainingFee ? "Yes" : "No"}
+                          {!payment
+                            ? null
+                            : payment.isTrainingFee
+                            ? "Yes"
+                            : "No"}
                         </p>
                         <p className="is-size-5">
-                          Amount: {payment.amount || "Amount not avilable"}
+                          Amount:{" "}
+                          {!payment
+                            ? null
+                            : payment.amount || "Amount not avilable"}
                         </p>
                         <p className="is-size-5">
                           Mode of payment : {payment.mode || "not available"}
@@ -57,7 +71,7 @@ function ListPayments(props) {
                       </Link>
                       <a
                         className="card-footer-item"
-                        onClick={() => deletePaymentHandler(payment._id)}
+                        onClick={() => deletePayment(payment._id)}
                       >
                         Delete
                       </a>

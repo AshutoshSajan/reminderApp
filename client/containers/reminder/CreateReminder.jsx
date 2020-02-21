@@ -46,8 +46,21 @@ class CreateReminder extends Component {
   paymentReminderSubmitHandler = () => {
     const { amount, details, mode, month, year } = this.state.reminder;
     const reminder = { amount: +amount, details, mode, month, year: +year };
-    this.props.dispatch(createReminderHandler({ reminder }), () => {
-      this.props.history.push("/reminders/list-reminders");
+    this.props.dispatch(
+      createReminderHandler({ reminder }, () => {
+        this.props.history.push("/reminders/list-reminders");
+      })
+    );
+
+    this.setState({
+      reminder: {
+        studentId: "",
+        amount: "",
+        details: "",
+        mode: "",
+        month: "",
+        year: ""
+      }
     });
   };
 

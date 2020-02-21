@@ -45,13 +45,13 @@ const Header = props => {
                   className="navbar-item"
                   to="/students/:id/payment-reminder"
                 >
-                  <strong>Payment Reminder</strong>
+                  <strong>Create Reminder</strong>
                 </Link>
                 <Link
                   className="navbar-item"
                   to="/students/:id/send-payment-details"
                 >
-                  <strong>Send Payment Details</strong>
+                  <strong>Create Payment</strong>
                 </Link>
                 <Link className="navbar-item" to="/payments/list-payments">
                   <strong>List Payments</strong>

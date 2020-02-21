@@ -4,12 +4,12 @@ export function createPaymentHandler(formData, cb) {
   return async dispatch => {
     dispatch({ type: "PAYMENT_AUTH_START" });
 
-    const token = localStorage.getItem("authToken");
+    const { authToken } = localStorage;
 
     try {
       const res = await axios.post("/api/v1/payments", formData, {
         headers: {
-          authorization: token
+          authorization: authToken
         }
       });
 
@@ -17,7 +17,7 @@ export function createPaymentHandler(formData, cb) {
         type: "CREATE_PAYMENT",
         data: { payment: res.data.payment }
       });
-      // cb();
+      cb();
     } catch (err) {
       dispatch({
         type: "PAYMENT_AUTH_ERROR",
@@ -107,28 +107,23 @@ export function paymentUpdateHandler(paymentId, formData, cb) {
   };
 }
 
-export function deletePaymentHandler(paymentId, formData, cb) {
+export function deletePaymentHandler(paymentId) {
   return async dispatch => {
     dispatch({ type: "PAYMENT_AUTH_START" });
 
     const token = localStorage.getItem("authToken");
 
     try {
-      const res = await axios.delete(
-        "/api/v1/payments/" + paymentId,
-        formData,
-        {
-          headers: {
-            authorization: token
-          }
+      await axios.delete("/api/v1/payments/" + paymentId, {
+        headers: {
+          authorization: token
         }
-      );
+      });
 
       dispatch({
         type: "DELETE_PAYMENT",
-        data: { payment: res.data.payment }
+        data: { paymentId }
       });
-      cb();
     } catch (err) {
       dispatch({
         type: "PAYMENT_AUTH_ERROR",
