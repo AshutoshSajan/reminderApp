@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import { createPaymentHandler } from "../../actions/payments";
+import { Alert } from "../common/Alert";
 
 class CreatePayment extends Component {
   constructor(props) {
@@ -18,6 +19,7 @@ class CreatePayment extends Component {
         isStayFee: false,
         isTrainingFee: false
       },
+      error: "",
 
       months: [
         "Jan",
@@ -60,13 +62,32 @@ class CreatePayment extends Component {
       isTrainingFee
     };
 
-    // TODO: add student id inpayment object after testing
+    if (!amount || !month || !mode || !year || !isStayFee || !isStayFee) {
+      return this.handleError("All feilds are must");
+    }
 
+    // TODO: add student id in payment object after testing
     this.props.dispatch(
       createPaymentHandler({ payment }, () =>
         this.props.history.push("/payments/list-payments")
       )
     );
+  };
+
+  handleError = async err => {
+    await this.setState({ error: err });
+    // this.removeError();
+  };
+
+  removeError = () => {
+    setTimeout(
+      console.log("setTimeout called"),
+
+      this.setState({
+        error: ""
+      })
+    ),
+      3000;
   };
 
   handleChange = e => {
@@ -101,110 +122,117 @@ class CreatePayment extends Component {
       isTrainingFee
     } = this.state.payment;
 
-    const { paymentModes, months } = this.state;
+    const { paymentModes, months, error } = this.state;
+
+    const { paymentsAuthError } = this.props.payments;
 
     return (
-      <div className="container">
-        <div className="form columns">
-          <div className="column is-one-third is-offset-one-third">
-            <label className="label">Send payment details</label>
-            <br />
+      <>
+        {paymentsAuthError || error ? (
+          <Alert text={paymentsAuthError || error} className="is-danger" />
+        ) : null}
+        <div className="container">
+          <div className="form columns">
+            <div className="column is-one-third is-offset-one-third">
+              <label className="label">Send payment details</label>
+              <br />
 
-            <div className="field">
-              <label className="checkbox">
-                <input
-                  type="checkbox"
-                  name="isStayFee"
-                  checked={isStayFee}
-                  onChange={this.handleToggle}
-                />
-                Stay Fee paid
-              </label>
-            </div>
-
-            <div className="field">
-              <label className="checkbox">
-                <input
-                  type="checkbox"
-                  name="isTrainingFee"
-                  checked={isTrainingFee}
-                  onChange={this.handleToggle}
-                />
-                Paid Training Fee
-              </label>
-            </div>
-
-            <div className="field">
-              <div className="select is-info">
-                <select
-                  className="is-capitalized"
-                  name="month"
-                  onChange={this.handleChange}
-                >
-                  <option value="">Month of payment</option>
-                  {months.map((month, i) => (
-                    <option value={month} key={i}>
-                      {month}
-                    </option>
-                  ))}
-                </select>
+              <div className="field">
+                <label className="checkbox">
+                  <input
+                    type="checkbox"
+                    name="isStayFee"
+                    checked={isStayFee}
+                    onChange={this.handleToggle}
+                  />
+                  Stay Fee paid
+                </label>
               </div>
-            </div>
 
-            <div className="field">
-              <div className="select is-info">
-                <select
-                  className="is-capitalized"
-                  name="mode"
-                  onChange={this.handleChange}
-                >
-                  <option value="">Mode of payment</option>
-                  {paymentModes.map((mode, i) => (
-                    <option value={mode} key={i}>
-                      {mode}
-                    </option>
-                  ))}
-                </select>
+              <div className="field">
+                <label className="checkbox">
+                  <input
+                    type="checkbox"
+                    name="isTrainingFee"
+                    checked={isTrainingFee}
+                    onChange={this.handleToggle}
+                  />
+                  Paid Training Fee
+                </label>
               </div>
-            </div>
 
-            <div className="field">
-              <label className="label">Amount paid</label>
-              <div className="control">
-                <input
-                  className="input"
-                  type="number"
-                  name="amount"
-                  value={amount}
-                  onChange={this.handleChange}
-                  placeholder="e.g 8000"
-                />
+              <div className="field">
+                <div className="select is-info">
+                  <select
+                    className="is-capitalized"
+                    name="month"
+                    onChange={this.handleChange}
+                  >
+                    <option value="">Month of payment</option>
+                    {months.map((month, i) => (
+                      <option value={month} key={i}>
+                        {month}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
-            </div>
 
-            <div className="field">
-              <label className="label">Year</label>
-              <div className="control">
-                <input
-                  className="input"
-                  type="number"
-                  name="year"
-                  value={year}
-                  onChange={this.handleChange}
-                  placeholder="e.g. 2020"
-                />
+              <div className="field">
+                <div className="select is-info">
+                  <select
+                    className="is-capitalized"
+                    name="mode"
+                    onChange={this.handleChange}
+                  >
+                    <option value="">Mode of payment</option>
+                    {paymentModes.map((mode, i) => (
+                      <option value={mode} key={i}>
+                        {mode}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
-            </div>
 
-            <button
-              onClick={this.paymentDetailsSubmitHandler}
-              className="button is-info"
-            >
-              Submit
-            </button>
+              <div className="field">
+                <label className="label">Amount paid</label>
+                <div className="control">
+                  <input
+                    className="input"
+                    type="number"
+                    name="amount"
+                    value={amount}
+                    onChange={this.handleChange}
+                    placeholder="e.g 8000"
+                  />
+                </div>
+              </div>
+
+              <div className="field">
+                <label className="label">Year</label>
+                <div className="control">
+                  <input
+                    className="input"
+                    type="number"
+                    name="year"
+                    value={year}
+                    onChange={this.handleChange}
+                    placeholder="e.g. 2020"
+                  />
+                </div>
+              </div>
+
+              <button
+                onClick={this.paymentDetailsSubmitHandler}
+                className="button is-info"
+              >
+                Submit
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 }

@@ -5,3 +5,5 @@
 - Display List of students
 - Profile of a student
 - Automatic and manually Trigger mail
+
+- Add node cron for mail notification

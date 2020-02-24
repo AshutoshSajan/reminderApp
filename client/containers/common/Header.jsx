@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
 
 const Header = props => {
+  const [toggle, setToggle] = useState(false);
+
   const handleLogout = () => {
     localStorage.clear();
     props.dispatch({ type: "LOGOUT", payload: null });
     props.history.push("/");
+  };
+
+  const toggleBurger = () => {
+    setToggle(!toggle);
   };
 
   return (
@@ -25,12 +31,16 @@ const Header = props => {
           className="navbar-burger"
           aria-label="menu"
           aria-expanded="false"
+          onClick={toggleBurger}
         >
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
         </a>
-        <div id="navbarBasicExample" className="navbar-menu">
+        <div
+          id="navbarBasicExample"
+          className={`navbar-menu ${toggle ? "navbar-active" : ""}`}
+        >
           <div className="navbar-start">
             {props.auth.mentor ? (
               <>

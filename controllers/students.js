@@ -1,4 +1,7 @@
 const studentsService = require("../src/students/students-service");
+const remindersService = require("../src/reminders/reminders-service");
+
+// TODO : create reminder after creating user
 
 const studentsController = {
   listStudents: async function(req, res, next) {

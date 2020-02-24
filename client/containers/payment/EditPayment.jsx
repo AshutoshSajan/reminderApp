@@ -61,13 +61,15 @@ class EditPayment extends Component {
           }
         })
         .then(res => {
-          this.setState(state => ({
+          console.log(res, "res..");
+
+          this.setState({
             isLoading: false,
             payment: {
-              ...state.payment,
+              ...this.state.payment,
               ...res.data.payment
             }
-          }));
+          });
         })
         .catch(err => {
           console.error(err);

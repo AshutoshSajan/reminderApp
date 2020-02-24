@@ -13,11 +13,19 @@ export function createPaymentHandler(formData, cb) {
         }
       });
 
-      dispatch({
-        type: "CREATE_PAYMENT",
-        data: { payment: res.data.payment }
-      });
-      cb();
+      console.log(res, "create payment res...");
+      if (!res.data.success) {
+        return dispatch({
+          type: "PAYMENT_ERROR",
+          data: { error: res.data.message }
+        });
+      } else {
+        dispatch({
+          type: "CREATE_PAYMENT",
+          data: { payment: res.data.payment }
+        });
+        return cb();
+      }
     } catch (err) {
       dispatch({
         type: "PAYMENT_AUTH_ERROR",
