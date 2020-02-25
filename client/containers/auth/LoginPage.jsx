@@ -51,45 +51,43 @@ class LoginPage extends Component {
     const { email, password } = this.state;
 
     return (
-      <div>
-        <div className="container">
-          <div className="form columns">
-            <div className="column is-one-third is-offset-one-third">
-              <label className="label">Login</label>
-              <div className="field">
-                <label className="label">Email</label>
-                <div className="control">
-                  <input
-                    onChange={this.handleChange}
-                    className="input"
-                    type="email"
-                    name="email"
-                    value={email}
-                    placeholder="Text input"
-                  />
-                </div>
+      <div className="container">
+        <div className="form columns">
+          <div className="column is-one-third is-offset-one-third">
+            <label className="label">Login</label>
+            <div className="field">
+              <label className="label">Email</label>
+              <div className="control">
+                <input
+                  onChange={this.handleChange}
+                  className="input"
+                  type="email"
+                  name="email"
+                  value={email}
+                  placeholder="Text input"
+                />
               </div>
-              <div className="field">
-                <label className="label">Password</label>
-                <div className="control">
-                  <input
-                    onChange={this.handleChange}
-                    name="password"
-                    className="input"
-                    type="password"
-                    value={password}
-                    placeholder="Text input"
-                  />
-                </div>
-              </div>
-              {isAuthInProgress ? (
-                <p>Logging in...</p>
-              ) : (
-                <button onClick={this.handleSubmit} className="button is-info">
-                  Submit
-                </button>
-              )}
             </div>
+            <div className="field">
+              <label className="label">Password</label>
+              <div className="control">
+                <input
+                  onChange={this.handleChange}
+                  name="password"
+                  className="input"
+                  type="password"
+                  value={password}
+                  placeholder="Text input"
+                />
+              </div>
+            </div>
+            {isAuthInProgress ? (
+              <p>Logging in...</p>
+            ) : (
+              <button onClick={this.handleSubmit} className="button is-info">
+                Submit
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -97,6 +95,4 @@ class LoginPage extends Component {
   }
 }
 
-const mapStateToProps = store => store;
-
-export default connect(mapStateToProps)(LoginPage);
+export default connect(store => store)(LoginPage);

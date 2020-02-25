@@ -1,15 +1,34 @@
 import React from "react";
 import Header from "../common/Header";
+import { Link } from "react-router-dom";
 
 const LandingPage = () => {
   return (
     <div className="container">
-      <div className="card">
-        <h1 className="text-center title" style={{ textAlign: "center" }}>
-          Reminder App landing page
+      <div
+        style={{
+          display: "flex",
+          placeItems: "center",
+          justifyContent: "center",
+          placeItems: "flex-start"
+        }}
+      >
+        <h1 className="title is-4 is-capitalized">
+          Welcome to payment reminder app
         </h1>
-        <img src="/media/programmers-life.jpg" alt="landing page image" />
+        <Link
+          to="/login"
+          className="title is-4"
+          style={{
+            marginLeft: "20px",
+            textDecoration: "underline",
+            fontWeight: "normal"
+          }}
+        >
+          Login
+        </Link>
       </div>
+      <img src="/media/reminder.svg" alt="landing page image" />
     </div>
   );
 };

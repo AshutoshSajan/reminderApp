@@ -5,6 +5,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
+// const favicon = require("serve-favicon");
 
 const indexRouter = require("./routes/index");
 const authRouter = require("./routes/auth");
@@ -14,6 +15,7 @@ const remindersRouter = require("./routes/reminders");
 
 const authMiddleware = require("./utils/auth-middleware");
 
+require("./utils/node-crone");
 const app = express();
 
 // view engine setup
@@ -40,6 +42,9 @@ if (process.env.NODE_ENV === "development") {
 
   app.use(require("webpack-hot-middleware")(compiler));
 }
+
+// set favicon icon
+// app.use(favicon(path.join(__dirname, "public/media/", "bell.png")));
 
 mongoose.set("useFindAndModify", false);
 mongoose.connect(

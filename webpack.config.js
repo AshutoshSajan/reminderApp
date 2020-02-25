@@ -1,7 +1,8 @@
 /* eslint-disable */
 const webpack = require("webpack");
-const path = require("path");
+// const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+// const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   mode: "development",
@@ -53,5 +54,8 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "bundle.css"
     })
+    // new HtmlWebpackPlugin({
+    //   favicon: "/public/media/bell.png"
+    // })
   ]
 };

@@ -1,15 +1,14 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-/* a {
-    color: #111 !important;
-  }
-  
-  .navbar-link:hover {
-    color: #111 !important;
-  } */
+a {
+  color: #333 !important;
+}
+
+.navbar-item:hover {
+  color: #424242 !important;
+}
 
 .navbar-active {
   display: block;
