@@ -31,6 +31,10 @@ const paymentSchema = new Schema(
       type: String,
       enum: paymentModeEnum
     },
+    screenshot: {
+      type: Object,
+      default: null
+    },
     month: {
       type: String,
       enum: monthsEnum

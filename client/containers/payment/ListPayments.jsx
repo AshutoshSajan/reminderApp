@@ -60,6 +60,13 @@ function ListPayments(props) {
                         <p className="is-size-5">
                           Year of payment : {payment.year || "not available"}
                         </p>
+                        <div>
+                          <p>Screenshot</p>
+                          <img
+                            src={payment.screenshot || ""}
+                            alt="screenshot"
+                          />
+                        </div>
                       </div>
                     </div>
                     <footer className="card-footer">

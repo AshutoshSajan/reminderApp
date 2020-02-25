@@ -4,10 +4,13 @@ const router = express.Router();
 const validatorMiddleware = require("../utils/validator-middleware");
 const paymentsController = require("../controllers/payments");
 
+const upload = require("../utils/multer.config");
+
 router.get("/", paymentsController.listPayments);
 
 router.post(
   "/",
+  upload.single("screenshot"),
   validatorMiddleware.mustHaveFields(["amount"], "payment"),
   paymentsController.createPayment
 );

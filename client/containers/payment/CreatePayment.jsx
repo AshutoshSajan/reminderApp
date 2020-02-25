@@ -14,6 +14,7 @@ class CreatePayment extends Component {
         studentId: this.studentId.length > 4 || "",
         amount: "",
         mode: "",
+        screenshot: "",
         month: "",
         year: "",
         isStayFee: false,
@@ -35,17 +36,18 @@ class CreatePayment extends Component {
         "Nov",
         "Dec"
       ],
-      paymentModes: ["cash", "UPI", "Bank Transfer"]
+      paymentModes: ["cash", "UPI", "Bank Transfer"],
+      selectedFile: ""
     };
+    this.fileInput = React.createRef();
   }
-
-  componentDidMount = () => {};
 
   paymentDetailsSubmitHandler = () => {
     const {
       studentId,
       amount,
       mode,
+      screenshot,
       month,
       year,
       isStayFee,
@@ -56,13 +58,22 @@ class CreatePayment extends Component {
       // studentId,
       amount: +amount,
       mode,
+      screenshot,
       month,
       year: +year,
       isStayFee,
       isTrainingFee
     };
 
-    if (!amount || !month || !mode || !year || !isStayFee || !isStayFee) {
+    if (
+      !amount ||
+      !month ||
+      !mode ||
+      !screenshot ||
+      !year ||
+      !isStayFee ||
+      !isStayFee
+    ) {
       return this.handleError("All feilds are must");
     }
 
@@ -88,6 +99,31 @@ class CreatePayment extends Component {
       })
     ),
       3000;
+  };
+
+  handleFileChange = async e => {
+    const file = event.target.files[0];
+
+    this.setState({ selectedFile: file.name });
+
+    const setFileInState = str => {
+      str
+        ? this.setState({
+            payment: {
+              ...this.state.payment,
+              screenshot: str
+            }
+          })
+        : null;
+    };
+
+    // file conversion to base64 using FileReader fn
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onload = event => {
+      setFileInState(event.target.result);
+    };
   };
 
   handleChange = e => {
@@ -116,13 +152,14 @@ class CreatePayment extends Component {
     const {
       amount,
       mode,
+      screenshot,
       month,
       year,
       isStayFee,
       isTrainingFee
     } = this.state.payment;
 
-    const { paymentModes, months, error } = this.state;
+    const { paymentModes, months, error, selectedFile } = this.state;
 
     const { paymentsAuthError } = this.props.payments;
 
@@ -192,6 +229,28 @@ class CreatePayment extends Component {
                       </option>
                     ))}
                   </select>
+                </div>
+              </div>
+
+              <div className="field">
+                <div className="file has-name">
+                  <label className="file-label">
+                    <input
+                      className="file-input"
+                      type="file"
+                      name="screenshot"
+                      ref={this.fileInput}
+                      onChange={this.handleFileChange}
+                      accept="image/png, image/jpg, image/jpeg"
+                    />
+                    <span className="file-cta">
+                      <span className="file-icon">
+                        <i className="fas fa-upload"></i>
+                      </span>
+                      <span className="file-label">Choose a file…</span>
+                    </span>
+                    <span className="file-name">{selectedFile}</span>
+                  </label>
                 </div>
               </div>
 
