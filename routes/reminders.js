@@ -22,15 +22,4 @@ router.put(
 
 router.delete("/:id", remindersController.deleteReminder);
 
-// send reminder mail test route
-//
-// router.post(
-//   "/send-mail/:id",
-//   (req, res, next) => {
-//     console.log("reminders router");
-//     next();
-//   },
-//   remindersController.sendReminder
-// );
-
 module.exports = router;

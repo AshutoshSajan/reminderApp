@@ -1,7 +1,7 @@
 const paymentsService = require("../src/payments/payments-service");
 
 const paymentsController = {
-  listPayments: async function(req, res, next) {
+  listPayments: async function(req, res) {
     try {
       const payments = await paymentsService.listPayments();
       return res.status(200).json({
@@ -16,7 +16,7 @@ const paymentsController = {
     }
   },
 
-  createPayment: async function(req, res, next) {
+  createPayment: async function(req, res) {
     const payment = req.body.payment;
     try {
       return res.status(200).json({
@@ -31,7 +31,7 @@ const paymentsController = {
     }
   },
 
-  showPayment: async function(req, res, next) {
+  showPayment: async function(req, res) {
     const paymentId = req.params.id;
     try {
       return res.status(200).json({
@@ -46,7 +46,7 @@ const paymentsController = {
     }
   },
 
-  updatePayment: async function(req, res, next) {
+  updatePayment: async function(req, res) {
     const paymentId = req.params.id;
     const payment = req.body.payment;
     try {
@@ -62,7 +62,7 @@ const paymentsController = {
     }
   },
 
-  deletePayment: async function(req, res, next) {
+  deletePayment: async function(req, res) {
     const paymentId = req.params.id;
     try {
       return res.status(200).json({

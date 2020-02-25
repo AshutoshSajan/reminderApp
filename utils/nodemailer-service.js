@@ -2,23 +2,12 @@
 const nodemailer = require("nodemailer");
 const mailMessage = require("./mail");
 
-// const message = userId =>
-//   `<div>
-//         <h2>Monthly Payment Reminder</h2>
-//         <p>Plese make your payments as soon as possible<p>
-//         <a
-//             href='http://localhost:3000/students/${userId}/send-payment-details'
-//             target='_blank'
-//         >
-//             Send Payment Details
-//         </a>
-//     </div>`;
-
 // async..await is not allowed in global scope, must use a wrapper
-exports.sendMail = async function(email, userId, html = null) {
+exports.sendMail = async (email, userId, html = null) => {
   // Generate test SMTP service account from ethereal.email
   // Only needed if you don't have a real mail account for testing
   const testAccount = await nodemailer.createTestAccount();
+  console.log(testAccount, "testAccount...");
 
   // create reusable transporter object using the default SMTP transport
   const transporter = nodemailer.createTransport({

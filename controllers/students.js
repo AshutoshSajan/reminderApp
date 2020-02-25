@@ -4,7 +4,7 @@ const remindersService = require("../src/reminders/reminders-service");
 // TODO : create reminder after creating user
 
 const studentsController = {
-  listStudents: async function(req, res, next) {
+  listStudents: async function(req, res) {
     try {
       const students = await studentsService.listStudents();
       return res.status(200).json({ success: true, message: "", students });
@@ -13,7 +13,7 @@ const studentsController = {
     }
   },
 
-  createStudent: async function(req, res, next) {
+  createStudent: async function(req, res) {
     try {
       const student = await studentsService.createStudent(req.body.student);
       return res.status(200).json({
@@ -26,7 +26,7 @@ const studentsController = {
     }
   },
 
-  showStudent: async function(req, res, next) {
+  showStudent: async function(req, res) {
     const studentId = req.params.id;
 
     try {
@@ -42,7 +42,7 @@ const studentsController = {
     }
   },
 
-  updateStudent: async function(req, res, next) {
+  updateStudent: async function(req, res) {
     const studentId = req.params.id;
     const student = req.body.student;
 
@@ -62,7 +62,7 @@ const studentsController = {
     }
   },
 
-  deleteStudent: async function(req, res, next) {
+  deleteStudent: async function(req, res) {
     const studentId = req.params.id;
 
     try {
