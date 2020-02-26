@@ -17,8 +17,6 @@ const paymentsController = {
   },
 
   createPayment: async function(req, res) {
-    console.log(req.body, req.files, "inside create payment controller...");
-
     const payment = req.body.payment;
     try {
       return res.status(200).json({
