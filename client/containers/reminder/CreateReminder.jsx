@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { createReminderHandler } from "../../actions/reminders";
+import Loader from "../common/Loader";
 
 class CreateReminder extends Component {
   state = {
@@ -74,99 +75,109 @@ class CreateReminder extends Component {
       year
     } = this.state.reminder;
 
+    const { isFetchingReminders, remindersAuthError } = this.props.reminders;
+
     const { paymentModes, months } = this.state;
 
     return (
-      <div className="container">
-        <div className="form columns">
-          <div className="column is-one-third is-offset-one-third">
-            <label className="label">Payment reminder</label>
-            <br />
+      <div>
+        {isFetchingReminders ? (
+          <Loader />
+        ) : (
+          <div className="container">
+            {remindersAuthError ? <p>{remindersAuthError}</p> : null}
 
-            <div className="field">
-              <div className="select is-info">
-                <select
-                  className="is-capitalized"
-                  name="month"
-                  onChange={this.handleChange}
+            <div className="form columns">
+              <div className="column is-one-third is-offset-one-third">
+                <label className="label">Payment reminder</label>
+                <br />
+
+                <div className="field">
+                  <div className="select is-info">
+                    <select
+                      className="is-capitalized"
+                      name="month"
+                      onChange={this.handleChange}
+                    >
+                      <option value="">Month of reminder</option>
+                      {months.map((month, i) => (
+                        <option value={month} key={i}>
+                          {month}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="field">
+                  <div className="select is-info">
+                    <select
+                      className="is-capitalized"
+                      name="mode"
+                      onChange={this.handleChange}
+                    >
+                      <option value="">Mode of Reminder</option>
+                      {paymentModes.map((mode, i) => (
+                        <option value={mode} key={i}>
+                          {mode}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="field">
+                  <label className="label">Amount</label>
+                  <div className="control">
+                    <input
+                      className="input"
+                      type="number"
+                      name="amount"
+                      value={amount}
+                      onChange={this.handleChange}
+                      placeholder="e.g 8000"
+                    />
+                  </div>
+                </div>
+
+                <div className="field">
+                  <label className="label">Details</label>
+                  <div className="control">
+                    <input
+                      className="input"
+                      type="text"
+                      name="details"
+                      value={details}
+                      onChange={this.handleChange}
+                      placeholder="e.g"
+                    />
+                  </div>
+                </div>
+
+                <div className="field">
+                  <label className="label">Year</label>
+                  <div className="control">
+                    <input
+                      className="input"
+                      type="number"
+                      name="year"
+                      value={year}
+                      onChange={this.handleChange}
+                      placeholder="e.g. 2020"
+                    />
+                  </div>
+                </div>
+
+                <button
+                  onClick={this.paymentReminderSubmitHandler}
+                  className="button is-info"
                 >
-                  <option value="">Month of reminder</option>
-                  {months.map((month, i) => (
-                    <option value={month} key={i}>
-                      {month}
-                    </option>
-                  ))}
-                </select>
+                  Submit
+                </button>
               </div>
             </div>
-
-            <div className="field">
-              <div className="select is-info">
-                <select
-                  className="is-capitalized"
-                  name="mode"
-                  onChange={this.handleChange}
-                >
-                  <option value="">Mode of Reminder</option>
-                  {paymentModes.map((mode, i) => (
-                    <option value={mode} key={i}>
-                      {mode}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            <div className="field">
-              <label className="label">Amount</label>
-              <div className="control">
-                <input
-                  className="input"
-                  type="number"
-                  name="amount"
-                  value={amount}
-                  onChange={this.handleChange}
-                  placeholder="e.g 8000"
-                />
-              </div>
-            </div>
-
-            <div className="field">
-              <label className="label">Details</label>
-              <div className="control">
-                <input
-                  className="input"
-                  type="text"
-                  name="details"
-                  value={details}
-                  onChange={this.handleChange}
-                  placeholder="e.g"
-                />
-              </div>
-            </div>
-
-            <div className="field">
-              <label className="label">Year</label>
-              <div className="control">
-                <input
-                  className="input"
-                  type="number"
-                  name="year"
-                  value={year}
-                  onChange={this.handleChange}
-                  placeholder="e.g. 2020"
-                />
-              </div>
-            </div>
-
-            <button
-              onClick={this.paymentReminderSubmitHandler}
-              className="button is-info"
-            >
-              Submit
-            </button>
           </div>
-        </div>
+        )}
       </div>
     );
   }

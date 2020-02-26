@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
+import Loader from "../common/Loader";
 import {
   fetchStudentsListHandler,
   deleteStudentHandler
@@ -16,8 +17,12 @@ class Dashboard extends Component {
 
   componentDidMount() {
     const { authToken } = localStorage;
-    if (authToken) {
-      this.props.dispatch(fetchStudentsListHandler());
+    const { students } = this.props.students;
+
+    if (!students || !students.length) {
+      if (authToken) {
+        this.props.dispatch(fetchStudentsListHandler());
+      }
     }
   }
 
@@ -41,119 +46,122 @@ class Dashboard extends Component {
 
     return (
       <div>
-        <div className="container">
-          {isFetchingStudents ? (
-            <p>Loading . . .</p>
-          ) : studentsAuthError ? (
-            <p>{studentsAuthError}</p>
-          ) : students ? (
-            students.map((student, i) => {
-              return (
-                <div className="container" key={i}>
-                  <div className="columns is-mobile">
-                    <div className="column is-half is-offset-one-quarter">
-                      <div className="card">
-                        <header className="card-header">
-                          <p className="card-header-title is-capitalized is-size-3">
-                            {student.name}
-                          </p>
-                          <a
-                            href="#"
-                            className="card-header-icon"
-                            aria-label="more options"
-                          >
-                            <span className="icon">
-                              <i
-                                className="fas fa-angle-down"
-                                aria-hidden="true"
-                              ></i>
-                            </span>
-                          </a>
-                        </header>
-                        <div className="card-content">
-                          <div className="media-content">
-                            <p className="title is-4 is-capitalized is-size-4">
+        {isFetchingStudents ? (
+          <Loader />
+        ) : (
+          <div className="container">
+            {studentsAuthError ? <p>{studentsAuthError}</p> : null}
+            {students ? (
+              students.map((student, i) => {
+                return (
+                  <div className="container" key={i}>
+                    <div className="columns is-mobile">
+                      <div className="column is-half is-offset-one-quarter">
+                        <div className="card">
+                          <header className="card-header">
+                            <p className="card-header-title is-capitalized is-size-3">
                               {student.name}
                             </p>
-                            <p className="subtitle is-5">{student.email}</p>
+                            <a
+                              href="#"
+                              className="card-header-icon"
+                              aria-label="more options"
+                            >
+                              <span className="icon">
+                                <i
+                                  className="fas fa-angle-down"
+                                  aria-hidden="true"
+                                ></i>
+                              </span>
+                            </a>
+                          </header>
+                          <div className="card-content">
+                            <div className="media-content">
+                              <p className="title is-4 is-capitalized is-size-4">
+                                {student.name}
+                              </p>
+                              <p className="subtitle is-5">{student.email}</p>
+                            </div>
+                            <br />
+                            <div className="content">
+                              <p className="is-size-5">
+                                Aluminai : {student.isAlumni ? "Yes" : "No"}
+                              </p>
+                              <p className="is-size-5">
+                                Staying in campus :{" "}
+                                {student.isStayingInCampus ? "Yes" : "No"}
+                              </p>
+                              <p className="is-size-5">
+                                Paid entire Training Fee :{" "}
+                                {student.hasPaidEntireTrainingFee
+                                  ? "Yes"
+                                  : "No"}
+                              </p>
+                              <p className="is-size-5">
+                                Phone:{" "}
+                                {student.phoneNumber
+                                  ? student.phoneNumber
+                                  : "Phone Number not avilable"}
+                              </p>
+                              <p className="is-size-5">
+                                Annual Salary :{" "}
+                                {student.numAnnualSalary
+                                  ? student.numAnnualSalary
+                                  : ""}
+                              </p>
+                              <p className="is-size-5">
+                                Percentage To Be Charged :{" "}
+                                {student.numPercentageToBeCharged
+                                  ? student.numPercentageToBeCharged + "%"
+                                  : ""}
+                              </p>
+                              <p className="is-size-5">
+                                Minumum amount to be paid :{" "}
+                                {student.numMinAmtToBePaid
+                                  ? student.numMinAmtToBePaid
+                                  : ""}
+                              </p>
+                            </div>
                           </div>
-                          <br />
-                          <div className="content">
-                            <p className="is-size-5">
-                              Aluminai : {student.isAlumni ? "Yes" : "No"}
-                            </p>
-                            <p className="is-size-5">
-                              Staying in campus :{" "}
-                              {student.isStayingInCampus ? "Yes" : "No"}
-                            </p>
-                            <p className="is-size-5">
-                              Paid entire Training Fee :{" "}
-                              {student.hasPaidEntireTrainingFee ? "Yes" : "No"}
-                            </p>
-                            <p className="is-size-5">
-                              Phone:{" "}
-                              {student.phoneNumber
-                                ? student.phoneNumber
-                                : "Phone Number not avilable"}
-                            </p>
-                            <p className="is-size-5">
-                              Annual Salary :{" "}
-                              {student.numAnnualSalary
-                                ? student.numAnnualSalary
-                                : ""}
-                            </p>
-                            <p className="is-size-5">
-                              Percentage To Be Charged :{" "}
-                              {student.numPercentageToBeCharged
-                                ? student.numPercentageToBeCharged + "%"
-                                : ""}
-                            </p>
-                            <p className="is-size-5">
-                              Minumum amount to be paid :{" "}
-                              {student.numMinAmtToBePaid
-                                ? student.numMinAmtToBePaid
-                                : ""}
-                            </p>
-                          </div>
+                          <footer className="card-footer">
+                            <Link
+                              to=""
+                              className="card-footer-item"
+                              onClick={() => {
+                                this.handlePaymentReminder(
+                                  student._id,
+                                  student.email
+                                );
+                              }}
+                            >
+                              Send reminder
+                            </Link>
+                            <Link
+                              to={`/students/${student._id}/update`}
+                              className="card-footer-item"
+                            >
+                              Edit
+                            </Link>
+                            <a
+                              className="card-footer-item"
+                              onClick={() =>
+                                this.handelDeleteStudent(student._id)
+                              }
+                            >
+                              Delete
+                            </a>
+                          </footer>
                         </div>
-                        <footer className="card-footer">
-                          <Link
-                            to=""
-                            className="card-footer-item"
-                            onClick={() => {
-                              this.handlePaymentReminder(
-                                student._id,
-                                student.email
-                              );
-                            }}
-                          >
-                            Send reminder
-                          </Link>
-                          <Link
-                            to={`/students/${student._id}/update`}
-                            className="card-footer-item"
-                          >
-                            Edit
-                          </Link>
-                          <a
-                            className="card-footer-item"
-                            onClick={() =>
-                              this.handelDeleteStudent(student._id)
-                            }
-                          >
-                            Delete
-                          </a>
-                        </footer>
                       </div>
                     </div>
                   </div>
-                </div>
-              );
-            })
-          ) : (
-            <div>No students found!</div>
-          )}
-        </div>
+                );
+              })
+            ) : (
+              <div>No students found!</div>
+            )}
+          </div>
+        )}
       </div>
     );
   }

@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import axios from "axios";
 
 import { paymentUpdateHandler } from "../../actions/payments";
+import Loader from "../common/Loader";
 
 class EditPayment extends Component {
   constructor(props) {
@@ -61,8 +62,6 @@ class EditPayment extends Component {
           }
         })
         .then(res => {
-          console.log(res, "res..");
-
           this.setState({
             isLoading: false,
             payment: {
@@ -139,114 +138,121 @@ class EditPayment extends Component {
 
     const { paymentModes, months, isLoading, error } = this.state;
 
+    const { paymentsAuthError, isFetchingPayments } = this.props.payments;
+
     return (
       <div className="container">
-        {isLoading ? <p>Loading . . .</p> : null}
-        {error ? <p>{error}</p> : null}
+        {isFetchingPayments || isLoading ? (
+          <Loader />
+        ) : (
+          <div>
+            {paymentsAuthError ? <p>{paymentsAuthError}</p> : null}
 
-        <div className="card">
-          <div className="form columns">
-            <div className="column is-one-third is-offset-one-third">
-              <label className="label">Edit payment details</label>
-              <br />
+            <div>
+              <div className="form columns">
+                <div className="column is-one-third is-offset-one-third">
+                  <label className="label">Edit payment details</label>
+                  <br />
 
-              <div className="field">
-                <label className="checkbox">
-                  <input
-                    type="checkbox"
-                    name="isStayFee"
-                    checked={isStayFee}
-                    onChange={this.handleToggle}
-                  />
-                  Stay Fee paid
-                </label>
-              </div>
+                  <div className="field">
+                    <label className="checkbox">
+                      <input
+                        type="checkbox"
+                        name="isStayFee"
+                        checked={isStayFee}
+                        onChange={this.handleToggle}
+                      />
+                      Stay Fee paid
+                    </label>
+                  </div>
 
-              <div className="field">
-                <label className="checkbox">
-                  <input
-                    type="checkbox"
-                    name="isTrainingFee"
-                    checked={isTrainingFee}
-                    onChange={this.handleToggle}
-                  />
-                  Paid Training Fee
-                </label>
-              </div>
+                  <div className="field">
+                    <label className="checkbox">
+                      <input
+                        type="checkbox"
+                        name="isTrainingFee"
+                        checked={isTrainingFee}
+                        onChange={this.handleToggle}
+                      />
+                      Paid Training Fee
+                    </label>
+                  </div>
 
-              <div className="field">
-                <div className="select is-info">
-                  <select
-                    className="is-capitalized"
-                    name="month"
-                    onChange={this.handleChange}
-                    value={month}
+                  <div className="field">
+                    <div className="select is-info">
+                      <select
+                        className="is-capitalized"
+                        name="month"
+                        onChange={this.handleChange}
+                        value={month}
+                      >
+                        <option value="">Month of payment</option>
+                        {months.map((month, i) => (
+                          <option value={month} key={i}>
+                            {month}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="field">
+                    <div className="select is-info">
+                      <select
+                        className="is-capitalized"
+                        name="mode"
+                        onChange={this.handleChange}
+                        value={mode}
+                      >
+                        <option value="">Mode of payment</option>
+                        {paymentModes.map((mode, i) => (
+                          <option value={mode} key={i}>
+                            {mode}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="field">
+                    <label className="label">Amount paid</label>
+                    <div className="control">
+                      <input
+                        className="input"
+                        type="number"
+                        name="amount"
+                        value={amount}
+                        onChange={this.handleChange}
+                        placeholder="e.g 8000"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="field">
+                    <label className="label">Year</label>
+                    <div className="control">
+                      <input
+                        className="input"
+                        type="number"
+                        name="year"
+                        value={year}
+                        onChange={this.handleChange}
+                        placeholder="e.g. 2020"
+                      />
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={this.updatePaymentSubmitHandler}
+                    className="button is-info"
                   >
-                    <option value="">Month of payment</option>
-                    {months.map((month, i) => (
-                      <option value={month} key={i}>
-                        {month}
-                      </option>
-                    ))}
-                  </select>
+                    Submit
+                  </button>
                 </div>
               </div>
-
-              <div className="field">
-                <div className="select is-info">
-                  <select
-                    className="is-capitalized"
-                    name="mode"
-                    onChange={this.handleChange}
-                    value={mode}
-                  >
-                    <option value="">Mode of payment</option>
-                    {paymentModes.map((mode, i) => (
-                      <option value={mode} key={i}>
-                        {mode}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              <div className="field">
-                <label className="label">Amount paid</label>
-                <div className="control">
-                  <input
-                    className="input"
-                    type="number"
-                    name="amount"
-                    value={amount}
-                    onChange={this.handleChange}
-                    placeholder="e.g 8000"
-                  />
-                </div>
-              </div>
-
-              <div className="field">
-                <label className="label">Year</label>
-                <div className="control">
-                  <input
-                    className="input"
-                    type="number"
-                    name="year"
-                    value={year}
-                    onChange={this.handleChange}
-                    placeholder="e.g. 2020"
-                  />
-                </div>
-              </div>
-
-              <button
-                onClick={this.updatePaymentSubmitHandler}
-                className="button is-info"
-              >
-                Submit
-              </button>
             </div>
           </div>
-        </div>
+        )}
       </div>
     );
   }

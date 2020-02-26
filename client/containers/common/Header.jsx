@@ -46,7 +46,7 @@ const Header = props => {
                   className="navbar-item"
                   to="/students/create"
                   tabIndex="true"
-                  onClick={() => setToggle(!toggle)}
+                  // onClick={() => setToggle(!toggle)}
                 >
                   <strong>Create student</strong>
                 </Link>
@@ -54,7 +54,7 @@ const Header = props => {
                   className="navbar-item"
                   to="/students/list-students"
                   tabIndex="true"
-                  onClick={() => setToggle(!toggle)}
+                  // onClick={() => setToggle(!toggle)}
                 >
                   <strong>List student</strong>
                 </Link>
@@ -64,7 +64,7 @@ const Header = props => {
                   className="navbar-item"
                   to="/students/:id/payment-reminder"
                   tabIndex="true"
-                  onClick={() => setToggle(!toggle)}
+                  // onClick={() => setToggle(!toggle)}
                 >
                   <strong>Create Reminder</strong>
                 </Link>
@@ -72,7 +72,7 @@ const Header = props => {
                   className="navbar-item"
                   to="/students/:id/send-payment-details"
                   tabIndex="true"
-                  onClick={() => setToggle(!toggle)}
+                  // onClick={() => setToggle(!toggle)}
                 >
                   <strong>Create Payment</strong>
                 </Link>
@@ -80,7 +80,7 @@ const Header = props => {
                   className="navbar-item"
                   to="/payments/list-payments"
                   tabIndex="true"
-                  onClick={() => setToggle(!toggle)}
+                  // onClick={() => setToggle(!toggle)}
                 >
                   <strong>List Payments</strong>
                 </Link>
@@ -88,7 +88,7 @@ const Header = props => {
                   className="navbar-item"
                   to="/reminders/list-reminders"
                   tabIndex="true"
-                  onClick={() => setToggle(!toggle)}
+                  // onClick={() => setToggle(!toggle)}
                 >
                   <strong>List Reminders</strong>
                 </Link>

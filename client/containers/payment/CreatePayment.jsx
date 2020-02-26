@@ -91,16 +91,14 @@ class CreatePayment extends Component {
     // this.removeError();
   };
 
-  removeError = () => {
-    setTimeout(
-      console.log("setTimeout called"),
-
-      this.setState({
-        error: ""
-      })
-    ),
-      3000;
-  };
+  // removeError = () => {
+  //   setTimeout(
+  //     this.setState({
+  //       error: ""
+  //     })
+  //   ),
+  //     3000;
+  // };
 
   handleFileChange = async e => {
     const file = event.target.files[0];
@@ -163,8 +161,6 @@ class CreatePayment extends Component {
     const { paymentModes, months, error, selectedFile } = this.state;
 
     const { paymentsAuthError, isFetchingPayments } = this.props.payments;
-
-    console.log(this.props, "props...");
 
     return (
       <div>
@@ -240,7 +236,7 @@ class CreatePayment extends Component {
                   </div>
 
                   <div className="field">
-                    <div className="file has-name">
+                    <div className="file has-name ">
                       <label className="file-label">
                         <input
                           className="file-input"

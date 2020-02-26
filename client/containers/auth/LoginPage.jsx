@@ -3,9 +3,7 @@ import { connect } from "react-redux";
 import validator from "validator";
 
 import { loginMentor } from "../../actions";
-import Header from "../common/Header";
 
-// dispatch as a prop.
 class LoginPage extends Component {
   state = {
     email: "ashutoshsajan1213@gmail.com",
@@ -45,13 +43,14 @@ class LoginPage extends Component {
   };
 
   render() {
-    const isAuthInProgress = this.props.auth.isAuthInProgress;
-    const authError = this.props.auth.authError;
+    const { isAuthInProgress } = this.props.auth;
+    const { authError } = this.props.auth;
 
     const { email, password } = this.state;
 
     return (
       <div className="container">
+        {authError ? <p>{authError}</p> : null}
         <div className="form columns">
           <div className="column is-one-third is-offset-one-third">
             <label className="label">Login</label>
@@ -81,13 +80,14 @@ class LoginPage extends Component {
                 />
               </div>
             </div>
-            {isAuthInProgress ? (
-              <p>Logging in...</p>
-            ) : (
-              <button onClick={this.handleSubmit} className="button is-info">
-                Submit
-              </button>
-            )}
+            <button
+              onClick={this.handleSubmit}
+              className={`button is-info ${
+                isAuthInProgress ? "is-loading" : null
+              }`}
+            >
+              Submit
+            </button>
           </div>
         </div>
       </div>
