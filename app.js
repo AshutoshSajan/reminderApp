@@ -5,7 +5,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
-// const favicon = require("serve-favicon");
+const favicon = require("serve-favicon");
 // const bodyParser = require("body-parser");
 
 const indexRouter = require("./routes/index");
@@ -48,7 +48,7 @@ if (process.env.NODE_ENV === "development") {
 }
 
 // set favicon icon
-// app.use(favicon(path.join(__dirname, "public/media/", "bell.png")));
+app.use(favicon(path.join(__dirname, "public/media", "bell.png")));
 
 mongoose.set("useFindAndModify", false);
 mongoose.connect(
