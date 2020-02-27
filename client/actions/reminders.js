@@ -1,4 +1,5 @@
 import axios from "axios";
+import action from "../utils/helper";
 
 export function createReminderHandler(formData, cb) {
   return async dispatch => {
@@ -13,16 +14,21 @@ export function createReminderHandler(formData, cb) {
         }
       });
 
-      dispatch({
-        type: "CREATE_REMINDER",
-        data: { reminder: res.data.reminder }
-      });
+      if (!res.data.success) {
+        return dispatch(
+          action("REMINDER_AUTH_ERROR", {
+            error: res.data.message
+          })
+        );
+      }
+
+      dispatch(action("CREATE_REMINDER", { reminder: res.data.reminder }));
+
       cb();
     } catch (err) {
-      dispatch({
-        type: "REMINDER_AUTH_ERROR",
-        data: { error: "Something went wrong." }
-      });
+      dispatch(
+        action("REMINDER_AUTH_ERROR", { error: "Something went wrong." })
+      );
     }
   };
 }
@@ -40,15 +46,19 @@ export function fetchReminderHandler(reminderId) {
         }
       });
 
-      dispatch({
-        type: "FETCH_REMINDER",
-        data: { reminder: res.data.reminder }
-      });
+      if (!res.data.success) {
+        return dispatch(
+          action("REMINDER_AUTH_ERROR", {
+            error: res.data.message
+          })
+        );
+      }
+
+      dispatch(action("FETCH_REMINDER", { reminder: res.data.reminder }));
     } catch (err) {
-      dispatch({
-        type: "REMINDER_AUTH_ERROR",
-        data: { error: "Something went wrong." }
-      });
+      dispatch(
+        action("REMINDER_AUTH_ERROR", { error: "Something went wrong." })
+      );
     }
   };
 }
@@ -66,15 +76,23 @@ export function fetchRemindersListHandler() {
         }
       });
 
-      dispatch({
-        type: "FETCH_REMINDER_LIST_SUCCESS",
-        data: { reminders: res.data.reminders }
-      });
+      if (!res.data.success) {
+        return dispatch(
+          action("REMINDER_AUTH_ERROR", {
+            error: res.data.message
+          })
+        );
+      }
+
+      dispatch(
+        action("FETCH_REMINDER_LIST_SUCCESS", {
+          reminders: res.data.reminders
+        })
+      );
     } catch (err) {
-      dispatch({
-        type: "REMINDER_AUTH_ERROR",
-        data: { error: "Something went wrong." }
-      });
+      dispatch(
+        action("REMINDER_AUTH_ERROR", { error: "Something went wrong." })
+      );
     }
   };
 }
@@ -92,17 +110,21 @@ export function updateReminderHandler(reminderId, formData, cb) {
         }
       });
 
-      dispatch({
-        type: "UPDATE_REMINDER",
-        data: { reminder: res.data.reminder }
-      });
+      if (!res.data.success) {
+        return dispatch(
+          action("REMINDER_AUTH_ERROR", {
+            error: res.data.message
+          })
+        );
+      }
+
+      dispatch(action("UPDATE_REMINDER", { reminder: res.data.reminder }));
 
       cb();
     } catch (err) {
-      dispatch({
-        type: "REMINDER_AUTH_ERROR",
-        data: { error: "Something went wrong." }
-      });
+      dispatch(
+        action("REMINDER_AUTH_ERROR", { error: "Something went wrong." })
+      );
     }
   };
 }
@@ -120,19 +142,19 @@ export function deleteReminderHandler(reminderId) {
         }
       });
 
-      dispatch({
-        type: "DELETE_REMINDER",
-        data: { reminderId }
-      });
+      if (!res.data.success) {
+        return dispatch(
+          action("REMINDER_AUTH_ERROR", {
+            error: res.data.message
+          })
+        );
+      }
+
+      dispatch(action("DELETE_REMINDER", { reminderId }));
     } catch (err) {
-      dispatch({
-        type: "REMINDER_AUTH_ERROR",
-        data: { error: "Something went wrong." }
-      });
+      dispatch(
+        action("REMINDER_AUTH_ERROR", { error: "Something went wrong." })
+      );
     }
   };
-}
-
-export function paymentReminderHandler(id, email) {
-  // console.log(paymentReminderHandler);
 }

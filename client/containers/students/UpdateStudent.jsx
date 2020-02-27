@@ -3,6 +3,9 @@ import { connect } from "react-redux";
 import validator from "validator";
 import axios from "axios";
 
+import Loader from "../common/Loader";
+import { Alert } from "../common/Alert";
+
 import {
   updateStudentHandler,
   fetchStudentHandler
@@ -40,7 +43,6 @@ class UpdateStudent extends Component {
   }
 
   componentDidMount = async () => {
-    // const {student} = this.state;
     const { authToken } = localStorage;
 
     const studentId = window.location.pathname.split("/")[2];
@@ -74,7 +76,7 @@ class UpdateStudent extends Component {
           }));
         }
       } catch (error) {
-        console.log(error, "something went wrong!");
+        this.setState({ error: "something went wrong" });
       }
     }
   };
@@ -167,140 +169,146 @@ class UpdateStudent extends Component {
       hasPaidEntireTrainingFee
     } = this.state.student;
 
-    const { isLoading } = this.state;
+    const { isLoading, error } = this.state;
 
     return (
-      <div className="container">
-        {isLoading ? (
-          <p>Loading . . . </p>
+      <>
+        {isLoading || isAuthInProgress ? (
+          <Loader />
         ) : (
-          <div className="form columns">
-            <div className="column is-one-third is-offset-one-third">
-              <label className="label">Create student</label>
+          <div className="container">
+            {authError || error ? (
+              <Alert text={authError || error} className="is-danger" />
+            ) : null}
 
-              <label className="checkbox">
-                <input
-                  type="checkbox"
-                  name="isAlumni"
-                  checked={isAlumni}
-                  onChange={this.handleToggle}
-                />
-                Alumni
-              </label>
+            <div className="form columns">
+              <div className="column is-one-third is-offset-one-third">
+                <label className="label">Create student</label>
 
-              <br />
-
-              <label className="checkbox">
-                <input
-                  type="checkbox"
-                  name="hasPaidEntireTrainingFee"
-                  checked={hasPaidEntireTrainingFee}
-                  onChange={this.handleToggle}
-                />
-                Paid Entire Training Fee
-              </label>
-
-              <br />
-
-              <label className="checkbox">
-                <input
-                  type="checkbox"
-                  name="isStayingInCampus"
-                  checked={isStayingInCampus}
-                  onChange={this.handleToggle}
-                />
-                Staying In Campus
-              </label>
-
-              <br />
-
-              <div className="field">
-                <label className="label">Name</label>
-                <div className="control">
+                <label className="checkbox">
                   <input
-                    onChange={this.handleChange}
-                    className="input"
-                    type="text"
-                    name="name"
-                    value={name}
-                    placeholder="Text input"
+                    type="checkbox"
+                    name="isAlumni"
+                    checked={isAlumni}
+                    onChange={this.handleToggle}
                   />
-                </div>
-              </div>
-              <div className="field">
-                <label className="label">Email</label>
-                <div className="control">
-                  <input
-                    onChange={this.handleChange}
-                    className="input"
-                    type="email"
-                    name="email"
-                    value={email}
-                    placeholder="Text input"
-                  />
-                </div>
-              </div>
-              <div className="field">
-                <label className="label">Phone</label>
-                <div className="control">
-                  <input
-                    onChange={this.handleChange}
-                    className="input"
-                    type="number"
-                    name="phoneNumber"
-                    value={phoneNumber}
-                    placeholder="Text input"
-                  />
-                </div>
-              </div>
+                  Alumni
+                </label>
 
-              <div className="field">
-                <label className="label">Annual Salary</label>
-                <div className="control">
-                  <input
-                    onChange={this.handleChange}
-                    className="input"
-                    type="number"
-                    name="numAnnualSalary"
-                    value={numAnnualSalary}
-                    placeholder="e.g. 50000"
-                  />
-                </div>
-              </div>
-              <div className="field">
-                <label className="label">Percentage To Be Charged</label>
-                <div className="control">
-                  <input
-                    onChange={this.handleChange}
-                    className="input"
-                    type="number"
-                    name="numPercentageToBeCharged"
-                    value={numPercentageToBeCharged}
-                    placeholder="e.g. 7000"
-                  />
-                </div>
-              </div>
-              <div className="field">
-                <label className="label">Minimum Amount To Be Paid</label>
-                <div className="control">
-                  <input
-                    onChange={this.handleChange}
-                    className="input"
-                    type="number"
-                    name="numMinAmtToBePaid"
-                    value={numMinAmtToBePaid}
-                    placeholder="e.g. 100000"
-                  />
-                </div>
-              </div>
+                <br />
 
-              <button onClick={this.handleSubmit} className="button is-info">
-                Submit
-              </button>
+                <label className="checkbox">
+                  <input
+                    type="checkbox"
+                    name="hasPaidEntireTrainingFee"
+                    checked={hasPaidEntireTrainingFee}
+                    onChange={this.handleToggle}
+                  />
+                  Paid Entire Training Fee
+                </label>
+
+                <br />
+
+                <label className="checkbox">
+                  <input
+                    type="checkbox"
+                    name="isStayingInCampus"
+                    checked={isStayingInCampus}
+                    onChange={this.handleToggle}
+                  />
+                  Staying In Campus
+                </label>
+
+                <br />
+
+                <div className="field">
+                  <label className="label">Name</label>
+                  <div className="control">
+                    <input
+                      onChange={this.handleChange}
+                      className="input"
+                      type="text"
+                      name="name"
+                      value={name}
+                      placeholder="Text input"
+                    />
+                  </div>
+                </div>
+                <div className="field">
+                  <label className="label">Email</label>
+                  <div className="control">
+                    <input
+                      onChange={this.handleChange}
+                      className="input"
+                      type="email"
+                      name="email"
+                      value={email}
+                      placeholder="Text input"
+                    />
+                  </div>
+                </div>
+                <div className="field">
+                  <label className="label">Phone</label>
+                  <div className="control">
+                    <input
+                      onChange={this.handleChange}
+                      className="input"
+                      type="number"
+                      name="phoneNumber"
+                      value={phoneNumber}
+                      placeholder="Text input"
+                    />
+                  </div>
+                </div>
+
+                <div className="field">
+                  <label className="label">Annual Salary</label>
+                  <div className="control">
+                    <input
+                      onChange={this.handleChange}
+                      className="input"
+                      type="number"
+                      name="numAnnualSalary"
+                      value={numAnnualSalary}
+                      placeholder="e.g. 50000"
+                    />
+                  </div>
+                </div>
+                <div className="field">
+                  <label className="label">Percentage To Be Charged</label>
+                  <div className="control">
+                    <input
+                      onChange={this.handleChange}
+                      className="input"
+                      type="number"
+                      name="numPercentageToBeCharged"
+                      value={numPercentageToBeCharged}
+                      placeholder="e.g. 7000"
+                    />
+                  </div>
+                </div>
+                <div className="field">
+                  <label className="label">Minimum Amount To Be Paid</label>
+                  <div className="control">
+                    <input
+                      onChange={this.handleChange}
+                      className="input"
+                      type="number"
+                      name="numMinAmtToBePaid"
+                      value={numMinAmtToBePaid}
+                      placeholder="e.g. 100000"
+                    />
+                  </div>
+                </div>
+
+                <button onClick={this.handleSubmit} className="button is-info">
+                  Submit
+                </button>
+              </div>
             </div>
           </div>
         )}
-      </div>
+      </>
     );
   }
 }

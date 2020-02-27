@@ -88,17 +88,7 @@ class CreatePayment extends Component {
 
   handleError = async err => {
     await this.setState({ error: err });
-    // this.removeError();
   };
-
-  // removeError = () => {
-  //   setTimeout(
-  //     this.setState({
-  //       error: ""
-  //     })
-  //   ),
-  //     3000;
-  // };
 
   handleFileChange = async e => {
     const file = event.target.files[0];
@@ -116,7 +106,7 @@ class CreatePayment extends Component {
         : null;
     };
 
-    // file conversion to base64 using FileReader fn
+    // file conversion to base64 using FileReader
     const reader = new FileReader();
     reader.readAsDataURL(file);
 

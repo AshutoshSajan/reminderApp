@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 import Loader from "../common/Loader";
+import { Alert } from "../common/Alert";
+
 import {
   fetchStudentsListHandler,
   deleteStudentHandler
@@ -50,7 +52,9 @@ class Dashboard extends Component {
           <Loader />
         ) : (
           <div className="container">
-            {studentsAuthError ? <p>{studentsAuthError}</p> : null}
+            {studentsAuthError ? (
+              <Alert text={studentsAuthError} className="is-danger" />
+            ) : null}
             {students ? (
               students.map((student, i) => {
                 return (

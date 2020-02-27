@@ -1,53 +1,35 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo, useMemo, Component } from "react";
 
 export const Alert = props => {
   const { text, className } = props;
+  console.log(text, className, "props classname...");
 
   const [showAlert, setShowAlert] = useState(false);
-  const [hideAlert, setHideAlert] = useState(false);
+  const [display, setDisplay] = useState({ display: "block" });
 
   useEffect(() => {
     handleAlert();
   }, []);
 
   const handleAlert = () => {
-    console.log("handle alert called...");
-
     setShowAlert(true);
     setTimeout(() => {
-      console.log("close alert called...");
-
       setShowAlert(false);
-      setHideAlert(true);
     }, 5000);
+    setTimeout(() => {
+      setDisplay({ display: "none" });
+    }, 6000);
   };
 
   return (
-    <div className="container alert">
-      <div
-        className={`notification ${className ? className : ""}`}
-        style={
-          ({ transition: "all ese-in-out" },
-          hideAlert ? { transform: "translateY(-100%)" } : {})
-        }
-        // style={{
-        //   position: "absolute",
-        //   left: 50,
-        //   top: 0,
-        //   transform: "translateY(-100%)",
-        //   transition: "all ease-in-out"
-        // }}
-      >
-        {showAlert ? (
-          <div
-          // style={{
-          //   transform: "translateY(100%)"
-          // }}
-          >
-            <strong>{text}</strong>
-          </div>
-        ) : null}
-      </div>
+    <div
+      style={display}
+      className={`alert notification is-light 
+          ${className ? className : ""}
+          ${showAlert ? "show-alert" : "hide-alert"}
+          has-text-centered`}
+    >
+      <strong>{text}</strong>
     </div>
   );
 };

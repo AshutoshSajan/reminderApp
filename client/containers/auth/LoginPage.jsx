@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import validator from "validator";
 
 import { loginMentor } from "../../actions";
+import { Alert } from "../common/Alert";
 
 class LoginPage extends Component {
   state = {
@@ -50,7 +51,7 @@ class LoginPage extends Component {
 
     return (
       <div className="container">
-        {authError ? <p>{authError}</p> : null}
+        {authError ? <Alert text={authError} className="is-danger" /> : null}
         <div className="form columns">
           <div className="column is-one-third is-offset-one-third">
             <label className="label">Login</label>

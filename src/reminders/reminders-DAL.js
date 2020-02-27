@@ -1,4 +1,4 @@
-const Reminder = require("../../models/reminder");
+const Reminder = require("../../models/Reminder");
 
 const remindersDAL = {
   listReminders: async function() {

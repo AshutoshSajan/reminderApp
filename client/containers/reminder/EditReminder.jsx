@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { updateReminderHandler } from "../../actions/reminders";
 import axios from "axios";
+
 import Loader from "../common/Loader";
+import { Alert } from "../common/Alert";
 
 class EditReminder extends Component {
   constructor(props) {
@@ -143,10 +145,8 @@ class EditReminder extends Component {
           <Loader />
         ) : (
           <div className="container">
-            {error ? (
-              <p>{error}</p>
-            ) : remindersAuthError ? (
-              <p>{remindersAuthError}</p>
+            {remindersAuthError || error ? (
+              <Alert text={remindersAuthError || error} />
             ) : null}
 
             <div className="form columns">

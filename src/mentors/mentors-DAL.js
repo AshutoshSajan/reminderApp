@@ -1,4 +1,4 @@
-const Mentor = require("../../models/mentor");
+const Mentor = require("../../models/Mentor");
 
 const mentorsDAL = {
   findOneByField: async function(fieldNameObj) {

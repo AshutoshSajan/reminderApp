@@ -1,4 +1,5 @@
 import axios from "axios";
+import action from "../utils/helper";
 
 export function createStudentHandler(formData, cb) {
   return async dispatch => {
@@ -12,16 +13,22 @@ export function createStudentHandler(formData, cb) {
           authorization: token
         }
       });
-      dispatch({
-        type: "CREATE_STUDENT",
-        data: { student: res.data.student }
-      });
+
+      if (!res.data.success) {
+        return dispatch(
+          action("STUDENTS_AUTH_ERROR", {
+            error: res.data.message
+          })
+        );
+      }
+
+      dispatch(action("CREATE_STUDENT", { student: res.data.student }));
+
       cb();
     } catch (err) {
-      dispatch({
-        type: "STUDENTS_AUTH_ERROR",
-        data: { error: "Something went wrong." }
-      });
+      dispatch(
+        action("STUDENTS_AUTH_ERROR", { error: "Something went wrong." })
+      );
     }
   };
 }
@@ -39,15 +46,23 @@ export function fetchStudentsListHandler() {
         }
       });
 
-      dispatch({
-        type: "FETCH_STUDENTS_LIST_SUCCESS",
-        data: { students: res.data.students }
-      });
+      if (!res.data.success) {
+        return dispatch(
+          action("STUDENTS_AUTH_ERROR", {
+            error: res.data.message
+          })
+        );
+      }
+
+      dispatch(
+        action("FETCH_STUDENTS_LIST_SUCCESS", {
+          students: res.data.students
+        })
+      );
     } catch (err) {
-      dispatch({
-        type: "STUDENTS_AUTH_ERROR",
-        data: { error: "Something went wrong." }
-      });
+      dispatch(
+        action("STUDENTS_AUTH_ERROR", { error: "Something went wrong." })
+      );
     }
   };
 }
@@ -65,15 +80,19 @@ export function fetchStudentHandler(studentId) {
         }
       });
 
-      dispatch({
-        type: "FETCH_STUDENT_SUCCESS",
-        data: { student: res.data.student }
-      });
+      if (!res.data.success) {
+        return dispatch(
+          action("STUDENTS_AUTH_ERROR", {
+            error: res.data.message
+          })
+        );
+      }
+
+      dispatch(action("FETCH_STUDENT_SUCCESS", { student: res.data.student }));
     } catch (err) {
-      dispatch({
-        type: "STUDENTS_AUTH_ERROR",
-        data: { error: "Something went wrong." }
-      });
+      dispatch(
+        action("STUDENTS_AUTH_ERROR", { error: "Something went wrong." })
+      );
     }
   };
 }
@@ -90,16 +109,21 @@ export function updateStudentHandler(studentId, formData, cb) {
           authorization: token
         }
       });
-      dispatch({
-        type: "UPDATE_STUDENT",
-        data: { student: res.data.student }
-      });
+
+      if (!res.data.success) {
+        return dispatch(
+          action("STUDENTS_AUTH_ERROR", {
+            error: res.data.message
+          })
+        );
+      }
+
+      dispatch(action("UPDATE_STUDENT", { student: res.data.student }));
       cb();
     } catch (err) {
-      dispatch({
-        type: "STUDENTS_AUTH_ERROR",
-        data: { error: "Something went wrong." }
-      });
+      dispatch(
+        action("STUDENTS_AUTH_ERROR", { error: "Something went wrong." })
+      );
     }
   };
 }
@@ -117,15 +141,19 @@ export function deleteStudentHandler(studentId) {
         }
       });
 
-      dispatch({
-        type: "DELETE_STUDENT",
-        data: { studentId }
-      });
+      if (!res.data.success) {
+        return dispatch(
+          action("STUDENTS_AUTH_ERROR", {
+            error: res.data.message
+          })
+        );
+      }
+
+      dispatch(action("DELETE_STUDENT", { studentId }));
     } catch (err) {
-      dispatch({
-        type: "STUDENTS_AUTH_ERROR",
-        data: { error: "Something went wrong." }
-      });
+      dispatch(
+        action("STUDENTS_AUTH_ERROR", { error: "Something went wrong." })
+      );
     }
   };
 }

@@ -1,4 +1,5 @@
 import axios from "axios";
+import action from "../utils/helper";
 
 export function createPaymentHandler(formData, cb) {
   return async dispatch => {
@@ -13,24 +14,16 @@ export function createPaymentHandler(formData, cb) {
         }
       });
 
-      console.log(res, "create payment res...");
       if (!res.data.success) {
-        return dispatch({
-          type: "PAYMENT_ERROR",
-          data: { error: res.data.message }
-        });
+        return dispatch(action("PAYMENT_ERROR", { error: res.data.message }));
       } else {
-        dispatch({
-          type: "CREATE_PAYMENT",
-          data: { payment: res.data.payment }
-        });
+        dispatch(action("CREATE_PAYMENT", { payment: res.data.payment }));
         return cb();
       }
     } catch (err) {
-      dispatch({
-        type: "PAYMENT_AUTH_ERROR",
-        data: { error: "Something went wrong." }
-      });
+      dispatch(
+        action("PAYMENT_AUTH_ERROR", { error: "Something went wrong." })
+      );
     }
   };
 }
@@ -48,16 +41,23 @@ export function fetchPaymentHandler(paymentId) {
         }
       });
 
-      dispatch({
-        type: "GET_PAYMENT_SUCCESS",
-        data: { payment: res.data.payment }
-      });
-      // cb();
+      if (!res.data.success) {
+        return dispatch(
+          action("PAYMENT_AUTH_ERROR", {
+            error: res.data.message
+          })
+        );
+      }
+
+      dispatch(
+        action("GET_PAYMENT_SUCCESS", {
+          payment: res.data.payment
+        })
+      );
     } catch (err) {
-      dispatch({
-        type: "PAYMENT_AUTH_ERROR",
-        data: { error: "Something went wrong." }
-      });
+      dispatch(
+        action("PAYMENT_AUTH_ERROR", { error: "Something went wrong." })
+      );
     }
   };
 }
@@ -75,15 +75,23 @@ export function fetchPaymentsListHandler() {
         }
       });
 
-      dispatch({
-        type: "FETCH_PAYMENT_LIST_SUCCESS",
-        data: { payments: res.data.payments }
-      });
+      if (!res.data.success) {
+        return dispatch(
+          action("PAYMENT_AUTH_ERROR", {
+            error: res.data.message
+          })
+        );
+      }
+
+      dispatch(
+        action("FETCH_PAYMENT_LIST_SUCCESS", {
+          payments: res.data.payments
+        })
+      );
     } catch (err) {
-      dispatch({
-        type: "PAYMENT_AUTH_ERROR",
-        data: { error: "Something went wrong." }
-      });
+      dispatch(
+        action("PAYMENT_AUTH_ERROR", { error: "Something went wrong." })
+      );
     }
   };
 }
@@ -101,16 +109,20 @@ export function paymentUpdateHandler(paymentId, formData, cb) {
         }
       });
 
-      dispatch({
-        type: "UPDATE_PAYMENT",
-        data: { payment: res.data.payment }
-      });
+      if (!res.data.success) {
+        return dispatch(
+          action("PAYMENT_AUTH_ERROR", {
+            error: res.data.message
+          })
+        );
+      }
+
+      dispatch(action("UPDATE_PAYMENT", { payment: res.data.payment }));
       cb();
     } catch (err) {
-      dispatch({
-        type: "PAYMENT_AUTH_ERROR",
-        data: { error: "Something went wrong." }
-      });
+      dispatch(
+        action("PAYMENT_AUTH_ERROR", { error: "Something went wrong." })
+      );
     }
   };
 }
@@ -122,21 +134,25 @@ export function deletePaymentHandler(paymentId) {
     const token = localStorage.getItem("authToken");
 
     try {
-      await axios.delete("/api/v1/payments/" + paymentId, {
+      const res = await axios.delete("/api/v1/payments/" + paymentId, {
         headers: {
           authorization: token
         }
       });
 
-      dispatch({
-        type: "DELETE_PAYMENT",
-        data: { paymentId }
-      });
+      if (!res.data.success) {
+        return dispatch(
+          action("PAYMENT_AUTH_ERROR", {
+            error: "Something went wrong."
+          })
+        );
+      }
+
+      dispatch(action("DELETE_PAYMENT", { paymentId }));
     } catch (err) {
-      dispatch({
-        type: "PAYMENT_AUTH_ERROR",
-        data: { error: "Something went wrong." }
-      });
+      dispatch(
+        action("PAYMENT_AUTH_ERROR", { error: "Something went wrong." })
+      );
     }
   };
 }

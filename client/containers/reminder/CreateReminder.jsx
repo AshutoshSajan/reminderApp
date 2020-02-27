@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { createReminderHandler } from "../../actions/reminders";
+
 import Loader from "../common/Loader";
+import { Alert } from "../common/Alert";
+
+import { createReminderHandler } from "../../actions/reminders";
 
 class CreateReminder extends Component {
   state = {
@@ -85,7 +88,9 @@ class CreateReminder extends Component {
           <Loader />
         ) : (
           <div className="container">
-            {remindersAuthError ? <p>{remindersAuthError}</p> : null}
+            {remindersAuthError ? (
+              <Alert text={remindersAuthError} className="is-danger" />
+            ) : null}
 
             <div className="form columns">
               <div className="column is-one-third is-offset-one-third">

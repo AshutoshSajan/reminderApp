@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+
 import Loader from "../common/Loader";
+import { Alert } from "../common/Alert";
 
 import {
   deleteReminderHandler,
@@ -28,13 +30,13 @@ function ListReminders(props) {
   return (
     <div>
       {isFetchingReminders ? (
-        <>
-          {console.log("loader called...")}
-          <Loader />
-        </>
+        <Loader />
       ) : (
         <div className="container">
-          {remindersAuthError ? <p>{remindersAuthError}</p> : null}
+          {remindersAuthError ? (
+            <Alert text={remindersAuthError} className="is-danger" />
+          ) : null}
+
           {reminders.length ? (
             reminders.map((reminder, i) => {
               return (

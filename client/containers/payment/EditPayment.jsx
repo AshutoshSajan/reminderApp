@@ -4,7 +4,7 @@ import axios from "axios";
 
 import { paymentUpdateHandler } from "../../actions/payments";
 import Loader from "../common/Loader";
-
+import { Alert } from "../common/Alert";
 class EditPayment extends Component {
   constructor(props) {
     super(props);
@@ -146,7 +146,9 @@ class EditPayment extends Component {
           <Loader />
         ) : (
           <div>
-            {paymentsAuthError ? <p>{paymentsAuthError}</p> : null}
+            {paymentsAuthError || error ? (
+              <Alert text={paymentsAuthError || error} className="is-danger" />
+            ) : null}
 
             <div>
               <div className="form columns">

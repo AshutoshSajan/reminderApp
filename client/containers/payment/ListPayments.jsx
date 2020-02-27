@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+
 import Loader from "../common/Loader";
+import { Alert } from "../common/Alert";
 
 import {
   deletePaymentHandler,
@@ -9,8 +11,10 @@ import {
 } from "../../actions/payments";
 
 function ListPayments(props) {
+  const { isFetchingPayments, paymentsAuthError, payments } = props.payments;
+
   useEffect(() => {
-    if (!props.payments.payments.length) {
+    if (!payments.length) {
       props.dispatch(fetchPaymentsListHandler());
     }
   }, []);
@@ -19,20 +23,17 @@ function ListPayments(props) {
     props.dispatch(deletePaymentHandler(paymentId));
   };
 
-  const { isFetchingPayments } = props.payments;
-
   return (
     <div className="container">
       {isFetchingPayments ? (
         <Loader />
       ) : (
         <>
-          {props.payments.isFetchingPayments ? <p>Loading....</p> : null}
-          {props.reminders.paymentsAuthError ? (
-            <p>{props.reminders.paymentsAuthError}</p>
+          {paymentsAuthError ? (
+            <Alert text={paymentsAuthError} className="is-danger" />
           ) : null}
-          {props.payments.payments.length ? (
-            props.payments.payments.map((payment, i) => {
+          {payments.length ? (
+            payments.map((payment, i) => {
               if (!payment) return null;
               return (
                 <div key={i}>
