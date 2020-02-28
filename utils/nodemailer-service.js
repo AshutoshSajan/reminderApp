@@ -6,8 +6,9 @@ const mailMessage = require("./mail");
 exports.sendMail = async (email, userId, html = null) => {
   // Generate test SMTP service account from ethereal.email
   // Only needed if you don't have a real mail account for testing
-  const testAccount = await nodemailer.createTestAccount();
-  console.log(testAccount, "testAccount...");
+
+  // const testAccount = await nodemailer.createTestAccount();
+  // console.log(testAccount, "testAccount...");
 
   // create reusable transporter object using the default SMTP transport
   const transporter = nodemailer.createTransport({
@@ -28,8 +29,6 @@ exports.sendMail = async (email, userId, html = null) => {
     "process.env.MAILING_EMAIL_PASS"
   );
 
-  const mailMessage = mailMessage(userId);
-
   // message(userId);
   // send mail with defined transport object
   const info = await transporter.sendMail({
@@ -38,7 +37,7 @@ exports.sendMail = async (email, userId, html = null) => {
     subject: "Paymennt Reminder", // Subject line
     text: "If you have already paid your expenses then ignore this message", // plain text body
     // html: html ? html : `${message}; ` // html body
-    html: html ? html : `${mailMessage}; ` // html body
+    html: html ? html : `${mailMessage(userId)}; ` // html body
   });
 
   console.log("Message sent: %s", info.messageId);

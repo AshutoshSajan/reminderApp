@@ -11,7 +11,10 @@ const mailMessage = userId => {
         >
           Monthly Payment Reminder
         </h2>
-        <p>
+        <p
+          style="text-align: justify;
+          padding-bottom: 20px"
+        >
           This mail is to remind you about your Monthly payment. If you
           haven't made you payment then please make the payment and click the
           link below to send your payment details. If you have already made
@@ -24,8 +27,8 @@ const mailMessage = userId => {
           <a
             style="width:100px;
             padding:5px 10px;
-            color:#111;
-            background:#2e8dbd;
+            color:#fff;
+            background:#19ceac;
             margin: 0 auto;
             border-radius: 2px"
             href="http://localhost:3000/students/${userId}/send-payment-details"
@@ -33,7 +36,7 @@ const mailMessage = userId => {
             id="payment-link"
             target="_blank"
           >
-            Send Payment Details
+            Submit Payment Details
           </a>
         </p>
       </div>

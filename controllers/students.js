@@ -1,7 +1,6 @@
 const studentsService = require("../src/students/students-service");
 const remindersService = require("../src/reminders/reminders-service");
-
-// TODO : create reminder after creating user
+const nodemailer = require("../utils/nodemailer-service");
 
 const studentsController = {
   listStudents: async function(req, res) {
@@ -16,6 +15,12 @@ const studentsController = {
   createStudent: async function(req, res) {
     try {
       const student = await studentsService.createStudent(req.body.student);
+
+      // TODO: create reminder instance before sending the email
+
+      // sending mail reminder after creating student
+      nodemailer.sendMail(student.email, student._id);
+
       return res.status(200).json({
         success: true,
         message: "student created",

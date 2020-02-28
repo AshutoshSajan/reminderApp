@@ -81,7 +81,7 @@ class CreatePayment extends Component {
     // TODO: add student id in payment object after testing
     this.props.dispatch(
       createPaymentHandler({ payment }, () =>
-        this.props.history.push("/payments/list-payments")
+        this.props.history.push("/students/thank-you")
       )
     );
   };
