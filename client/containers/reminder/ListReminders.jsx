@@ -17,6 +17,8 @@ function ListReminders(props) {
     reminders
   } = props.reminders;
 
+  const [hideError, setHideError] = useState(true);
+
   useEffect(() => {
     if (!reminders || !reminders.length) {
       props.dispatch(fetchRemindersListHandler());
@@ -27,6 +29,8 @@ function ListReminders(props) {
     props.dispatch(deleteReminderHandler(reminderId));
   };
 
+  const hideErrorHandler = () => setHideError(true);
+
   return (
     <div>
       {isFetchingReminders ? (
@@ -34,7 +38,12 @@ function ListReminders(props) {
       ) : (
         <div className="container">
           {remindersAuthError ? (
-            <Alert text={remindersAuthError} className="is-danger" />
+            <Alert
+              text={remindersAuthError}
+              className="is-danger"
+              hideError={hideError}
+              hideErrorHandler={hideErrorHandler}
+            />
           ) : null}
 
           {reminders.length ? (

@@ -1,34 +1,16 @@
 import React, { useState, useEffect, memo, useMemo, Component } from "react";
 
 export const Alert = props => {
-  const { text, className } = props;
-  console.log(text, className, "props classname...");
-
-  const [showAlert, setShowAlert] = useState(false);
-  const [display, setDisplay] = useState({ display: "block" });
-
-  useEffect(() => {
-    handleAlert();
-  }, []);
-
-  const handleAlert = () => {
-    setShowAlert(true);
-    setTimeout(() => {
-      setShowAlert(false);
-    }, 5000);
-    setTimeout(() => {
-      setDisplay({ display: "none" });
-    }, 6000);
-  };
+  const { text, className, hideError, hideErrorHandler } = props;
 
   return (
     <div
-      style={display}
-      className={`alert notification is-light 
+      className={`alert notification is-light
+          ${hideError ? "hide-alert" : "show-alert"}
           ${className ? className : ""}
-          ${showAlert ? "show-alert" : "hide-alert"}
           has-text-centered`}
     >
+      <button className="delete" onClick={hideErrorHandler}></button>
       <strong>{text}</strong>
     </div>
   );

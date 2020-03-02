@@ -38,7 +38,8 @@ class UpdateStudent extends Component {
         numPercentageToBeCharged: this.student.numPercentageToBeCharged || "",
         numMinAmtToBePaid: this.student.numMinAmtToBePaid || "",
         hasPaidEntireTrainingFee: this.student.hasPaidEntireTrainingFee || false
-      }
+      },
+      hideError: true
     };
   }
 
@@ -83,6 +84,7 @@ class UpdateStudent extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
+    this.setState({ hideError: !this.state.hideError });
     const studentId = window.location.pathname.split("/")[2];
 
     const {
@@ -153,6 +155,12 @@ class UpdateStudent extends Component {
     }));
   };
 
+  hideErrorHandler = () => {
+    this.setState({
+      hideError: true
+    });
+  };
+
   render() {
     const isAuthInProgress = this.props.auth.isAuthInProgress;
     const authError = this.props.auth.authError;
@@ -169,7 +177,7 @@ class UpdateStudent extends Component {
       hasPaidEntireTrainingFee
     } = this.state.student;
 
-    const { isLoading, error } = this.state;
+    const { isLoading, error, hideError } = this.state;
 
     return (
       <>
@@ -178,7 +186,12 @@ class UpdateStudent extends Component {
         ) : (
           <div className="container">
             {authError || error ? (
-              <Alert text={authError || error} className="is-danger" />
+              <Alert
+                text={authError || error}
+                className="is-danger"
+                hideError={hideError}
+                hideErrorHandler={this.hideErrorHandler}
+              />
             ) : null}
 
             <div className="form columns">

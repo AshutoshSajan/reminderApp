@@ -8,7 +8,8 @@ import { Alert } from "../common/Alert";
 class LoginPage extends Component {
   state = {
     email: "ashutoshsajan1213@gmail.com",
-    password: "qwerty1234"
+    password: "qwerty1234",
+    hideError: true
   };
 
   constructor(props) {
@@ -43,55 +44,70 @@ class LoginPage extends Component {
     this.setState({ [name]: value });
   };
 
+  hideErrorHandler = () => {
+    this.setState({
+      hideError: true
+    });
+  };
+
   render() {
     const { isAuthInProgress } = this.props.auth;
     const { authError } = this.props.auth;
 
-    const { email, password } = this.state;
+    const { email, password, hideError } = this.state;
 
     return (
-      <div className="container">
-        {authError ? <Alert text={authError} className="is-danger" /> : null}
-        <div className="form columns">
-          <div className="column is-one-third is-offset-one-third">
-            <label className="label">Login</label>
-            <div className="field">
-              <label className="label">Email</label>
-              <div className="control">
-                <input
-                  onChange={this.handleChange}
-                  className="input"
-                  type="email"
-                  name="email"
-                  value={email}
-                  placeholder="Text input"
-                />
+      <>
+        {authError ? (
+          <Alert
+            text={authError}
+            className="is-danger"
+            hideErrorHandler={this.hideErrorHandler}
+            hideError={hideError}
+          />
+        ) : null}
+        <div className="container">
+          <div className="form columns">
+            <div className="column is-one-third is-offset-one-third">
+              <label className="label">Login</label>
+              <div className="field">
+                <label className="label">Email</label>
+                <div className="control">
+                  <input
+                    onChange={this.handleChange}
+                    className="input"
+                    type="email"
+                    name="email"
+                    value={email}
+                    placeholder="Text input"
+                  />
+                </div>
               </div>
-            </div>
-            <div className="field">
-              <label className="label">Password</label>
-              <div className="control">
-                <input
-                  onChange={this.handleChange}
-                  name="password"
-                  className="input"
-                  type="password"
-                  value={password}
-                  placeholder="Text input"
-                />
+              <div className="field">
+                <label className="label">Password</label>
+                <div className="control">
+                  <input
+                    onChange={this.handleChange}
+                    name="password"
+                    className="input"
+                    type="password"
+                    value={password}
+                    placeholder="Text input"
+                  />
+                </div>
               </div>
+              <button
+                onClick={this.handleSubmit}
+                className={`button is-info ${
+                  isAuthInProgress ? "is-loading" : null
+                }`}
+              >
+                Submit
+              </button>
             </div>
-            <button
-              onClick={this.handleSubmit}
-              className={`button is-info ${
-                isAuthInProgress ? "is-loading" : null
-              }`}
-            >
-              Submit
-            </button>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 }

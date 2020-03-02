@@ -15,6 +15,9 @@ import { createReminderHandler } from "../../actions/reminders";
 class Dashboard extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      hideError: true
+    };
   }
 
   componentDidMount() {
@@ -30,6 +33,8 @@ class Dashboard extends Component {
 
   handlePaymentReminder = (studentId, email) => {
     const { authToken } = localStorage;
+    this.setState({ hideError: !this.state.hideError });
+
     if (authToken) {
       this.props.dispatch(createReminderHandler(studentId, email));
     }
@@ -39,12 +44,20 @@ class Dashboard extends Component {
     this.props.dispatch(deleteStudentHandler(studentId));
   };
 
+  hideErrorHandler = () => {
+    this.setState({
+      hideError: true
+    });
+  };
+
   render() {
     const {
       isFetchingStudents,
       studentsAuthError,
       students
     } = this.props.students;
+
+    const { hideError } = this.state;
 
     return (
       <div>
@@ -53,7 +66,12 @@ class Dashboard extends Component {
         ) : (
           <div className="container">
             {studentsAuthError ? (
-              <Alert text={studentsAuthError} className="is-danger" />
+              <Alert
+                text={studentsAuthError}
+                className="is-danger"
+                hideError={hideError}
+                hideErrorHandler={this.hideErrorHandler}
+              />
             ) : null}
             {students ? (
               students.map((student, i) => {

@@ -47,7 +47,8 @@ class EditPayment extends Component {
       ],
       paymentModes: ["cash", "UPI", "Bank Transfer"],
       isLoading: false,
-      error: ""
+      error: "",
+      hideError: true
     };
   }
 
@@ -78,6 +79,8 @@ class EditPayment extends Component {
   }
 
   updatePaymentSubmitHandler = () => {
+    this.setState({ hideError: !this.state.hideError });
+
     const {
       studentId,
       amount,
@@ -126,6 +129,12 @@ class EditPayment extends Component {
     });
   };
 
+  hideErrorHandler = () => {
+    this.setState({
+      hideError: true
+    });
+  };
+
   render() {
     const {
       amount,
@@ -136,7 +145,7 @@ class EditPayment extends Component {
       isTrainingFee
     } = this.state.payment;
 
-    const { paymentModes, months, isLoading, error } = this.state;
+    const { paymentModes, months, isLoading, error, hideError } = this.state;
 
     const { paymentsAuthError, isFetchingPayments } = this.props.payments;
 
@@ -147,7 +156,12 @@ class EditPayment extends Component {
         ) : (
           <div>
             {paymentsAuthError || error ? (
-              <Alert text={paymentsAuthError || error} className="is-danger" />
+              <Alert
+                text={paymentsAuthError || error}
+                className="is-danger"
+                hideError={hideError}
+                hideErrorHandler={this.hideErrorHandler}
+              />
             ) : null}
 
             <div>

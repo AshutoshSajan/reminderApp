@@ -22,6 +22,7 @@ class CreatePayment extends Component {
         isTrainingFee: false
       },
       error: "",
+      hideError,
 
       months: [
         "Jan",
@@ -44,6 +45,8 @@ class CreatePayment extends Component {
   }
 
   paymentDetailsSubmitHandler = () => {
+    this.setState({ hideError: !this.state.hideError });
+
     const {
       studentId,
       amount,
@@ -137,6 +140,12 @@ class CreatePayment extends Component {
     });
   };
 
+  hideErrorHandler = () => {
+    this.setState({
+      hideError: true
+    });
+  };
+
   render() {
     const {
       amount,
@@ -148,7 +157,7 @@ class CreatePayment extends Component {
       isTrainingFee
     } = this.state.payment;
 
-    const { paymentModes, months, error, selectedFile } = this.state;
+    const { paymentModes, months, error, selectedFile, hideError } = this.state;
 
     const { paymentsAuthError, isFetchingPayments } = this.props.payments;
 
@@ -159,7 +168,12 @@ class CreatePayment extends Component {
         ) : (
           <>
             {paymentsAuthError || error ? (
-              <Alert text={paymentsAuthError || error} className="is-danger" />
+              <Alert
+                text={paymentsAuthError || error}
+                className="is-danger"
+                hideError={hideError}
+                hideErrorHandler={this.hideErrorHandler}
+              />
             ) : null}
             <div className="container">
               <div className="form columns">

@@ -48,7 +48,8 @@ class EditReminder extends Component {
       paymentModes: ["call", "sms", "email"],
 
       isLoading: false,
-      error: ""
+      error: "",
+      hideError: true
     };
   }
 
@@ -91,6 +92,8 @@ class EditReminder extends Component {
   };
 
   updateReminderSubmitHandler = () => {
+    this.setState({ hideError: !this.state.hideError });
+
     const {
       studentId,
       amount,
@@ -126,6 +129,12 @@ class EditReminder extends Component {
     });
   };
 
+  hideErrorHandler = () => {
+    this.setState({
+      hideError: true
+    });
+  };
+
   render() {
     const {
       studentId,
@@ -136,7 +145,7 @@ class EditReminder extends Component {
       year
     } = this.state.reminder;
 
-    const { paymentModes, months, isLoading, error } = this.state;
+    const { paymentModes, months, isLoading, error, hideError } = this.state;
     const { isFetchingReminders, remindersAuthError } = this.props.reminders;
 
     return (
@@ -146,7 +155,12 @@ class EditReminder extends Component {
         ) : (
           <div className="container">
             {remindersAuthError || error ? (
-              <Alert text={remindersAuthError || error} />
+              <Alert
+                text={remindersAuthError || error}
+                className="is-danger"
+                hideError={hideError}
+                hideErrorHandler={this.hideErrorHandler}
+              />
             ) : null}
 
             <div className="form columns">

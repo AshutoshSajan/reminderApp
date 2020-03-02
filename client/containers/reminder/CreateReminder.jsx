@@ -31,10 +31,9 @@ class CreateReminder extends Component {
       "Nov",
       "Dec"
     ],
-    paymentModes: ["call", "sms", "email"]
+    paymentModes: ["call", "sms", "email"],
+    hideError: true
   };
-
-  componentDidMount = () => {};
 
   handleChange = e => {
     const { name, value } = e.target;
@@ -48,6 +47,8 @@ class CreateReminder extends Component {
   };
 
   paymentReminderSubmitHandler = () => {
+    this.setState({ hideError: !this.state.hideError });
+
     const { amount, details, mode, month, year } = this.state.reminder;
     const reminder = { amount: +amount, details, mode, month, year: +year };
     this.props.dispatch(
@@ -68,6 +69,12 @@ class CreateReminder extends Component {
     });
   };
 
+  hideErrorHandler = () => {
+    this.setState({
+      hideError: true
+    });
+  };
+
   render() {
     const {
       studentId,
@@ -80,7 +87,7 @@ class CreateReminder extends Component {
 
     const { isFetchingReminders, remindersAuthError } = this.props.reminders;
 
-    const { paymentModes, months } = this.state;
+    const { paymentModes, months, hideError } = this.state;
 
     return (
       <div>
@@ -89,7 +96,12 @@ class CreateReminder extends Component {
         ) : (
           <div className="container">
             {remindersAuthError ? (
-              <Alert text={remindersAuthError} className="is-danger" />
+              <Alert
+                text={remindersAuthError}
+                className="is-danger"
+                hideError={hideError}
+                hideErrorHandler={this.hideErrorHandler}
+              />
             ) : null}
 
             <div className="form columns">

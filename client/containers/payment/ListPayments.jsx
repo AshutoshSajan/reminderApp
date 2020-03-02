@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -13,6 +13,8 @@ import {
 function ListPayments(props) {
   const { isFetchingPayments, paymentsAuthError, payments } = props.payments;
 
+  const [error, setHideError] = useState(paymentsAuthError ? false : true);
+
   useEffect(() => {
     if (!payments.length) {
       props.dispatch(fetchPaymentsListHandler());
@@ -23,6 +25,10 @@ function ListPayments(props) {
     props.dispatch(deletePaymentHandler(paymentId));
   };
 
+  const hideErrorHandler = () => {
+    setHideError(true);
+  };
+
   return (
     <div className="container">
       {isFetchingPayments ? (
@@ -30,7 +36,12 @@ function ListPayments(props) {
       ) : (
         <>
           {paymentsAuthError ? (
-            <Alert text={paymentsAuthError} className="is-danger" />
+            <Alert
+              text={paymentsAuthError}
+              className="is-danger"
+              hideError={error}
+              hideErrorHandler={hideErrorHandler}
+            />
           ) : null}
           {payments.length ? (
             payments.map((payment, i) => {
