@@ -5,10 +5,9 @@ const mailMessage = require("./mail");
 // async..await is not allowed in global scope, must use a wrapper
 exports.sendMail = async (email, userId, html = null) => {
   // Generate test SMTP service account from ethereal.email
-  // Only needed if you don't have a real mail account for testing
 
+  // Only needed if you don't have a real mail account for testing
   // const testAccount = await nodemailer.createTestAccount();
-  // console.log(testAccount, "testAccount...");
 
   // create reusable transporter object using the default SMTP transport
   const transporter = nodemailer.createTransport({
@@ -22,17 +21,9 @@ exports.sendMail = async (email, userId, html = null) => {
     }
   });
 
-  console.log(
-    process.env.MAILING_EMAIL_ADDRESS,
-    "process.env.MAILING_EMAIL_ADDRESS",
-    process.env.MAILING_EMAIL_PASS,
-    "process.env.MAILING_EMAIL_PASS"
-  );
-
-  // message(userId);
   // send mail with defined transport object
   const info = await transporter.sendMail({
-    from: `Altcampus<${process.env.MAILING_EMAIL_ADDRESS}>`, // sender address
+    from: `Altcampus`, // sender address
     to: `${email}`, // list of receivers
     subject: "Paymennt Reminder", // Subject line
     text: "If you have already paid your expenses then ignore this message", // plain text body

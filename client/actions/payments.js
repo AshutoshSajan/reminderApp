@@ -5,14 +5,8 @@ export function createPaymentHandler(formData, cb) {
   return async dispatch => {
     dispatch({ type: "PAYMENT_AUTH_START" });
 
-    const { authToken } = localStorage;
-
     try {
-      const res = await axios.post("/api/v1/payments", formData, {
-        headers: {
-          authorization: authToken
-        }
-      });
+      const res = await axios.post("/api/v1/payments", formData);
 
       if (!res.data.success) {
         return dispatch(action("PAYMENT_ERROR", { error: res.data.message }));

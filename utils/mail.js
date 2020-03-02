@@ -26,11 +26,14 @@ const mailMessage = userId => {
         <p>
           <a
             style="width:100px;
-            padding:5px 10px;
-            color:#fff;
-            background:#19ceac;
+            padding: 5px 10px;
+            color: #111;
+            background: #19ceac;
             margin: 0 auto;
-            border-radius: 2px"
+            border-radius: 2px;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 4px 6px 0 rgba(0,0,0,0.3)"
             href="http://localhost:3000/students/${userId}/send-payment-details"
             className="button is-info"
             id="payment-link"

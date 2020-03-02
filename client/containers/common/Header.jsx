@@ -11,6 +11,10 @@ const Header = props => {
     props.history.push("/");
   };
 
+  const re = /(send-payment-details|thank-you)/g;
+
+  const isUserOnline = re.test(window.location.pathname);
+
   return (
     <nav
       style={{ background: "teal" }}
@@ -40,7 +44,7 @@ const Header = props => {
           className={`navbar-menu ${toggle ? "navbar-active" : ""}`}
         >
           <div className="navbar-start">
-            {props.auth.mentor ? (
+            {props.auth.mentor && !isUserOnline ? (
               <>
                 <Link
                   className="navbar-item"
@@ -98,19 +102,21 @@ const Header = props => {
         </div>
       </div>
       <div className="navbar-end">
-        <div className="navbar-item">
-          <div className="buttons">
-            {props.auth.isAuthenticated ? (
-              <button className="button is-warning" onClick={handleLogout}>
-                <strong>Logout</strong>
-              </button>
-            ) : (
-              <Link className="button is-primary" to="/login">
-                <strong>Login</strong>
-              </Link>
-            )}
+        {!isUserOnline ? (
+          <div className="navbar-item">
+            <div className="buttons">
+              {props.auth.isAuthenticated ? (
+                <button className="button is-warning" onClick={handleLogout}>
+                  <strong>Logout</strong>
+                </button>
+              ) : (
+                <Link className="button is-primary" to="/login">
+                  <strong>Login</strong>
+                </Link>
+              )}
+            </div>
           </div>
-        </div>
+        ) : null}
       </div>
     </nav>
   );

@@ -22,7 +22,7 @@ class CreatePayment extends Component {
         isTrainingFee: false
       },
       error: "",
-      hideError,
+      hideError: true,
 
       months: [
         "Jan",
