@@ -1,4 +1,4 @@
-import React, { useState, useEffect, memo, useMemo, Component } from "react";
+import React from "react";
 
 export const Alert = props => {
   const { text, className, hideError, hideErrorHandler } = props;

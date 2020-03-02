@@ -17,7 +17,7 @@ function ListReminders(props) {
     reminders
   } = props.reminders;
 
-  const [hideError, setHideError] = useState(true);
+  const [hideError, setHideError] = useState(remindersAuthError ? false : true);
 
   useEffect(() => {
     if (!reminders || !reminders.length) {
