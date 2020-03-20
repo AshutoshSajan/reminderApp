@@ -168,6 +168,6 @@ a {
 	margin-bottom: 1.5em;
 }
 
-/* .navbar-menu.navbar-active.navbar-start.navbar-item {
-	font-size: 1.8em;
-} */
+.navbar-brand {
+	width: 100%;
+}

@@ -5,6 +5,12 @@ import { withRouter, Link } from "react-router-dom";
 const Header = props => {
 	const [toggle, setToggle] = useState(false);
 
+	const toggleBurger = () => {
+		if (props.auth.isAuthenticated && props.auth.mentor) {
+			setToggle(!toggle);
+		}
+	};
+
 	const handleLogout = () => {
 		localStorage.clear();
 		props.dispatch({
@@ -37,12 +43,13 @@ const Header = props => {
 					aria-label="menu"
 					aria-expanded="false"
 					tabIndex="true"
-					onFocus={() => setToggle(!toggle)}
+					onFocus={toggleBurger}
 				>
 					<span aria-hidden="true"></span>
 					<span aria-hidden="true"></span>
 					<span aria-hidden="true"></span>
 				</a>
+
 				<div
 					id="navbarBasicExample"
 					className={`navbar-menu ${toggle ? "navbar-active" : ""}`}
@@ -52,7 +59,7 @@ const Header = props => {
 							<>
 								<a
 									className="navbar-item toggle-burger-close-btn"
-									onClick={() => setToggle(!toggle)}
+									onClick={toggleBurger}
 								>
 									<img
 										className="close-btn"
@@ -65,7 +72,7 @@ const Header = props => {
 									to="/students/create"
 									tabIndex="true"
 								>
-									<strong> Create student </strong>{" "}
+									<strong> Create student </strong>
 								</Link>
 								<Link
 									className="navbar-item"
@@ -74,57 +81,62 @@ const Header = props => {
 								>
 									<strong> List student </strong>
 								</Link>
-								{/* TODO: remove these two links after testing  */}{" "}
+
+								{/* TODO: remove these two links after testing  */}
+
 								<Link
 									className="navbar-item"
 									to="/students/:id/payment-reminder"
 									tabIndex="true"
 								>
-									<strong> Create Reminder </strong>{" "}
+									<strong> Create Reminder </strong>
 								</Link>
 								<Link
 									className="navbar-item"
 									to="/students/:id/send-payment-details"
 									tabIndex="true"
 								>
-									<strong> Create Payment </strong>{" "}
+									<strong> Create Payment </strong>
 								</Link>
 								<Link
 									className="navbar-item"
 									to="/payments/list-payments"
 									tabIndex="true"
 								>
-									<strong> List Payments </strong>{" "}
+									<strong> List Payments </strong>
 								</Link>
 								<Link
 									className="navbar-item"
 									to="/reminders/list-reminders"
 									tabIndex="true"
 								>
-									<strong> List Reminders </strong>{" "}
+									<strong> List Reminders </strong>
 								</Link>
 							</>
 						) : null}
 					</div>
-				</div>
-			</div>
 
-			<div className="navbar-end">
-				{!isUserOnline ? (
-					<div className="navbar-item">
-						<div className="buttons">
-							{props.auth.isAuthenticated ? (
-								<button className="button is-warning" onClick={handleLogout}>
-									<strong> Logout </strong>
-								</button>
-							) : (
-								<Link className="button is-primary" to="/login">
-									<strong> Login </strong>
-								</Link>
-							)}
+					<div className="navbar-end">
+						<div className="navbar-item">
+							{!isUserOnline ? (
+								<div className="buttons">
+									{props.auth.isAuthenticated ? (
+										<button
+											className="button is-warning"
+											onClick={handleLogout}
+										>
+											<strong> Logout </strong>
+										</button>
+									) : (
+										<Link className="button is-primary" to="/login">
+											<strong> Login </strong>
+										</Link>
+									)}
+								</div>
+							) : null}
 						</div>
 					</div>
-				) : null}
+				</div>
 			</div>
 		</nav>
 	);
