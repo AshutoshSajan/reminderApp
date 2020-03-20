@@ -1,7 +1,7 @@
 import React from "react";
 import { Footer } from "./Footer";
 
-export const ThnakYouPage = () => {
+export const ThankYouPage = () => {
   return (
     <div className="container has-text-centered">
       <header className="site-header" id="header">

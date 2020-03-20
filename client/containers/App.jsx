@@ -12,7 +12,7 @@ import UpdateStudent from "./students/UpdateStudent";
 
 import NotFound from "../containers/common/NotFound";
 import Dashboard from "../containers/home/Dashboard";
-import { ThnakYouPage } from "./common/ThnakYouPage";
+import { ThankYouPage } from "./common/ThankYouPage";
 
 import CreatePayment from "./payment/CreatePayment";
 import ListPayments from "./payment/ListPayments";
@@ -45,7 +45,7 @@ class App extends Component {
             <Route exact path="/login" component={LoginPage} />
             <Route exact path="/students/create" component={CreateStudent} />
             <Route exact path="/students/list-students" component={Dashboard} />
-            <Route exact path="/students/thank-you" component={ThnakYouPage} />
+            <Route exact path="/students/thank-you" component={ThankYouPage} />
             <Route
               exact
               path="/students/:id/update"
