@@ -1,25 +1,25 @@
-const Payment = require("../../models/Payment");
+const Payment = require('../../models/Payment');
 
 const paymentsDAL = {
-  listPayments: async function() {
-    return await Payment.find({});
+  async listPayments() {
+    return Payment.find({});
   },
 
-  showPayment: async function(paymentId) {
-    return await Payment.findOne({ _id: paymentId });
+  async showPayment(paymentId) {
+    return Payment.findOne({ _id: paymentId });
   },
 
-  createPayment: async function(payment) {
-    return await Payment.create(payment);
+  async createPayment(payment) {
+    return Payment.create(payment);
   },
 
-  updatePayment: async function(paymentId, payment) {
-    return await Payment.findByIdAndUpdate(paymentId, payment, { new: true });
+  async updatePayment(paymentId, payment) {
+    return Payment.findByIdAndUpdate(paymentId, payment, { new: true });
   },
 
-  deletePayment: async function(paymentId) {
-    return await Payment.remove({ _id: paymentId });
-  }
+  async deletePayment(paymentId) {
+    return Payment.remove({ _id: paymentId });
+  },
 };
 
 module.exports = paymentsDAL;

@@ -1,35 +1,35 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Route, Switch } from "react-router-dom";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Route, Switch } from 'react-router-dom';
 
-import { verifyMentor } from "../actions/index";
+import { verifyMentor } from '../actions/index';
 
-import LoginPage from "./auth/LoginPage";
-import HomePage from "./home/HomePage";
+import LoginPage from './auth/LoginPage';
+import HomePage from './home/HomePage';
 
-import CreateStudent from "../containers/students/CreateStudent";
-import UpdateStudent from "./students/UpdateStudent";
+import CreateStudent from '../containers/students/CreateStudent';
+import UpdateStudent from './students/UpdateStudent';
 
-import NotFound from "../containers/common/NotFound";
-import Dashboard from "../containers/home/Dashboard";
-import { ThankYouPage } from "./common/ThankYouPage";
+import NotFound from '../containers/common/NotFound';
+import Dashboard from '../containers/home/Dashboard';
+import { ThankYouPage } from './common/ThankYouPage';
 
-import CreatePayment from "./payment/CreatePayment";
-import ListPayments from "./payment/ListPayments";
-import EditPayment from "./payment/EditPayment";
+import CreatePayment from './payment/CreatePayment';
+import ListPayments from './payment/ListPayments';
+import EditPayment from './payment/EditPayment';
 
-import CreateReminder from "./reminder/CreateReminder";
-import EditReminder from "./reminder/EditReminder";
-import ListReminders from "./reminder/ListReminders";
+import CreateReminder from './reminder/CreateReminder';
+import EditReminder from './reminder/EditReminder';
+import ListReminders from './reminder/ListReminders';
 
-import Header from "../containers/common/Header";
+import Header from '../containers/common/Header';
 class App extends Component {
   componentDidMount() {
-    const authToken = localStorage.getItem("authToken");
+    const authToken = localStorage.getItem('authToken');
 
     if (authToken) {
       this.props.dispatch({
-        type: "TOKEN_VERIFICATION_START"
+        type: 'TOKEN_VERIFICATION_START',
       });
       this.props.dispatch(verifyMentor(authToken));
     }
@@ -85,6 +85,6 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = store => store;
+const mapStateToProps = (store) => store;
 
 export default connect(mapStateToProps)(App);

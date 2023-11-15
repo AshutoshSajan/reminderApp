@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import axios from "axios";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import axios from 'axios';
 
-import { paymentUpdateHandler } from "../../actions/payments";
-import Loader from "../common/Loader";
-import { Alert } from "../common/Alert";
+import { paymentUpdateHandler } from '../../actions/payments';
+import Loader from '../common/Loader';
+import { Alert } from '../common/Alert';
 class EditPayment extends Component {
   constructor(props) {
     super(props);
 
-    this.paymentId = window.location.pathname.split("/")[2];
+    this.paymentId = window.location.pathname.split('/')[2];
 
     if (this.paymentId) {
       this.payment = this.props.payments.payments.reduce((acc, payment) => {
@@ -22,33 +22,33 @@ class EditPayment extends Component {
 
     this.state = {
       payment: {
-        studentId: this.payment ? this.payment.studentId : "",
-        amount: this.payment ? +this.payment.amount : "",
-        mode: this.payment ? this.payment.mode : "",
-        month: this.payment ? this.payment.month : "",
-        year: this.payment ? +this.payment.year : "",
+        studentId: this.payment ? this.payment.studentId : '',
+        amount: this.payment ? +this.payment.amount : '',
+        mode: this.payment ? this.payment.mode : '',
+        month: this.payment ? this.payment.month : '',
+        year: this.payment ? +this.payment.year : '',
         isStayFee: this.payment ? this.payment.isStayFee : false,
-        isTrainingFee: this.payment ? this.payment.isTrainingFee : false
+        isTrainingFee: this.payment ? this.payment.isTrainingFee : false,
       },
 
       months: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec"
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec',
       ],
-      paymentModes: ["cash", "UPI", "Bank Transfer"],
+      paymentModes: ['cash', 'UPI', 'Bank Transfer'],
       isLoading: false,
-      error: "",
-      hideError: true
+      error: '',
+      hideError: true,
     };
   }
 
@@ -57,23 +57,23 @@ class EditPayment extends Component {
     if (!this.payment) {
       this.setState({ isLoading: true });
       axios
-        .get("/api/v1/payments/" + this.paymentId, {
+        .get('/api/v1/payments/' + this.paymentId, {
           headers: {
-            authorization: authToken
-          }
+            authorization: authToken,
+          },
         })
-        .then(res => {
+        .then((res) => {
           this.setState({
             isLoading: false,
             payment: {
               ...this.state.payment,
-              ...res.data.payment
-            }
+              ...res.data.payment,
+            },
           });
         })
-        .catch(err => {
+        .catch((err) => {
           console.error(err);
-          this.setState({ isLoading: false, error: "something went wrong" });
+          this.setState({ isLoading: false, error: 'something went wrong' });
         });
     }
   }
@@ -81,15 +81,8 @@ class EditPayment extends Component {
   updatePaymentSubmitHandler = () => {
     this.setState({ hideError: !this.state.hideError });
 
-    const {
-      studentId,
-      amount,
-      mode,
-      month,
-      year,
-      isStayFee,
-      isTrainingFee
-    } = this.state.payment;
+    const { studentId, amount, mode, month, year, isStayFee, isTrainingFee } =
+      this.state.payment;
 
     const payment = {
       amount: +amount,
@@ -97,53 +90,47 @@ class EditPayment extends Component {
       month,
       year: +year,
       isStayFee,
-      isTrainingFee
+      isTrainingFee,
     };
 
     this.props.dispatch(
       paymentUpdateHandler(this.paymentId, { payment }, () => {
-        this.props.history.push("/payments/list-payments");
-      })
+        this.props.history.push('/payments/list-payments');
+      }),
     );
   };
 
-  handleChange = e => {
+  handleChange = (e) => {
     const { name, value } = e.target;
 
     this.setState({
       payment: {
         ...this.state.payment,
-        [name]: value
-      }
+        [name]: value,
+      },
     });
   };
 
-  handleToggle = e => {
+  handleToggle = (e) => {
     const { name } = e.target;
 
     this.setState({
       payment: {
         ...this.state.payment,
-        [name]: !this.state.payment[name]
-      }
+        [name]: !this.state.payment[name],
+      },
     });
   };
 
   hideErrorHandler = () => {
     this.setState({
-      hideError: true
+      hideError: true,
     });
   };
 
   render() {
-    const {
-      amount,
-      mode,
-      month,
-      year,
-      isStayFee,
-      isTrainingFee
-    } = this.state.payment;
+    const { amount, mode, month, year, isStayFee, isTrainingFee } =
+      this.state.payment;
 
     const { paymentModes, months, isLoading, error, hideError } = this.state;
 
@@ -274,4 +261,4 @@ class EditPayment extends Component {
   }
 }
 
-export default connect(store => store)(EditPayment);
+export default connect((store) => store)(EditPayment);

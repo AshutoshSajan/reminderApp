@@ -1,57 +1,58 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+
+const { Schema } = mongoose;
 
 const monthsEnum = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec"
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
 ];
-const paymentModeEnum = ["cash", "UPI", "Bank Transfer"];
+const paymentModeEnum = ['cash', 'UPI', 'Bank Transfer'];
 
 const paymentSchema = new Schema(
   {
     studentId: {
       type: Schema.Types.ObjectId,
-      ref: "Student"
+      ref: 'Student',
     },
     amount: {
       type: Number,
-      required: true
+      required: true,
     },
     mode: {
       type: String,
-      enum: paymentModeEnum
+      enum: paymentModeEnum,
     },
     screenshot: {
       type: String,
-      default: ""
+      default: '',
     },
     month: {
       type: String,
-      enum: monthsEnum
+      enum: monthsEnum,
     },
     year: {
-      type: Number
+      type: Number,
     },
     isStayFee: {
       type: Boolean,
-      default: false
+      default: false,
     },
     isTrainingFee: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-module.exports = mongoose.model("Payment", paymentSchema);
+module.exports = mongoose.model('Payment', paymentSchema);

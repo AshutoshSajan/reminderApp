@@ -1,45 +1,45 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import { createPaymentHandler } from "../../actions/payments";
-import { Alert } from "../common/Alert";
-import Loader from "../common/Loader";
+import { createPaymentHandler } from '../../actions/payments';
+import { Alert } from '../common/Alert';
+import Loader from '../common/Loader';
 
 class CreatePayment extends Component {
   constructor(props) {
     super();
-    this.studentId = window.location.pathname.split("/")[2];
+    this.studentId = window.location.pathname.split('/')[2];
 
     this.state = {
       payment: {
-        studentId: this.studentId.length > 4 || "",
-        amount: "",
-        mode: "",
-        screenshot: "",
-        month: "",
-        year: "",
+        studentId: this.studentId.length > 4 || '',
+        amount: '',
+        mode: '',
+        screenshot: '',
+        month: '',
+        year: '',
         isStayFee: false,
-        isTrainingFee: false
+        isTrainingFee: false,
       },
-      error: "",
+      error: '',
       hideError: true,
 
       months: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec"
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec',
       ],
-      paymentModes: ["cash", "UPI", "Bank Transfer"],
-      selectedFile: ""
+      paymentModes: ['cash', 'UPI', 'Bank Transfer'],
+      selectedFile: '',
     };
     this.fileInput = React.createRef();
   }
@@ -55,7 +55,7 @@ class CreatePayment extends Component {
       month,
       year,
       isStayFee,
-      isTrainingFee
+      isTrainingFee,
     } = this.state.payment;
 
     const payment = {
@@ -66,7 +66,7 @@ class CreatePayment extends Component {
       month,
       year: +year,
       isStayFee,
-      isTrainingFee
+      isTrainingFee,
     };
 
     if (
@@ -78,33 +78,33 @@ class CreatePayment extends Component {
       !isStayFee ||
       !isStayFee
     ) {
-      return this.handleError("All feilds are must");
+      return this.handleError('All feilds are must');
     }
 
     // TODO: add student id in payment object after testing
     this.props.dispatch(
       createPaymentHandler({ payment }, () =>
-        this.props.history.push("/students/thank-you")
-      )
+        this.props.history.push('/students/thank-you'),
+      ),
     );
   };
 
-  handleError = async err => {
+  handleError = async (err) => {
     await this.setState({ error: err });
   };
 
-  handleFileChange = async e => {
+  handleFileChange = async (e) => {
     const file = event.target.files[0];
 
     this.setState({ selectedFile: file.name });
 
-    const setFileInState = str => {
+    const setFileInState = (str) => {
       str
         ? this.setState({
             payment: {
               ...this.state.payment,
-              screenshot: str
-            }
+              screenshot: str,
+            },
           })
         : null;
     };
@@ -113,49 +113,42 @@ class CreatePayment extends Component {
     const reader = new FileReader();
     reader.readAsDataURL(file);
 
-    reader.onload = event => {
+    reader.onload = (event) => {
       setFileInState(event.target.result);
     };
   };
 
-  handleChange = e => {
+  handleChange = (e) => {
     const { name, value } = e.target;
 
     this.setState({
       payment: {
         ...this.state.payment,
-        [name]: value
-      }
+        [name]: value,
+      },
     });
   };
 
-  handleToggle = e => {
+  handleToggle = (e) => {
     const { name } = e.target;
 
     this.setState({
       payment: {
         ...this.state.payment,
-        [name]: !this.state.payment[name]
-      }
+        [name]: !this.state.payment[name],
+      },
     });
   };
 
   hideErrorHandler = () => {
     this.setState({
-      hideError: true
+      hideError: true,
     });
   };
 
   render() {
-    const {
-      amount,
-      mode,
-      screenshot,
-      month,
-      year,
-      isStayFee,
-      isTrainingFee
-    } = this.state.payment;
+    const { amount, mode, screenshot, month, year, isStayFee, isTrainingFee } =
+      this.state.payment;
 
     const { paymentModes, months, error, selectedFile, hideError } = this.state;
 
@@ -305,4 +298,4 @@ class CreatePayment extends Component {
   }
 }
 
-export default connect(store => store)(CreatePayment);
+export default connect((store) => store)(CreatePayment);

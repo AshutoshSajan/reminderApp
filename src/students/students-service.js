@@ -1,25 +1,25 @@
-const studentsDAL = require("./students-DAL");
+const studentsDAL = require('./students-DAL');
 
 const studentsService = {
-  listStudents: async function() {
-    return await studentsDAL.listStudents();
+  async listStudents() {
+    return studentsDAL.listStudents();
   },
 
-  showStudent: async function(studentId) {
-    return await studentsDAL.showStudent(studentId);
+  async showStudent(studentId) {
+    return studentsDAL.showStudent(studentId);
   },
 
-  createStudent: async function(student) {
-    return await studentsDAL.createStudent(student);
+  async createStudent(student) {
+    return studentsDAL.createStudent(student);
   },
 
-  updateStudent: async function(studentId, student) {
-    return await studentsDAL.updateStudent(studentId, student);
+  async updateStudent(studentId, student) {
+    return studentsDAL.updateStudent(studentId, student);
   },
 
-  deleteStudent: async function(studentId) {
-    return await studentsDAL.deleteStudent(studentId);
-  }
+  async deleteStudent(studentId) {
+    return studentsDAL.deleteStudent(studentId);
+  },
 };
 
 module.exports = studentsService;

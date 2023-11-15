@@ -1,52 +1,52 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import validator from "validator";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import validator from 'validator';
 
-import { loginMentor } from "../../actions";
-import { Alert } from "../common/Alert";
+import { loginMentor } from '../../actions';
+import { Alert } from '../common/Alert';
 
 class LoginPage extends Component {
   state = {
-    email: "ashutoshsajan1213@gmail.com",
-    password: "qwerty1234",
-    hideError: true
+    email: 'ashutoshsajan1213@gmail.com',
+    password: 'qwerty1234',
+    hideError: true,
   };
 
   constructor(props) {
     super(props);
   }
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
     const { email, password } = this.state;
 
     if (!email || !password) {
-      return alert("Email and password are must.");
+      return alert('Email and password are must.');
     }
 
     if (password.length < 6) {
-      return alert("Password must contain 6 characters.");
+      return alert('Password must contain 6 characters.');
     }
 
     if (!validator.isEmail(email)) {
-      return alert("Invalid email.");
+      return alert('Invalid email.');
     }
 
     this.props.dispatch(
       loginMentor({ email, password }, () => {
-        this.props.history.push("/");
-      })
+        this.props.history.push('/');
+      }),
     );
   };
 
-  handleChange = e => {
+  handleChange = (e) => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
 
   hideErrorHandler = () => {
     this.setState({
-      hideError: true
+      hideError: true,
     });
   };
 
@@ -99,7 +99,7 @@ class LoginPage extends Component {
               <button
                 onClick={this.handleSubmit}
                 className={`button is-info ${
-                  isAuthInProgress ? "is-loading" : null
+                  isAuthInProgress ? 'is-loading' : null
                 }`}
               >
                 Submit
@@ -112,4 +112,4 @@ class LoginPage extends Component {
   }
 }
 
-export default connect(store => store)(LoginPage);
+export default connect((store) => store)(LoginPage);

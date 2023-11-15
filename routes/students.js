@@ -1,32 +1,32 @@
-const express = require("express");
+const express = require('express');
+const validatorMiddleware = require('../utils/validator-middleware');
+const studentsController = require('../controllers/students');
+
 const router = express.Router();
 
-const validatorMiddleware = require("../utils/validator-middleware");
-const studentsController = require("../controllers/students");
-
-router.get("/", studentsController.listStudents);
+router.get('/', studentsController.listStudents);
 
 router.post(
-  "/",
+  '/',
   validatorMiddleware.mustHaveFields(
-    ["name", "email", "phoneNumber"],
-    "student"
+    ['name', 'email', 'phoneNumber'],
+    'student',
   ),
-  validatorMiddleware.isValidEmail("email", "student"),
-  studentsController.createStudent
+  validatorMiddleware.isValidEmail('email', 'student'),
+  studentsController.createStudent,
 );
 
-router.get("/:id", studentsController.showStudent);
+router.get('/:id', studentsController.showStudent);
 
 router.put(
-  "/:id",
+  '/:id',
   validatorMiddleware.mustHaveFields(
-    ["name", "email", "phoneNumber"],
-    "student"
+    ['name', 'email', 'phoneNumber'],
+    'student',
   ),
-  studentsController.updateStudent
+  studentsController.updateStudent,
 );
 
-router.delete("/:id", studentsController.deleteStudent);
+router.delete('/:id', studentsController.deleteStudent);
 
 module.exports = router;
