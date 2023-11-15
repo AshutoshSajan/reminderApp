@@ -1,64 +1,65 @@
 const initialState = {
   isFetchingStudents: false,
   studentsAuthError: null,
-  students: []
+  students: [],
 };
 
+// eslint-disable-next-line default-param-last
 const studentsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "STUDENTS_AUTH_START":
+    case 'STUDENTS_AUTH_START':
       return {
         ...state,
         isFetchingStudents: true,
-        studentsAuthError: null
+        studentsAuthError: null,
       };
 
-    case "FETCH_STUDENTS_LIST_SUCCESS":
+    case 'FETCH_STUDENTS_LIST_SUCCESS':
       return {
         ...state,
         isFetchingStudents: false,
         studentsAuthError: null,
-        students: action.data.students
+        students: action.data.students,
       };
 
-    case "CREATE_STUDENT":
+    case 'CREATE_STUDENT':
       return {
         ...state,
         isFetchingStudents: false,
         students: [...state.students, action.data.student],
-        studentsAuthError: null
+        studentsAuthError: null,
       };
 
-    case "UPDATE_STUDENT":
+    case 'UPDATE_STUDENT':
       return {
         ...state,
         isFetchingStudents: false,
-        students: state.students.map(student => {
+        students: state.students.map((student) => {
           if (student._id === action.data.student._id) {
             return action.data.student;
-          } else {
-            return student;
           }
+
+          return student;
         }),
-        studentsAuthError: null
+        studentsAuthError: null,
       };
 
-    case "DELETE_STUDENT":
+    case 'DELETE_STUDENT':
       return {
         ...state,
         isFetchingStudents: false,
         students: state.students.filter(
-          student => student._id !== action.data.studentId
+          (student) => student._id !== action.data.studentId,
         ),
-        studentsAuthError: null
+        studentsAuthError: null,
       };
 
-    case "STUDENTS_AUTH_ERROR":
+    case 'STUDENTS_AUTH_ERROR':
       return {
         ...state,
         isFetchingStudents: false,
         studentsAuthError: action.data.error,
-        students: []
+        students: [],
       };
 
     default:

@@ -1,25 +1,25 @@
-const Student = require("../../models/Student");
+const Student = require('../../models/Student');
 
 const studentsDAL = {
-  listStudents: async function() {
-    return await Student.find({});
+  async listStudents() {
+    return Student.find({});
   },
 
-  showStudent: async function(studentId) {
-    return await Student.findOne({ _id: studentId });
+  async showStudent(studentId) {
+    return Student.findOne({ _id: studentId });
   },
 
-  createStudent: async function(student) {
-    return await Student.create(student);
+  async createStudent(student) {
+    return Student.create(student);
   },
 
-  updateStudent: async function(studentId, student) {
-    return await Student.findByIdAndUpdate(studentId, student, { new: true });
+  async updateStudent(studentId, student) {
+    return Student.findByIdAndUpdate(studentId, student, { new: true });
   },
 
-  deleteStudent: async function(studentId) {
-    return await Student.remove({ _id: studentId });
-  }
+  async deleteStudent(studentId) {
+    return Student.remove({ _id: studentId });
+  },
 };
 
 module.exports = studentsDAL;

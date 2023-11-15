@@ -1,64 +1,65 @@
 const initialState = {
   isFetchingReminders: false,
   remindersAuthError: null,
-  reminders: []
+  reminders: [],
 };
 
+// eslint-disable-next-line default-param-last
 const remindersReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "REMINDER_AUTH_START":
+    case 'REMINDER_AUTH_START':
       return {
         ...state,
         isFetchingReminders: true,
-        remindersAuthError: null
+        remindersAuthError: null,
       };
 
-    case "FETCH_REMINDER_LIST_SUCCESS":
+    case 'FETCH_REMINDER_LIST_SUCCESS':
       return {
         ...state,
         isFetchingReminders: false,
         remindersAuthError: null,
-        reminders: action.data.reminders
+        reminders: action.data.reminders,
       };
 
-    case "CREATE_REMINDER":
+    case 'CREATE_REMINDER':
       return {
         ...state,
         isFetchingReminders: false,
         remindersAuthError: null,
-        reminders: [...state.reminders, action.data.reminder]
+        reminders: [...state.reminders, action.data.reminder],
       };
 
-    case "UPDATE_REMINDER":
+    case 'UPDATE_REMINDER':
       return {
         ...state,
         isFetchingReminders: false,
         remindersAuthError: null,
-        reminders: state.reminders.map(reminder => {
+        reminders: state.reminders.map((reminder) => {
           if (reminder._id === action.data.reminder._id) {
             return action.data.reminder;
-          } else {
-            return reminder;
           }
-        })
+
+          return reminder;
+        }),
       };
 
-    case "DELETE_REMINDER":
+    case 'DELETE_REMINDER':
       return {
         ...state,
         isFetchingReminders: false,
         remindersAuthError: null,
-        reminders: state.reminders.filter(reminder => {
-          return reminder._id !== action.data.reminderId;
-        })
+        reminders: state.reminders.filter(
+          (reminder) => reminder._id !== action.data.reminderId,
+        ),
       };
 
-    case "REMINDER_AUTH_ERROR":
+    case 'REMINDER_AUTH_ERROR':
       return {
         ...state,
         isFetchingReminders: false,
         remindersAuthError: action.data.error,
-        reminders: []
+        reminders: [],
       };
 
     default:

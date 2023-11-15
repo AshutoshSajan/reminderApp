@@ -1,16 +1,16 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { updateReminderHandler } from "../../actions/reminders";
-import axios from "axios";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { updateReminderHandler } from '../../actions/reminders';
+import axios from 'axios';
 
-import Loader from "../common/Loader";
-import { Alert } from "../common/Alert";
+import Loader from '../common/Loader';
+import { Alert } from '../common/Alert';
 
 class EditReminder extends Component {
   constructor(props) {
     super(props);
 
-    this.reminderId = window.location.pathname.split("/")[2];
+    this.reminderId = window.location.pathname.split('/')[2];
 
     if (this.reminderId) {
       this.reminder = this.props.reminders.reminders.reduce((acc, reminder) => {
@@ -23,33 +23,33 @@ class EditReminder extends Component {
 
     this.state = {
       reminder: {
-        studentId: this.reminder ? this.reminder.studentId : "",
-        amount: this.reminder ? this.reminder.amount : "",
-        details: this.reminder ? this.reminder.details : "",
-        mode: this.reminder ? this.reminder.mode : "",
-        month: this.reminder ? this.reminder.month : "",
-        year: this.reminder ? this.reminder.year : ""
+        studentId: this.reminder ? this.reminder.studentId : '',
+        amount: this.reminder ? this.reminder.amount : '',
+        details: this.reminder ? this.reminder.details : '',
+        mode: this.reminder ? this.reminder.mode : '',
+        month: this.reminder ? this.reminder.month : '',
+        year: this.reminder ? this.reminder.year : '',
       },
 
       months: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec"
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec',
       ],
-      paymentModes: ["call", "sms", "email"],
+      paymentModes: ['call', 'sms', 'email'],
 
       isLoading: false,
-      error: "",
-      hideError: true
+      error: '',
+      hideError: true,
     };
   }
 
@@ -59,91 +59,79 @@ class EditReminder extends Component {
     if (!this.reminder) {
       this.setState({ isLoading: true });
       axios
-        .get("/api/v1/reminders/" + this.reminderId, {
+        .get('/api/v1/reminders/' + this.reminderId, {
           headers: {
-            authorization: authToken
-          }
+            authorization: authToken,
+          },
         })
-        .then(res => {
-          this.setState(state => ({
+        .then((res) => {
+          this.setState((state) => ({
             isLoading: false,
             reminder: {
               ...state.reminder,
-              ...res.data.reminder
-            }
+              ...res.data.reminder,
+            },
           }));
         })
-        .catch(err => {
+        .catch((err) => {
           console.error(err);
-          this.setState({ isLoading: false, error: "something went wrong" });
+          this.setState({ isLoading: false, error: 'something went wrong' });
         });
     }
   };
 
-  handleChange = e => {
+  handleChange = (e) => {
     const { name, value } = e.target;
 
     this.setState({
       reminder: {
         ...this.state.reminder,
-        [name]: value
-      }
+        [name]: value,
+      },
     });
   };
 
   updateReminderSubmitHandler = () => {
     this.setState({ hideError: !this.state.hideError });
 
-    const {
-      studentId,
-      amount,
-      details,
-      mode,
-      month,
-      year
-    } = this.state.reminder;
+    const { studentId, amount, details, mode, month, year } =
+      this.state.reminder;
 
     const reminder = {
       amount: +amount,
       details,
       mode,
       month,
-      year: +year
+      year: +year,
     };
 
     this.props.dispatch(
       updateReminderHandler(this.reminderId, { reminder }, () => {
-        this.props.history.push("/reminders/list-reminders");
-      })
+        this.props.history.push('/reminders/list-reminders');
+      }),
     );
 
     this.setState({
       reminder: {
-        studentId: "",
-        amount: "",
-        details: "",
-        mode: "",
-        month: "",
-        year: ""
-      }
+        studentId: '',
+        amount: '',
+        details: '',
+        mode: '',
+        month: '',
+        year: '',
+      },
     });
   };
 
   hideErrorHandler = () => {
     this.setState({
-      hideError: true
+      hideError: true,
     });
   };
 
   render() {
-    const {
-      studentId,
-      amount,
-      details,
-      mode,
-      month,
-      year
-    } = this.state.reminder;
+    const { studentId, amount, details, mode, month, year } =
+      this.state.reminder;
 
     const { paymentModes, months, isLoading, error, hideError } = this.state;
     const { isFetchingReminders, remindersAuthError } = this.props.reminders;
@@ -261,4 +249,4 @@ class EditReminder extends Component {
   }
 }
 
-export default connect(store => store)(EditReminder);
+export default connect((store) => store)(EditReminder);

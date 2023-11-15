@@ -1,81 +1,86 @@
-const paymentsService = require("../src/payments/payments-service");
+const paymentsService = require('../src/payments/payments-service');
 
 const paymentsController = {
-  listPayments: async function(req, res) {
+  async listPayments(req, res) {
     try {
       const payments = await paymentsService.listPayments();
+
       return res.status(200).json({
         success: true,
-        message: "request sucessfull",
-        payments
+        message: 'request sucessfull',
+        payments,
       });
     } catch (error) {
       return res
         .status(500)
-        .json({ success: false, error, message: "server error" });
+        .json({ success: false, error, message: 'server error' });
     }
   },
 
-  createPayment: async function(req, res) {
-    const payment = req.body.payment;
+  async createPayment(req, res) {
+    const { payment } = req.body;
+
     try {
       return res.status(200).json({
         success: true,
-        message: "request sucessfull",
-        payment: await paymentsService.createPayment(payment)
+        message: 'request sucessfull',
+        payment: await paymentsService.createPayment(payment),
       });
     } catch (error) {
       return res
         .status(500)
-        .json({ success: false, error, message: "server error" });
+        .json({ success: false, error, message: 'server error' });
     }
   },
 
-  showPayment: async function(req, res) {
+  async showPayment(req, res) {
     const paymentId = req.params.id;
+
     try {
       return res.status(200).json({
         success: true,
-        message: "request sucessfull",
-        payment: await paymentsService.showPayment(paymentId)
+        message: 'request sucessfull',
+        payment: await paymentsService.showPayment(paymentId),
       });
     } catch (error) {
       return res
         .status(500)
-        .json({ success: false, error, message: "server error" });
+        .json({ success: false, error, message: 'server error' });
     }
   },
 
-  updatePayment: async function(req, res) {
+  async updatePayment(req, res) {
     const paymentId = req.params.id;
-    const payment = req.body.payment;
+    const { payment } = req.body;
+
     try {
       return res.status(200).json({
         success: true,
-        message: "request sucessfull",
-        payment: await paymentsService.updatePayment(paymentId, payment)
+        message: 'request sucessfull',
+        payment: await paymentsService.updatePayment(paymentId, payment),
       });
     } catch (error) {
       return res
         .status(500)
-        .json({ success: false, error, message: "server error" });
+        .json({ success: false, error, message: 'server error' });
     }
   },
 
-  deletePayment: async function(req, res) {
+  async deletePayment(req, res) {
     const paymentId = req.params.id;
+
     try {
       return res.status(200).json({
         success: true,
-        message: "request sucessfull",
-        payment: await paymentsService.deletePayment(paymentId)
+        message: 'request sucessfull',
+        payment: await paymentsService.deletePayment(paymentId),
       });
     } catch (error) {
       return res
         .status(500)
-        .json({ success: false, error, message: "server error" });
+        .json({ success: false, error, message: 'server error' });
     }
-  }
+  },
 };
 
 module.exports = paymentsController;

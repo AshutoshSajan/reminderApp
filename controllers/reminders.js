@@ -1,80 +1,85 @@
-const remindersService = require("../src/reminders/reminders-service");
-const nodemailer = require("../utils/nodemailer-service");
+const remindersService = require('../src/reminders/reminders-service');
+const nodemailer = require('../utils/nodemailer-service');
 
 const remindersController = {
-  listReminders: async function(req, res) {
+  async listReminders(req, res) {
     try {
       const reminders = await remindersService.listReminders();
+
       return res.status(200).json({
         success: true,
-        message: "request sucessfull",
-        reminders
+        message: 'request sucessfull',
+        reminders,
       });
     } catch (error) {
       return res
         .status(500)
-        .json({ success: false, error, message: "server error" });
+        .json({ success: false, error, message: 'server error' });
     }
   },
 
-  createReminder: async function(req, res) {
-    const reminder = req.body.reminder;
+  async createReminder(req, res) {
+    const { reminder } = req.body;
+
     try {
       return res.status(200).json({
         success: true,
-        message: "request sucessfull",
-        reminder: await remindersService.createReminder(reminder)
+        message: 'request sucessfull',
+        reminder: await remindersService.createReminder(reminder),
       });
     } catch (error) {
       return res
         .status(500)
-        .json({ success: false, error, message: "server error" });
+        .json({ success: false, error, message: 'server error' });
     }
   },
 
-  showReminder: async function(req, res) {
+  async showReminder(req, res) {
     const reminderId = req.params.id;
+
     try {
       return res.status(200).json({
         success: true,
-        message: "request sucessfull",
-        reminder: await remindersService.showReminder(reminderId)
+        message: 'request sucessfull',
+        reminder: await remindersService.showReminder(reminderId),
       });
     } catch (error) {
       return res
         .status(500)
-        .json({ success: false, error, message: "server error" });
+        .json({ success: false, error, message: 'server error' });
     }
   },
 
-  updateReminder: async function(req, res) {
+  async updateReminder(req, res) {
     const reminderId = req.params.id;
-    const reminder = req.body.reminder;
+    const { reminder } = req.body;
+
     try {
       return res.status(200).json({
         success: true,
-        message: "request sucessfull",
-        reminder: await remindersService.updateReminder(reminderId, reminder)
+        message: 'request sucessfull',
+        reminder: await remindersService.updateReminder(reminderId, reminder),
       });
     } catch (error) {
       return res
         .status(500)
-        .json({ success: false, error, message: "server error" });
+        .json({ success: false, error, message: 'server error' });
     }
   },
 
-  deleteReminder: async function(req, res) {
+  async deleteReminder(req, res) {
     const reminderId = req.params.id;
+
     try {
       return res.status(200).json({
         success: true,
-        message: "request sucessfull",
-        reminder: await remindersService.deleteReminder(reminderId)
+        message: 'request sucessfull',
+        reminder: await remindersService.deleteReminder(reminderId),
       });
     } catch (error) {
       return res
         .status(500)
-        .json({ success: false, error, message: "server error" });
+        .json({ success: false, error, message: 'server error' });
     }
   },
 
@@ -84,15 +89,16 @@ const remindersController = {
 
     try {
       const mailRes = await nodemailer.sendMail(email, userId);
+
       return res
         .status(200)
-        .json({ success: true, message: "request sucessfull", mailRes });
+        .json({ success: true, message: 'request sucessfull', mailRes });
     } catch (error) {
       return res
         .status(500)
-        .json({ success: false, error, message: "server error" });
+        .json({ success: false, error, message: 'server error' });
     }
-  }
+  },
 };
 
 module.exports = remindersController;

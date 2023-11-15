@@ -1,5 +1,4 @@
-const mailMessage = userId => {
-  return `
+const mailMessage = (userId) => `
     <div style="width:500px; margin: 0 auto; text-align:center">
       <div>
         <h2
@@ -45,6 +44,5 @@ const mailMessage = userId => {
       </div>
     </div>
 `;
-};
 
 module.exports = mailMessage;

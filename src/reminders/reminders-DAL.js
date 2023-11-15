@@ -1,27 +1,27 @@
-const Reminder = require("../../models/Reminder");
+const Reminder = require('../../models/Reminder');
 
 const remindersDAL = {
-  listReminders: async function() {
-    return await Reminder.find({});
+  async listReminders() {
+    return Reminder.find({});
   },
 
-  showReminder: async function(reminderId) {
-    return await Reminder.findOne({ _id: reminderId });
+  async showReminder(reminderId) {
+    return Reminder.findOne({ _id: reminderId });
   },
 
-  createReminder: async function(reminder) {
-    return await Reminder.create(reminder);
+  async createReminder(reminder) {
+    return Reminder.create(reminder);
   },
 
-  updateReminder: async function(reminderId, reminder) {
-    return await Reminder.findByIdAndUpdate(reminderId, reminder, {
-      new: true
+  async updateReminder(reminderId, reminder) {
+    return Reminder.findByIdAndUpdate(reminderId, reminder, {
+      new: true,
     });
   },
 
-  deleteReminder: async function(reminderId) {
-    return await Reminder.remove({ _id: reminderId });
-  }
+  async deleteReminder(reminderId) {
+    return Reminder.remove({ _id: reminderId });
+  },
 };
 
 module.exports = remindersDAL;

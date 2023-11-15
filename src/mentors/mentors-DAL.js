@@ -1,9 +1,9 @@
-const Mentor = require("../../models/Mentor");
+const Mentor = require('../../models/Mentor');
 
 const mentorsDAL = {
-  findOneByField: async function(fieldNameObj) {
-    return await Mentor.findOne(fieldNameObj);
-  }
+  async findOneByField(fieldNameObj) {
+    return Mentor.findOne(fieldNameObj);
+  },
 };
 
 module.exports = mentorsDAL;

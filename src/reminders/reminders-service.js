@@ -1,25 +1,25 @@
-const remindersDAL = require("./reminders-DAL");
+const remindersDAL = require('./reminders-DAL');
 
 const paymentsService = {
-  listReminders: async function() {
-    return await remindersDAL.listReminders();
+  async listReminders() {
+    return remindersDAL.listReminders();
   },
 
-  showReminder: async function(reminderId) {
-    return await remindersDAL.showReminder(reminderId);
+  async showReminder(reminderId) {
+    return remindersDAL.showReminder(reminderId);
   },
 
-  createReminder: async function(reminder) {
-    return await remindersDAL.createReminder(reminder);
+  async createReminder(reminder) {
+    return remindersDAL.createReminder(reminder);
   },
 
-  updateReminder: async function(reminderId, reminder) {
-    return await remindersDAL.updateReminder(reminderId, reminder);
+  async updateReminder(reminderId, reminder) {
+    return remindersDAL.updateReminder(reminderId, reminder);
   },
 
-  deleteReminder: async function(reminderId) {
-    return await remindersDAL.deleteReminder(reminderId);
-  }
+  async deleteReminder(reminderId) {
+    return remindersDAL.deleteReminder(reminderId);
+  },
 };
 
 module.exports = paymentsService;

@@ -1,7 +1,7 @@
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 
 const authService = {
-  loginMentor: function(mentor, password) {
+  loginMentor(mentor, password) {
     const isAuthenticated = mentor.comparePassword(password);
 
     if (!isAuthenticated) {
@@ -9,8 +9,9 @@ const authService = {
     }
 
     const token = jwt.sign({ _id: mentor.id }, process.env.JWT_SECRET);
+
     return { token, mentor };
-  }
+  },
 };
 
 module.exports = authService;

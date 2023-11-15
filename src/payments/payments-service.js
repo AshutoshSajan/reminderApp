@@ -1,25 +1,25 @@
-const paymentsDAL = require("./payments-DAL");
+const paymentsDAL = require('./payments-DAL');
 
 const paymentsService = {
-  listPayments: async function() {
-    return await paymentsDAL.listPayments();
+  async listPayments() {
+    return paymentsDAL.listPayments();
   },
 
-  showPayment: async function(paymentId) {
-    return await paymentsDAL.showPayment(paymentId);
+  async showPayment(paymentId) {
+    return paymentsDAL.showPayment(paymentId);
   },
 
-  createPayment: async function(payment) {
-    return await paymentsDAL.createPayment(payment);
+  async createPayment(payment) {
+    return paymentsDAL.createPayment(payment);
   },
 
-  updatePayment: async function(paymentId, payment) {
-    return await paymentsDAL.updatePayment(paymentId, payment);
+  async updatePayment(paymentId, payment) {
+    return paymentsDAL.updatePayment(paymentId, payment);
   },
 
-  deletePayment: async function(paymentId) {
-    return await paymentsDAL.deletePayment(paymentId);
-  }
+  async deletePayment(paymentId) {
+    return paymentsDAL.deletePayment(paymentId);
+  },
 };
 
 module.exports = paymentsService;

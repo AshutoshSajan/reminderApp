@@ -1,44 +1,45 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+
+const { Schema } = mongoose;
 
 const studentSchema = new Schema(
   {
     name: {
       type: String,
-      required: true
+      required: true,
     },
     email: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
     },
     phoneNumber: {
       type: Number,
-      required: true
+      required: true,
     },
     isAlumni: {
       type: Boolean,
-      default: false
+      default: false,
     },
     isStayingInCampus: {
       type: Boolean,
-      default: false
+      default: false,
     },
     numAnnualSalary: {
-      type: Number
+      type: Number,
     },
     numPercentageToBeCharged: {
-      type: Number
+      type: Number,
     },
     numMinAmtToBePaid: {
-      type: Number
+      type: Number,
     },
     hasPaidEntireTrainingFee: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-module.exports = mongoose.model("Student", studentSchema);
+module.exports = mongoose.model('Student', studentSchema);

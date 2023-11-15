@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import LandingPage from "./LandingPage";
-import Dashboard from "./Dashboard";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import LandingPage from './LandingPage';
+import Dashboard from './Dashboard';
 
 class HomePage extends Component {
   render() {
@@ -13,6 +13,6 @@ class HomePage extends Component {
   }
 }
 
-const mapStateToProps = store => store;
+const mapStateToProps = (store) => store;
 
 export default connect(mapStateToProps)(HomePage);

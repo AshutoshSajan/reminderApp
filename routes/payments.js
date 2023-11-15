@@ -1,35 +1,35 @@
-const express = require("express");
+const express = require('express');
+const validatorMiddleware = require('../utils/validator-middleware');
+const paymentsController = require('../controllers/payments');
+const authMiddleware = require('../utils/auth-middleware');
+
 const router = express.Router();
 
-const validatorMiddleware = require("../utils/validator-middleware");
-const paymentsController = require("../controllers/payments");
-const authMiddleware = require("../utils/auth-middleware");
-
 // to save files locally or on cloudinary
-const upload = require("../utils/multer.config");
+// const upload = require('../utils/multer.config');
 
-router.get("/", authMiddleware.verifyMentor, paymentsController.listPayments);
+router.get('/', authMiddleware.verifyMentor, paymentsController.listPayments);
 
 router.post(
-  "/",
+  '/',
   // upload.single("screenshot"), // to save files locally using multer
-  validatorMiddleware.mustHaveFields(["amount"], "payment"),
-  paymentsController.createPayment
+  validatorMiddleware.mustHaveFields(['amount'], 'payment'),
+  paymentsController.createPayment,
 );
 
-router.get("/:id", authMiddleware.verifyMentor, paymentsController.showPayment);
+router.get('/:id', authMiddleware.verifyMentor, paymentsController.showPayment);
 
 router.put(
-  "/:id",
+  '/:id',
   authMiddleware.verifyMentor,
-  validatorMiddleware.mustHaveFields(["amount"], "payment"),
-  paymentsController.updatePayment
+  validatorMiddleware.mustHaveFields(['amount'], 'payment'),
+  paymentsController.updatePayment,
 );
 
 router.delete(
-  "/:id",
+  '/:id',
   authMiddleware.verifyMentor,
-  paymentsController.deletePayment
+  paymentsController.deletePayment,
 );
 
 module.exports = router;

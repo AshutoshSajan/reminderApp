@@ -1,25 +1,25 @@
-const express = require("express");
+const express = require('express');
+const validatorMiddleware = require('../utils/validator-middleware');
+const remindersController = require('../controllers/reminders');
+
 const router = express.Router();
 
-const validatorMiddleware = require("../utils/validator-middleware");
-const remindersController = require("../controllers/reminders");
-
-router.get("/", remindersController.listReminders);
+router.get('/', remindersController.listReminders);
 
 router.post(
-  "/",
-  validatorMiddleware.mustHaveFields(["amount"], "reminder"),
-  remindersController.createReminder
+  '/',
+  validatorMiddleware.mustHaveFields(['amount'], 'reminder'),
+  remindersController.createReminder,
 );
 
-router.get("/:id", remindersController.showReminder);
+router.get('/:id', remindersController.showReminder);
 
 router.put(
-  "/:id",
-  validatorMiddleware.mustHaveFields(["amount"], "reminder"),
-  remindersController.updateReminder
+  '/:id',
+  validatorMiddleware.mustHaveFields(['amount'], 'reminder'),
+  remindersController.updateReminder,
 );
 
-router.delete("/:id", remindersController.deleteReminder);
+router.delete('/:id', remindersController.deleteReminder);
 
 module.exports = router;

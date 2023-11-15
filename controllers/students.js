@@ -1,18 +1,22 @@
-const studentsService = require("../src/students/students-service");
-const remindersService = require("../src/reminders/reminders-service");
-const nodemailer = require("../utils/nodemailer-service");
+const studentsService = require('../src/students/students-service');
+// const remindersService = require('../src/reminders/reminders-service');
+const nodemailer = require('../utils/nodemailer-service');
 
 const studentsController = {
-  listStudents: async function(req, res) {
+  async listStudents(req, res) {
     try {
       const students = await studentsService.listStudents();
-      return res.status(200).json({ success: true, message: "", students });
+
+      return res.status(200).json({ success: true, message: '', students });
     } catch (error) {
-      return res.json({ success: false, message: "server error", students });
+      return res.json({
+        success: false,
+        message: 'server error',
+      });
     }
   },
 
-  createStudent: async function(req, res) {
+  async createStudent(req, res) {
     try {
       const student = await studentsService.createStudent(req.body.student);
 
@@ -23,15 +27,15 @@ const studentsController = {
 
       return res.status(200).json({
         success: true,
-        message: "student created",
-        student
+        message: 'student created',
+        student,
       });
     } catch (error) {
-      return res.json({ success: false, error, message: "server error" });
+      return res.json({ success: false, error, message: 'server error' });
     }
   },
 
-  showStudent: async function(req, res) {
+  async showStudent(req, res) {
     const studentId = req.params.id;
 
     try {
@@ -39,35 +43,35 @@ const studentsController = {
 
       return res.status(200).json({
         success: true,
-        message: "student found",
-        student
+        message: 'student found',
+        student,
       });
     } catch (error) {
-      return res.json({ success: false, error, message: "server error" });
+      return res.json({ success: false, error, message: 'server error' });
     }
   },
 
-  updateStudent: async function(req, res) {
+  async updateStudent(req, res) {
     const studentId = req.params.id;
-    const student = req.body.student;
+    const { student } = req.body;
 
     try {
       const updateStudent = await studentsService.updateStudent(
         studentId,
-        student
+        student,
       );
 
       return res.status(200).json({
         success: true,
-        message: "student updated",
-        updateStudent
+        message: 'student updated',
+        updateStudent,
       });
     } catch (error) {
-      return res.json({ success: false, error, message: "server error" });
+      return res.json({ success: false, error, message: 'server error' });
     }
   },
 
-  deleteStudent: async function(req, res) {
+  async deleteStudent(req, res) {
     const studentId = req.params.id;
 
     try {
@@ -75,13 +79,13 @@ const studentsController = {
 
       return res.status(200).json({
         success: true,
-        message: "student deleted",
-        student
+        message: 'student deleted',
+        student,
       });
     } catch (error) {
-      return res.json({ success: false, error, message: "server error" });
+      return res.json({ success: false, error, message: 'server error' });
     }
-  }
+  },
 };
 
 module.exports = studentsController;
