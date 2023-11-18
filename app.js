@@ -35,6 +35,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 if (process.env.NODE_ENV === 'development') {
+  // eslint-disable-next-line import/no-extraneous-dependencies
   const webpack = require('webpack');
   const webpackConfig = require('./webpack.config');
   const compiler = webpack(webpackConfig);

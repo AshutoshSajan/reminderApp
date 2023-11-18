@@ -1,9 +1,10 @@
-- Setup the folder structure - Done
-- Setup schema - Done
-- Add authentication for mentor - Done
-- Make API routes for students, payments, reminders
-- Display List of students
-- Profile of a student
-- Automatic and manually Trigger mail
+# TODO
 
-- Add node cron for mail notification
+- [x] Setup the folder structure
+- [x] Setup schema
+- [x] Add authentication for mentor
+- [x] Make API routes for students, payments, reminders
+- [x] Display List of students
+- [x] Profile of a student
+- [x] Automatic and manually Trigger mail
+- [ ] Add node cron for mail notification

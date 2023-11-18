@@ -1,3 +1,5 @@
+PORT=
+NODE_ENV=development | production
 NAME=admin_username
 EMAIL=admin_mail
 PASSWORD=admin_password
