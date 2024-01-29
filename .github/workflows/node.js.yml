@@ -11,30 +11,30 @@ on:
 
 jobs:
   lint:
-    name: Audit packages
+    name: Run eslint check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 18
-      - name: install npm packages
-        run: npm install
+      # - name: install npm packages
+      #   run: npm install
       - name: run eslint check
-        run: eslint .
+        run: npx eslint .
 
   prettier:
-    name: Audit packages
+    name: Run prettier check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 18
-      - name: install npm packages
-        run: npm install
+      # - name: install npm packages
+      #   run: npm install
       - name: run prettier check
-        run: prettier --check **/*.js
+        run: npx prettier --check **/*.js
 
   audit:
     name: Audit packages
@@ -63,6 +63,7 @@ jobs:
         uses: github/codeql-action/analyze@v3
   
   build:
+    name: Npm test
     runs-on: ubuntu-latest
     strategy:
       matrix:
