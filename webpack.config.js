@@ -1,11 +1,16 @@
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-// const HtmlWebpackPlugin = require("html-webpack-plugin");
+// const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  mode: 'development',
-  devtool: 'inline-source-map',
+  mode: process.env.NODE_ENV,
+  // devtool: 'inline-source-map',
   entry: ['./client/index.js'],
+  output: {
+    filename: 'bundle.js',
+    path: `${__dirname}/dist/bundle/`,
+    publicPath: '/static/',
+  },
   module: {
     rules: [
       {
@@ -20,7 +25,6 @@ module.exports = {
           {
             loader: 'css-loader',
           },
-          { loader: 'sass-loader' },
         ],
       },
       {
@@ -37,23 +41,16 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
   },
-  output: {
-    filename: 'bundle.js',
-    path: `${__dirname}/dist/bundle/`,
-    publicPath: '/static/',
-  },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('development'),
-      },
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     }),
     new MiniCssExtractPlugin({
       filename: 'bundle.css',
     }),
     // new HtmlWebpackPlugin({
-    //   favicon: "/public/media/bell.png"
-    // })
+    //   favicon: '/public/media/bell.png',
+    // }),
   ],
 };
